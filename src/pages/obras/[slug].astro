@@ -1,0 +1,258 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const obras = await getCollection('obras');
+  return obras.map((obra) => ({
+    params: { slug: obra.slug },
+    props: { obra },
+  }));
+}
+
+const { obra } = Astro.props;
+const { Content } = await obra.render();
+const data = obra.data;
+
+// --- 1. LÓGICA DE LA ETIQUETA (Faltaba esto) ---
+const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
+    ? data.categoria_manual 
+    : data.categoria;
+
+// --- 2. FUNCIÓN PARA OBTENER SOLO EL ID DEL VIDEO ---
+function getYouTubeID(url) {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
+const videoID = getYouTubeID(data.video);
+
+// --- 3. FUNCIÓN FECHAS (Catalán) ---
+function formatearFecha(fechaStr) {
+    if (!fechaStr) return "";
+    const fecha = new Date(fechaStr);
+    const diaSemana = fecha.toLocaleDateString('ca-ES', { weekday: 'long' });
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    return `${diaSemana} ${dia}/${mes}`.toUpperCase();
+}
+---
+
+<Layout title={data.titulo}>
+    
+    <!-- VIDEO DE FONDO -->
+    {videoID && (
+        <div id="video-wrapper">
+            <div id="video-dimmer">
+                <span class="hint-text">Click per activar so 🔊</span>
+            </div>
+            <div id="youtube-player" data-id={videoID}></div>
+        </div>
+    )}
+
+    <!-- CONTENIDO FLOTANTE -->
+    <div class="contenedor-principal contenido-flotante">
+
+        <header>
+            <!-- AQUI MOSTRAMOS LA ETIQUETA (Solo si existe) -->
+            {tipoShow && <span class="etiqueta-tipo gigante">{tipoShow}</span>}
+    
+            <h1 class="obra-titulo">{data.titulo}</h1>
+            <p class="obra-compania">
+                <a href={data.web_compania || '#'} target="_blank">{data.compania}</a>
+            </p>
+        </header>
+
+        <div class="col-der">
+            <div class="caja-tickets">
+                <ul style="padding: 0; margin-bottom: 0px;">
+                    {data.pases.map(pase => (
+                        <li class="pase-item">
+                           {formatearFecha(pase.fecha)} - {pase.hora}
+                        </li>
+                    ))}
+                </ul>
+                {data.entradas_url && (
+                    <a href={data.entradas_url} target="_blank" class="btn-entradas">COMPRAR ENTRADAS</a>
+                )}
+            </div>
+        </div> 
+
+        <!-- ESPACIO TRANSPARENTE -->
+        <div class="espacio-video"></div>
+
+        <div class="col-izq bg-blanco">
+            <div class="obra-sinopsis">
+                <Content />
+            </div>
+
+            <div class="galeria-grid">
+                {data.fotos.map(foto => (
+                    <img src={foto} alt={`Foto de ${data.titulo}`} class="galeria-img"/>
+                ))}
+            </div>
+        </div>
+            
+    </div>
+    <div style="height: 50px;"></div>
+
+</Layout>
+
+<!-- ESTILOS -->
+<style>
+    /* 1. CONTENEDOR DEL VIDEO */
+    #video-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    /* 2. EL IFRAME DE YOUTUBE */
+    :global(iframe#youtube-player) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw; 
+        height: 56.25vw;
+        min-height: 100vh;
+        min-width: 177.77vh;
+        max-width: none !important;
+        pointer-events: none;
+    }
+
+    /* 3. CAPA OSCURA (DIMMER) */
+    #video-dimmer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 2;
+        cursor: pointer;
+        transition: background-color 1s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hint-text {
+        color: white;
+        border: 1px solid rgba(255,255,255,0.5);
+        background: rgba(0,0,0,0.3);
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        backdrop-filter: blur(5px);
+    }
+
+    :global(.video-activo #video-dimmer) {
+        background-color: rgba(0,0,0,0); 
+        cursor: pointer; 
+    }
+    
+    :global(.video-activo .hint-text) { 
+        opacity: 0; 
+        transition: opacity 0.5s; 
+    }
+
+    /* 4. CONTENIDO FLOTANTE */
+    .contenedor-principal {
+        position: relative;
+        z-index: 10;
+        max-width: 100vw; 
+        padding: 0 6%;
+        pointer-events: none; 
+    }
+
+    .espacio-video {
+        height: 55vh; 
+        width: 100%;
+    }
+
+    header, .col-der, .col-izq, .btn-volver {
+        pointer-events: auto;
+    }
+
+    .bg-blanco {
+        background-color: rgba(0, 0, 0, 0.85); 
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        margin-top: 20px;
+        color: white;
+    }
+
+    .obra-titulo {
+        text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        color: white;
+        mix-blend-mode: difference;
+    }
+</style>
+
+<!-- SCRIPT -->
+<script>
+    var player;
+    
+    const wrapper = document.getElementById('video-wrapper');
+    const dimmer = document.getElementById('video-dimmer');
+    const playerDiv = document.getElementById('youtube-player');
+    const videoId = playerDiv ? playerDiv.getAttribute('data-id') : null;
+
+    var tag = document.createElement('script');
+    // CORREGIDO: Faltaba la URL aquí abajo
+    tag.src = "https://www.youtube.com/iframe_api"; 
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = function() {
+        if (!videoId) return;
+
+        player = new YT.Player('youtube-player', {
+            videoId: videoId,
+            playerVars: {
+                'autoplay': 1, 'controls': 0, 'disablekb': 1, 'fs': 0,
+                'mute': 1, 'loop': 1, 'playlist': videoId,
+                'playsinline': 1, 'rel': 0, 'showinfo': 0, 'modestbranding': 1
+            },
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    };
+
+    function onPlayerReady(event) {
+        event.target.playVideo();
+        console.log("Video listo.");
+
+        if (dimmer) {
+            dimmer.addEventListener('click', toggleSonido);
+        }
+    }
+
+    function toggleSonido() {
+        const estaActivo = wrapper.classList.contains('video-activo');
+
+        if (estaActivo) {
+            console.log("Apagando sonido...");
+            wrapper.classList.remove('video-activo');
+            if(player) player.mute();
+        } else {
+            console.log("Encendiendo sonido...");
+            wrapper.classList.add('video-activo');
+            if(player) {
+                player.unMute();
+                player.setVolume(100);
+            }
+        }
+    }
+</script>

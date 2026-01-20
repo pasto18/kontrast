@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="EDICIONS ANTERIORS">
+    <div class="contenedor-principal">
+        <iframe 
+            class="video-item"
+            src="https://www.youtube.com/embed/Puw2GJrfi4M?" 
+            title="Kontrast #5" 
+            allowfullscreen>
+        </iframe>
+
+        <iframe 
+            class="video-item"
+            src="https://www.youtube.com/embed/B_nUIUVwKh4" 
+            title="Kontrast #5" 
+            allowfullscreen>
+        </iframe>
+
+        <iframe 
+            class="video-item"
+            src="https://www.youtube.com/embed/hzF_HSrVUfA" 
+            title="Kontrast #5" 
+            allowfullscreen>
+        </iframe>
+
+        <iframe 
+            class="video-item"
+            src="https://www.youtube.com/embed/Puw2GJrfi4M?" 
+            title="Kontrast #5" 
+            allowfullscreen>
+        </iframe>
+
+
+    </div>
+
+    <style>
+    /* CLASE MÁGICA PARA VIDEOS RESPONSIVE */
+    .video-item {
+        width: 100%;             /* Ocupa todo el ancho disponible */
+        aspect-ratio: 16 / 9;    /* Calcula la altura automática basándose en el ancho */
+        border: none;            /* Quita bordes feos */
+        border-radius: 16px;     /* Bordes redondeados acorde a tu diseño */
+        margin-bottom: 40px;     /* Separación entre videos */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra elegante */
+        background-color: black; /* Fondo negro mientras carga */
+    }
+</style>
+</Layout>
