@@ -2,14 +2,13 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 import mdx from '@astrojs/mdx';
-import vercel from '@astrojs/vercel'; // <--- 1. Importamos el adaptador
+import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
 export default defineConfig({
-  // 2. Cambiamos a 'hybrid' (Híbrido: Web estática + Panel de admin dinámico)
-  output: 'hybrid', 
+  // CORRECCIÓN: Astro 5 pide 'static' (o simplemente borrar la línea, ya que es el default)
+  // Aunque pongamos 'static', el adaptador de Vercel permitirá que Keystatic funcione.
+  output: 'static', 
   
-  // 3. Añadimos el adaptador de Vercel
   adapter: vercel(),
 
   integrations: [
