@@ -57,12 +57,13 @@ function formatearFecha(fechaStr) {
 
         <header>
             <!-- AQUI MOSTRAMOS LA ETIQUETA (Solo si existe) -->
-            {tipoShow && <span class="etiqueta-tipo gigante">{tipoShow}</span>}
     
             <h1 class="obra-titulo">{data.titulo}</h1>
+            <div style="display: flex; flex:row; height: fit-content; align-items:center; gap: 15px; margin-top: 10px;">
             <p class="obra-compania">
                 <a href={data.web_compania || '#'} target="_blank">{data.compania}</a>
-            </p>
+            </p>            {tipoShow && <span class="etiqueta-tipo gigante">{tipoShow}</span>}
+            </div>
         </header>
 
         <div class="col-der">
