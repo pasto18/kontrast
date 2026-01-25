@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+
+const obras = await getCollection('obras');
+
+function formatearFecha(fechaStr) {
+    if (!fechaStr) return "";
+    const fecha = new Date(fechaStr);
+    const diaSemana = fecha.toLocaleDateString('ca-ES', { weekday: 'long' });
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    return `${diaSemana} ${dia}/${mes}`.toUpperCase();
+}
+
+// --- NUEVA LÓGICA DE AGRUPACIÓN ---
+const obrasPorDia = {};
+
+obras.forEach(obra => {
+    // 1. Recorremos TODOS los pases de la obra, no solo el primero
+    obra.data.pases.forEach(pase => {
+        const fechaKey = pase.fecha;
+        const horaKey = pase.hora;
+
+        if (!obrasPorDia[fechaKey]) {
+            obrasPorDia[fechaKey] = [];
+        }
+
+        // 2. Metemos un objeto que combina los datos de la obra + LA HORA ESPECÍFICA de ese pase
+        obrasPorDia[fechaKey].push({
+            originalData: obra.data, // Datos generales (título, foto...)
+            slug: obra.slug,
+            horaEspecifica: horaKey  // La hora de ESTE pase concreto
+        });
+    });
+});
+
+// 3. Ordenamos las fechas (días)
+const fechasOrdenadas = Object.keys(obrasPorDia).sort();
+
+// 4. Ordenamos las obras DENTRO de cada día por hora
+fechasOrdenadas.forEach(fecha => {
+    obrasPorDia[fecha].sort((a, b) => {
+        // Convertimos "20:00" a 2000 para comparar números
+        const horaA = parseInt(a.horaEspecifica.replace(':', ''));
+        const horaB = parseInt(b.horaEspecifica.replace(':', ''));
+        return horaA - horaB;
+    });
+});
+---
+
+<!-- CONTENEDOR PRINCIPAL -->
+<div class="programacion-container">
+    
+    <div class="header-prog">
+        <h1 class="titulo-festival">Programació 2026</h1>
+        <small>DESCARREGA TOTA LA PROGRAMACIÓ</small>
+    </div>
+
+    <!-- BUCLE DE DÍAS -->
+    {fechasOrdenadas.map((fecha) => (
+        
+        <div class="bloque-dia">
+            <div class="separador-fecha">
+                <h2>{formatearFecha(fecha)}</h2>
+                <div class="linea"></div>
+            </div>
+
+            <div class="fila-obras">
+                {obrasPorDia[fecha].map((item) => {
+                    // OJO: Ahora accedemos a item.originalData
+                    const data = item.originalData;
+                    
+                    const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
+                        ? data.categoria_manual 
+                        : data.categoria;
+
+                    return (
+                        <a href={`/obras/${item.slug}`} class="card-link">
+                            <article class="card-obra">
+                                
+                                <div class="card-img-container">
+                                    <img src={data.fotos[0]} alt={data.titulo} class="card-img"/>
+                                </div>
+                                
+                                <div class="card-content">
+                                    
+                                    <!-- CABECERA (Etiqueta + Hora) -->
+                                             {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
+                                        <!-- AQUI USAMOS LA HORA ESPECÍFICA ORDENADA -->
+                                      
+
+                                    <!-- INFO CENTRAL -->
+                                    <div style="margin-top: auto; margin-bottom: auto; text-align: center; width: 100%;">
+                                        <h2 class="card-titulo">{data.titulo}</h2>
+                                        <p class="card-compania">{data.compania}</p>
+                                    </div>
+
+                                      <span class="card-fecha">
+                                           {item.horaEspecifica}h
+                                        </span>
+
+                                </div>
+                            </article>
+                        </a>
+                    );
+                })}
+            </div>
+        </div>
+    ))}
+
+</div>
+

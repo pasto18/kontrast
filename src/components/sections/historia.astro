@@ -1,0 +1,483 @@
+---
+// Generamos una lista falsa de compañías para no repetir código
+const listaCompanias = [
+    "Compañía de Circo 'eia'", "Sacékripa", "My!Laika", "JÁNIKA company", 
+    "Francine Satu", "Esteros live project", "Lupa Maimone/Oltrenotte", 
+    "Cie. Kimera", "Sofia de la Zambra", "Cirque Pardi!", "Collectif Les Idoles",
+    "Blanco Teta", "Brik Tu-Tok", "Ivana Ray Singh", "Kimchi", "Wes Peden",
+    "Las Corpa & Humo y Polvo", "Cru Lab", "Cia. La Víspera", "NourKara.ir",
+    "EBC - 223", "Trobada Cirqueras i Discidències", "Intrepidus Squad",
+    "Copia - Coconauta", "Frà9il", "CORTEXXX (VJ)", "Cie. Circoncentrique",
+    "Fernanda Alemán", "Cabezadenego", "Gin Bali", "Fiesta en el vacío",
+    "Alta Gama", "Société protectrice de petites idées", "Kabaret Kontrast"
+];
+
+const ediciones = [
+    { 
+        year: "2025", titulo: "#5", color: "#FF3B30", 
+        cartel: "/img/k-5-cartel.jpg", 
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ", // ¡URL Corregida!
+        // AÑADIDAS MÁS FOTOS AQUÍ:
+        extras: ["/img/k5-1.jpg", "/img/k5-2.jpg", "/img/obras/foto3.jpg", "/img/obras/foto4.jpg", "/img/obras/foto1.jpg"],
+        companys: listaCompanias 
+    },
+    { 
+        year: "2024", titulo: "#4", color: "#FFCC00", 
+        cartel: "/img/k-4-cartel.jpg", 
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        extras: ["/img/obras/foto2.jpg", "/img/obras/foto3.jpg", "/img/obras/foto4.jpg"],
+        companys: listaCompanias
+    },
+    { 
+        year: "2023", titulo: "#3", color: "#007AFF", 
+        cartel: "/img/k-3-cartel.jpg", 
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        extras: ["/img/obras/foto2.jpg", "/img/obras/foto3.jpg", "/img/obras/foto1.jpg", "/img/obras/foto4.jpg"],
+        companys: listaCompanias
+    },
+    { 
+        year: "2022", titulo: "#2", color: "#FF9500", 
+        cartel: "/img/k-2-cartel.jpg", 
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        extras: ["/img/obras/foto2.jpg", "/img/obras/foto1.jpg"],
+        companys: listaCompanias
+    },
+    { 
+        year: "2021", titulo: "#1", color: "#FF9500", 
+        cartel: "/img/obras/foto1.jpg", 
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        extras: ["/img/obras/foto2.jpg", "/img/obras/foto3.jpg"],
+        companys: listaCompanias
+    },
+];
+---
+
+<div class="main-wrapper">
+    <div class="horizontal-container">
+        
+        <!-- PANEL 1: INTRO -->
+        <section class="panel intro">
+            <h1 class="parallax-fast">HISTÒRIA<br>DEL<br>FESTIVAL</h1>
+            <p>Scroll ↓</p>
+        </section>
+
+        <!-- PANELES DE EDICIONES -->
+        {ediciones.map((ed, i) => (
+            <section class="panel edicion">
+                
+                <!-- CAPA 0: AÑO -->
+                <div class="bg-year parallax-slow" style={`color: ${ed.color}15`}>
+                    {ed.year}
+                </div>
+
+                <!-- CAPA 1: FOTOS EXTRA (Bucle inteligente) -->
+                {ed.extras.map((img, idx) => (
+                    // Usamos (idx % 5) + 1 para rotar entre las clases scattered-1 a scattered-5
+                    <div class={`scattered-img scattered-${(idx % 5) + 1} parallax-scattered`}>
+                        <img src={img} alt="Foto extra" />
+                    </div>
+                ))}
+
+                <!-- CAPA 2: CONTENIDO MEDIA (Cartel y Video) -->
+                <div class="content-box">
+                    <div class="media-grid">
+                        <div class="img-box parallax-mid">
+                            <img src={ed.cartel} alt="Cartel" />
+                        </div>
+                        <div class="video-box parallax-mid-reverse">
+                            <iframe src={ed.video} frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CAPA 3: LISTA COMPAÑÍAS -->
+                <div class="companies-block parallax-companies">
+                    <h3 style={`color: ${ed.color}`}>LINE UP {ed.year}</h3>
+                    <p>
+                        {ed.companys && ed.companys.map((c, index) => (
+                            <>
+                                <span>{c}</span>
+                                {index < ed.companys.length - 1 && <span class="separator"> • </span>}
+                            </>
+                        ))}
+                    </p>
+                </div>
+
+                <!-- CAPA 4: TÍTULO GIGANTE -->
+                <div class="titulo-wrapper parallax-fast">
+                     <h2 style={`color: ${ed.color}; -webkit-text-stroke: 2px ${ed.color}; color: transparent;`}>
+                        {ed.titulo}
+                     </h2>
+                </div>
+
+            </section>
+        ))}
+
+        <!-- PANEL FINAL -->
+        <section class="panel final">
+            <h2>CONTINUARÀ...</h2>
+        </section>
+
+    </div>
+</div>
+
+<div class="normal-content">
+    <p>Vuelve al inicio para ver más.</p>
+</div>
+
+<style>
+/* ESTRUCTURA BASE */
+.main-wrapper {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.horizontal-container {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100%;
+    width: 500%; 
+}
+
+.panel {
+    width: 200vw; 
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #050505;
+    color: white;
+    overflow: hidden; 
+}
+
+/* INTRO */
+.intro h1 { font-size: 6rem; line-height: 0.9; font-weight: 900; letter-spacing: -2px; }
+
+/* AÑO VERTICAL */
+.bg-year {
+    position: absolute;
+    font-size: 20vw;
+    font-weight: 900;
+    z-index: 0;
+    top: 50%; 
+    left: -8%; 
+    transform: translateY(-50%) rotate(-90deg);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* CONTENEDOR MEDIA */
+.content-box { 
+    z-index: 10; 
+    text-align: center; 
+    position: relative;
+    width: 80vw;
+    left: -25vw; 
+}
+
+/* TÍTULO FLOTANTE */
+.titulo-wrapper {
+    position: absolute; 
+    top: 50%;           
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%); 
+    z-index: 9999 !important; 
+    pointer-events: none;     
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+}
+
+.titulo-wrapper h2 { 
+    font-size: 15rem; 
+    margin: 0; 
+    line-height: 1;
+    letter-spacing: -8px;
+    white-space: nowrap;
+    margin-left: -140vw; 
+}
+
+/* GRID MEDIA */
+.media-grid { 
+    display: flex; 
+    gap: 50px; 
+    align-items: center; 
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+.img-box { 
+    width: 65vw; height: 42vw; 
+    background: #333; 
+}
+.img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+.video-box { 
+    width: 80vw; height: 44.5vw; 
+    background: #000;
+    border: 2px solid #333;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+}
+.video-box iframe { width: 100%; height: 100%; }
+
+/* --- FOTOS EXTRA (COLLAGE) --- */
+.scattered-img {
+    position: absolute;
+    overflow: visible; 
+    filter: grayscale(50%);
+    transition: filter 0.3s;
+    cursor: zoom-in;
+}
+
+.scattered-img img { 
+    width: 100%;      
+    height: auto;     
+    display: block;   
+    object-fit: contain; 
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.scattered-img:hover { filter: grayscale(0%); }
+
+/* POSICIONES DEL COLLAGE (Añadidas 4 y 5) */
+.scattered-1 { 
+    top: 15%; 
+    left: 65%; 
+    width: 75vw; 
+    height: auto; 
+    z-index: 5; 
+}
+
+.scattered-2 { 
+    bottom: 0%; 
+    left: 30%; 
+    width: 30vw; 
+    height: auto; 
+    z-index: 1; 
+    opacity: 1; 
+}
+
+.scattered-3 { 
+    top: 5%; 
+    right: 5%; 
+    width: 25vw; 
+    height: auto; 
+    z-index: 8; 
+}
+
+.scattered-4 { 
+    bottom: 15%; 
+    right: 25%; 
+    width: 35vw; 
+    height: auto; 
+    z-index: 2; 
+}
+
+.scattered-5 { 
+    top: 40%; 
+    left: 10%; 
+    width: 20vw; 
+    height: auto; 
+    z-index: 6; 
+}
+
+/* CLASE ACTIVA (ZOOM) */
+.scattered-img.is-expanded, .img-box.is-expanded {
+    z-index: 5000 !important; 
+    filter: grayscale(0%);
+    cursor: zoom-out;
+}
+
+.scattered-img.is-expanded img, .img-box.is-expanded img {
+    transform: scale(1.5); 
+    box-shadow: 0 50px 100px rgba(0,0,0,0.5); 
+}
+
+/* BLOQUE DE COMPAÑÍAS */
+.companies-block {
+    position: absolute;
+    top: 25%;        
+    right: 15vw;     
+    width: 35vw;     
+    max-width: 600px; 
+    text-align: left;
+    z-index: 5;      
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+.companies-block h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.companies-block p {
+    font-size: 1.5rem;       
+    line-height: 1.5;      
+    font-weight: 400;
+    text-align: justify;   
+    width: 100%;           
+}
+
+.companies-block span {
+    white-space: normal;   
+    display: inline;       
+}
+
+.separator {
+    color: inherit;
+    opacity: 0.5;
+    margin: 0 5px;
+}
+
+.normal-content { height: 50vh; background: white; color: black; display: flex; align-items: center; justify-content: center; }
+
+/* MÓVIL */
+@media (max-width: 768px) {
+    .titulo-wrapper h2 { font-size: 4rem; margin-bottom: 20px; }
+    .media-grid { flex-direction: column; }
+    .img-box { width: 80vw; height: 100vw; }
+    .video-box { width: 90vw; height: 50vw; }
+    .bg-year { font-size: 40vw; transform: translate(-50%, -50%); top: 50%; left: 50%; rotate: 0deg; opacity: 0.2; }
+    .scattered-img { display: none; }
+    .companies-block { position: relative; width: 90%; right: auto; top: auto; margin: 40px auto; text-align: center; }
+    .companies-block p { text-align: center; font-size: 0.8rem; }
+}
+</style>
+
+<script>
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const container = document.querySelector(".horizontal-container");
+// @ts-ignore
+const panels = gsap.utils.toArray(".panel");
+
+// 1. EL TREN PRINCIPAL
+const scrollTween = gsap.to(panels, {
+    xPercent: -100 * (panels.length - 1),
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".main-wrapper",
+        pin: true,
+        scrub: 1,
+        end: "+=4000", 
+    }
+});
+
+// 2. EFECTOS PARALLAX
+panels.forEach((panel) => {
+    // @ts-ignore
+    const q = gsap.utils.selector(panel);
+
+    // A. TEXTO RÁPIDO
+    gsap.to(q(".parallax-fast"), {
+        x: -1100, 
+        ease: "none",
+        scrollTrigger: {
+            trigger: panel,
+            containerAnimation: scrollTween, 
+            start: "left right", 
+            end: "right left",   
+            scrub: true,
+        }
+    });
+
+    // B. FONDO AÑO
+    gsap.to(q(".parallax-slow"), {
+        x: 50, 
+        ease: "none",
+        scrollTrigger: {
+            trigger: panel,
+            containerAnimation: scrollTween,
+            start: "left right",
+            end: "right left",
+            scrub: true,
+        }
+    });
+
+    // C. CARTEL PRINCIPAL
+    gsap.fromTo(q(".parallax-mid"), 
+        { xPercent: -90, yPercent: 12 }, 
+        { xPercent: -450, yPercent: 12, ease: "none",
+            scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left right", end: "right left", scrub: true }
+        }
+    );
+    
+    // D. VIDEO
+    gsap.fromTo(q(".parallax-mid-reverse"), 
+        { x: -300, y: 20 }, 
+        { x: -300, y: 20, ease: "none",
+            scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left right", end: "right left", scrub: true }
+        }
+    );
+
+    // E. FOTOS EXTRA (SCATTERED)
+    const scattered = q(".parallax-scattered");
+    if(scattered.length > 0) {
+        gsap.fromTo(scattered, 
+            { 
+                x: (i) => {
+                    // Posiciones iniciales personalizadas para dar variedad
+                    if (i === 1) return 1300; 
+                    if (i === 3) return 800;
+                    return (i + 1) * 1200;
+                },
+            }, 
+            { 
+                x: (i) => (i + 5) * -200, 
+                y: 0, 
+                ease: "none",
+                scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: scrollTween,
+                    start: "left right",
+                    end: "right left",
+                    scrub: true,
+                }
+            }
+        );
+    }
+
+    // F. LISTA DE COMPAÑÍAS
+    gsap.fromTo(q(".parallax-companies"), 
+        { x: 300, opacity: 0 }, 
+        { x: 50, opacity: 1, ease: "none",
+            scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left center", end: "right left", scrub: true }
+        }
+    );
+});
+
+// --- LÓGICA DE ZOOM ---
+const allImages = document.querySelectorAll('.scattered-img, .img-box');
+
+allImages.forEach(box => {
+    box.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = box.classList.contains('is-expanded');
+        allImages.forEach(el => el.classList.remove('is-expanded'));
+        if (!isActive) {
+            box.classList.add('is-expanded');
+        }
+    });
+});
+
+window.addEventListener('click', () => {
+    allImages.forEach(el => el.classList.remove('is-expanded'));
+});
+</script>

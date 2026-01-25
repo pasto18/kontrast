@@ -65,9 +65,7 @@ const ediciones = [
                 <section class="panel edicion">
                     
                     <!-- CAPA 0: AÑO -->
-                    <div class="bg-year parallax-slow" style={`color: ${ed.color}15`}>
-                        {ed.year}
-                    </div>
+                    
 
                     <!-- CAPA 1: FOTOS EXTRA -->
                     {ed.extras.map((img, idx) => (
@@ -222,7 +220,7 @@ const ediciones = [
     .img-box { 
         width: 65vw; height: 42vw; 
         background: #333; 
-        box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        box-shadow: 0 00px 0px rgba(0,0,0,0.8);
     }
     .img-box img { width: 100%; height: 100%; object-fit: cover; }
     
@@ -392,7 +390,7 @@ const ediciones = [
 
         // A. TEXTO RÁPIDO
         gsap.to(q(".parallax-fast"), {
-            x: -900, 
+            x: -1100, 
             ease: "none",
             scrollTrigger: {
                 trigger: panel,
@@ -420,7 +418,7 @@ const ediciones = [
         gsap.fromTo(q(".parallax-mid"), 
             { 
                 // AQUÍ DEFINIMOS EL INICIO (Lo que intentabas en CSS)
-                xPercent: -100,  // Equivale a tu translate X -30%
+                xPercent: -90,  // Equivale a tu translate X -30%
                 yPercent: 12,   // Equivale a tu translate Y 150% (Empieza muy abajo)
             }, 
             { 
@@ -440,7 +438,7 @@ const ediciones = [
         );
         
         // D. VIDEO
-        gsap.fromTo(q(".parallax-mid-reverse"), { x: 100, y: -150 }, { x: -100, y: 150, ease: "none",
+        gsap.fromTo(q(".parallax-mid-reverse"), { x: -300, y: 20 }, { x: -300, y: 20, ease: "none",
             scrollTrigger: { trigger: panel, containerAnimation: scrollTween, start: "left right", end: "right left", scrub: true }
         });
 
@@ -481,9 +479,9 @@ const ediciones = [
         // F. LISTA DE COMPAÑÍAS (NUEVO)
         // Se mueve un poco más lento que el tren para que parezca que "entra tarde"
         gsap.fromTo(q(".parallax-companies"), 
-            { x: 100, opacity: 0 }, 
+            { x: 300, opacity: 0 }, 
             { 
-                x: -250, opacity: 1, // Entra y se acomoda
+                x: 50, opacity: 1, // Entra y se acomoda
                 ease: "none",
                 scrollTrigger: {
                     trigger: panel,

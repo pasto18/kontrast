@@ -1,0 +1,29 @@
+---
+// Hero.astro
+// CAMBIA ESTO POR EL ID DE TU VIDEO
+const VIDEO_ID = "Puw2GJrfi4M"; 
+---
+
+
+<!-- SOLO EL CONTENIDO -->
+<div id="video-container" style="height: 100vh">
+    <div id="youtube-bg" data-id={VIDEO_ID}></div>
+    <div class="overlay-oscura"></div>
+</div>
+
+<div class="hero-content" style="align-items: center; text-align: center; display: flex; flex-direction: column; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <h1 class="hero-title">KONTRAST #6</h1>
+    <p class="hero-dates">Del 10 al 19 de Abril</p>
+    <br><br>
+    <a href="#programacion" class="btn-entradas btn-hero">VER PROGRAMACIÓN COMPLETA</a>
+</div>
+
+
+<style>
+html {
+    scroll-behavior: smooth;
+}
+</style>
+
+<script>
+</script>

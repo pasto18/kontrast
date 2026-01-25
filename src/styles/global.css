@@ -1,26 +1,26 @@
 /* =========================================
-   VARIABLES Y CONFIGURACIÓN BASE
+   1. VARIABLES Y CONFIGURACIÓN BASE
    ========================================= */
 :root {
-    /* Paleta de Colores Moderna */
+    /* Paleta */
     --c-negro: #000000;
     --c-blanco: #ffffff;
-    --c-rojo: #ff3b30;      /* Rojo vibrante para acciones */
-    --c-amarillo: #ffcc00;  /* Amarillo fuerte para destacados */
+    --c-rojo: #ff3b30;
+    --c-amarillo: #ffcc00;
     --c-gris-claro: #f2f2f7;
 
-    /* Tipografía */
+    /* Fuentes */
     --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-    /* Bordes y Sombras */
-    --borde-radio: 16px;    /* Bordes redondeados modernos */
+    /* UI */
+    --borde-radio: 0px;
     --sombra-suave: 0 8px 30px rgba(0,0,0,0.08);
     --sombra-hover: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--c-negro);
@@ -28,21 +28,20 @@ body {
     font-family: var(--font-main);
     margin: 0;
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased; /* Texto más nítido en Mac */
+    -webkit-font-smoothing: antialiased;
 }
 
 a { text-decoration: none; color: inherit; }
 
-/* Contenedor principal centrado */
+/* Contenedor principal */
 .contenedor-principal {
     max-width: 100vw;
     margin: 0 auto;
     padding: 0px 6%;
 }
 
-
 /* =========================================
-   HEADER / NAVEGACIÓN
+   2. HEADER / NAVEGACIÓN
    ========================================= */
 .site-header {
     background-color: var(--c-negro);
@@ -54,7 +53,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .nav-conteiner {
-    max-width:  1500px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
@@ -68,7 +67,6 @@ a { text-decoration: none; color: inherit; }
     font-size: 3.4rem;
     letter-spacing: -0.5px;
 }
-
 .logo-text:hover { color: var(--c-amarillo); }
 
 .menu-links {
@@ -85,56 +83,16 @@ a { text-decoration: none; color: inherit; }
     font-size: 1.2rem;
     transition: all 0.2s;
 }
-
 .menu-item a:hover {
     color: var(--c-amarillo);
     text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
 }
 
-/* Móvil */
-@media (max-width: 850px) {
-    .nav-conteiner { flex-direction: column; gap: 15px; }
-    .menu-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
-}
-
-/* ETIQUETA DE TIPO (CIRC, MUSICA...) */
-.etiqueta-tipo {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 4px 12px;
-    border: 0px solid var(--c-negro); /* Borde negro fino */
-    border-radius: 50px;
-    margin-bottom: auto;
-    background-color: white;
-    color: var(--c-negro);
-    width: fit-content;
-}
-
-/* Versión para la página individual (Más grande y blanca si hay video) */
-.etiqueta-tipo.gigante {
-    font-size: 2.2rem;
-    border-color: var(--c-blanco);
-    color: var(--c-blanco);
-    margin-bottom: 0px;
-    background-color: rgba(0, 0, 0, 0.5); /* Un poco de fondo por si el video es claro */
-    backdrop-filter: blur(5px);
-    border-color: #ffffff;
-    border-width: 2px;
-    margin-left: -100px;
-    z-index: -1;
-    padding: 15px;
-    padding-left: 120px;
-    padding-right: 30px;
-    margin-top: 21px;
-}
 /* =========================================
-   HOME Y CARTELERA (PROGRAMACIÓN)
+   3. HERO (PORTADA)
    ========================================= */
-.titulo-festival {
-    font-size: 3rem;
+.hero-title {
+    font-size: 5rem;
     font-weight: 900;
     letter-spacing: -1.5px;
     margin-bottom: 40px;
@@ -142,124 +100,238 @@ a { text-decoration: none; color: inherit; }
     color: var(--c-blanco);
 }
 
-.cartelera-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 10px;
-    padding-bottom: 60px;
+.hero-dates {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: var(--c-blanco);
 }
 
-/* Diseño de Tarjeta (Card) */
-.card-obra {
-    position: relative; /* Vital para que la imagen absoluta no se salga */
-    border-radius: var(--borde-radio);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #333; /* Un borde sutil si el fondo es negro */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    /* Para que sea cuadrada o rectangular fija si quieres, o déjalo automático */
-    min-height: 400px; 
-}
-
-.card-obra:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--sombra-hover);
-    border-color: var(--c-amarillo);
-}
-
-.card-img-container {
-    /* CAMBIO CLAVE: Ahora la imagen ocupa TODO el fondo */
-    position: absolute;
-    top: 0;
-    left: 0;
+/* =========================================
+   4. ESTRUCTURA PROGRAMACIÓN (POR DÍAS)
+   ========================================= */
+.programacion-container {
     width: 100%;
+    padding-bottom: 100px;
+}
+
+.header-prog {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+/* Separador visual de cada día */
+.separador-fecha {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.separador-fecha h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    white-space: nowrap;
+    margin: 0;
+    color: white;
+}
+
+.separador-fecha .linea {
+    width: 100%;
+    height: 2px;
+    background-color: var(--c-negro);
+    opacity: 0.2;
+}
+
+/* La fila flexible que contiene las obras */
+.fila-obras {
+    display: flex;
+    width: 100%;
+    height: 50vh; /* Altura fija */
+}
+
+/* =========================================
+   5. TARJETAS DE OBRAS (CARDS)
+   ========================================= */
+
+/* El enlace que envuelve la tarjeta */
+.card-link {
+    flex: 1; /* Crecen todas igual */
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    min-width: 0;
+    transition: flex 0.9s ease, opacity 0.4s ease, filter 0.4s ease; /* Transiciones suaves */
+}
+
+/* Efecto Acordeón al pasar el ratón */
+.card-link:hover {
+    flex: 1.3; /* La activa crece */
+}
+
+.card-obra {
     height: 100%;
-    z-index: 0; /* Se va al fondo */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Imagen de fondo */
+.card-img-container {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
 }
 
 .card-img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.card-obra:hover .card-img {
-    transform: scale(1.1);
+/* Zoom ligero en la imagen al hacer hover */
+.card-link:hover .card-img {
+    transform: scale(1.05);
 }
 
+/* Contenido (Texto) sobre la imagen */
 .card-content {
-    /* Configuración Flexbox */
-    display: flex;
-    flex-direction: column; /* Apilar uno debajo de otro */
-    height: 100%; /* Ocupa toda la altura de la tarjeta */
-    
-    /* DISTANCIA MÍNIMA ENTRE TODOS LOS ELEMENTOS */
-    gap: 15px; /* Separación estándar entre título, fecha, etc. */
-    
-    /* ESTILOS VISUALES (Los que ya tenías) */
     position: relative;
     z-index: 1;
-   /* backdrop-filter: blur(5px);*/
-    padding: 25px;
-    justify-content: flex-start; /* Todo empieza pegado arriba */
-    opacity: 80% ; /* Empieza invisible */
-    transition: opacity 0.3s ease;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px;
+    color: white;
+    opacity: 0%;
+    /* Degradado para legibilidad */
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 
-/* EL MUELLE MÁGICO: Esto empuja el botón al fondo */
-.card-content .btn-entradas {
-    margin-top: auto; /* "Auto" significa: empújame lo más abajo posible */
-    align-self: center; /* Opcional: Centrar el botón horizontalmente */
-    
-    /* Tus estilos de botón */
-    padding: 10px 20px;
-    font-size: 0.8rem;
-    width: fit-content;
+.card-content:hover {
+    opacity: 100%;
+    transition: opacity 0.5s ease;
 }
 
-/* Opcional: Que al pasar el ratón se vea más clara la info */
-.card-obra:hover .card-content {
-    background: rgba(0, 0, 0, 0.9);
-    opacity: 100% ;
-}
-
-.card-fecha {
-    display: inline-block;
-    background: var(--c-amarillo);
-    color: var(--c-negro);
-    font-size: 1rem;
-    font-weight: 800;
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-bottom: 0px; /* Reduje un poco el margen */
-    text-transform: uppercase;
-    width: fit-content;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombrita para destacar sobre imagen */
-}
-
+/* Tipografías dentro de la tarjeta */
 .card-titulo {
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1; /* Corregido: 0.2 cortaba las letras, 1 o 1.1 es mejor */
+    font-size: 2.9vw;
+    font-weight: 900;
+    line-height: 1;
+    color: white;
     margin-bottom: -20px;
-    letter-spacing: -0.5px;
-    color: var(--c-blanco);
-}
-
-.card-titulo:hover {
+    max-width: 18vw; 
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    rotate: 0deg;
+    padding-bottom: 5px;
 }
 
 .card-compania {
-    font-size: 1.2rem;
-    color: #ffffff; /* Negro puro para mejor contraste sobre el fondo transparente */
-    margin-bottom: 0px;
-    font-weight: 500;
+    font-size: 1.3rem;
+    opacity: 1;
+line-height: 1;
+    max-width: 18vw;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.card-fecha {
+    /* Estilo para la hora dentro de la tarjeta */
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
 /* =========================================
-   PÁGINA DE OBRA (DETALLE)
+   6. EFECTOS HOVER (FOCUS / BLUR / OSCURIDAD)
+   ========================================= */
+
+/* CASO A: Cuando el ratón entra en la FILA, 
+   TODAS las tarjetas se oscurecen y se desenfocan. */
+.fila-obras:hover .card-link {
+    filter: grayscale(100%) brightness(0.9) blur(10px);
+    opacity: 0.5;
+}
+
+/* CASO B: EXCEPCIÓN. La tarjeta que TIENE el ratón encima 
+   se "salva" del efecto anterior. */
+.fila-obras .card-link:hover {
+    filter: none !important; /* Quita blur y gris */
+    opacity: 1 !important;   /* Opacidad al máximo */
+    z-index: 10;
+}
+
+/* =========================================
+   7. ETIQUETAS Y UI
+   ========================================= */
+.etiqueta-tipo {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    background-color: white;
+    color: var(--c-negro);
+    width: fit-content;
+    margin-top: 10px;
+}
+
+/* Etiqueta gigante (página detalle) */
+.etiqueta-tipo.gigante {
+    font-size: 2.2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border: 2px solid #ffffff;
+    color: white;
+    margin-left: -100px;
+    z-index: -1;
+    padding: 15px 30px 15px 120px;
+    margin-top: 21px;
+}
+
+.btn-entradas {
+    display: block;
+    background-color: var(--c-rojo);
+    color: white !important;
+    text-align: center;
+    padding: 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 20px;
+    transition: all 0.2s;
+    box-shadow: 0 5px 15px rgba(255, 59, 48, 0.3);
+}
+.btn-entradas:hover {
+    background-color: var(--c-negro);
+    color: var(--c-amarillo) !important;
+    transform: translateY(-2px);
+}
+
+.btn-volver {
+    display: inline-block;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #888;
+}
+.btn-volver:hover { color: var(--c-negro); }
+
+/* =========================================
+   8. PÁGINA DETALLE DE OBRA
    ========================================= */
 .obra-titulo {
     font-size: 7.5rem;
@@ -278,15 +350,11 @@ a { text-decoration: none; color: inherit; }
     border: 2px solid var(--c-blanco);
     border-radius: 500px;
     width: fit-content;
-    padding:3px 20px;
+    padding: 3px 20px;
 }
-
-.obra-compania a {  }
-
 .obra-compania:hover {
     background-color: #000000;
-    color: var(--c-blanco); /* Cambia el color del texto "Una producción de..." */
-    border-color: #ffffff;
+    color: var(--c-blanco);
     border: 2px solid var(--c-blanco);
 }
 
@@ -296,87 +364,12 @@ a { text-decoration: none; color: inherit; }
     gap: 50px;
 }
 
-/* Video */
-.video-container {
-    border-radius: var(--borde-radio);
-    overflow: hidden;
-    box-shadow: var(--sombra-suave);
-    aspect-ratio: 16/9;
-    background: black;
-    margin-bottom: 30px;
-}
-.video-container iframe { width: 100%; height: 100%; }
-
-/* Sinopsis */
 .obra-sinopsis {
     font-size: 1.5rem;
-    line-height: 1.2 ;
+    line-height: 1.2;
     color: rgb(255, 255, 255);
 }
 
-/* Caja de Tickets (Lateral) */
-.caja-tickets {
-   /* background-color: var(--c-gris-claro); /* Fondo gris suave */
-    padding: 0px;
-    border-radius: var(--borde-radio);
-    position: sticky;
-    top: 100px; /* Para que baje un poco más que el header */
-    border: 2px solid transparent;
-}
-
-.caja-tickets:hover {
-}
-
-.pases-titulo {
-    display: block;
-    font-weight: 800;
-    font-size: .9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    color: var(--c-negro);
-}
-
-.pase-item {
-    list-style: none;
-    padding: 0px 0;
-    font-size: 2rem;
-    color: var(--c-blanco);
-}
-
-/* BOTONES */
-.btn-entradas {
-    display: block;
-    background-color: var(--c-rojo);
-    color: white !important;
-    text-align: center;
-    padding: 16px;
-    border-radius: 50px; /* Botón tipo píldora */
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 20px;
-    transition: all 0.2s;
-    box-shadow: 0 5px 15px rgba(255, 59, 48, 0.3);
-}
-
-.btn-entradas:hover {
-    background-color: var(--c-negro);
-    color: var(--c-amarillo) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.btn-volver {
-    display: inline-block;
-    margin-bottom: 30px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #888;
-}
-.btn-volver:hover { color: var(--c-negro); }
-
-/* Galería */
 .galeria-titulo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -399,63 +392,60 @@ a { text-decoration: none; color: inherit; }
     border-radius: 12px;
     transition: transform 0.3s;
 }
-
 .galeria-img:hover { transform: scale(1.02); }
 
-/* Responsive General */
-@media (max-width: 768px) {
-    .grid-layout { grid-template-columns: 1fr; }
-    .obra-titulo { font-size: 2.5rem; line-height: 1; }
-    .caja-tickets { margin-top: 30px; position: static; }
-}
-/* --- BARRA LATERAL REDES (Floating Sidebar) --- */
+/* =========================================
+   9. SIDEBAR REDES
+   ========================================= */
 .social-sidebar {
-    position: fixed; /* Se queda fijo en la pantalla */
-    bottom: 40px;    /* Distancia desde abajo */
-    left: 40px;      /* Distancia desde la izquierda */
+    position: fixed;
+    bottom: 40px;
+    left: 40px;
     display: flex;
-    flex-direction: column; /* Uno encima de otro */
-    gap: 20px;       /* Espacio entre iconos */
-    z-index: 9999;   /* Siempre por encima de todo (incluso del video) */
+    flex-direction: column;
+    gap: 20px;
+    z-index: 9999;
     align-items: center;
-    
-    /* TRUCO PRO: Inversión de color automática */
-    /* Esto hace que se vea blanco sobre fondo negro y negro sobre fondo blanco */
-    mix-blend-mode: difference; 
-    color: white; /* Color base para la diferencia */
+    mix-blend-mode: difference;
+    color: white;
 }
 
 .social-icon {
     width: 30px;
     height: 30px;
     transition: transform 0.2s ease;
-    /* El color lo hereda del padre para que funcione el mix-blend-mode */
-    color: inherit; 
+    color: inherit;
 }
+.social-icon:hover { transform: scale(1.2); }
+.social-icon svg { width: 100%; height: 100%; }
 
-.social-icon:hover {
-    transform: scale(1.2); /* Efecto zoom al pasar el ratón */
-    /* Si quieres que al hacer hover se ponga amarillo/rojo, quita el mix-blend-mode */
-}
-
-.social-icon svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* Línea decorativa vertical (opcional, estilo Swiss) */
 .linea-decorativa {
     width: 2px;
     height: 60px;
-    background-color: white; /* Se invertirá a negro sobre fondo blanco */
+    background-color: white;
     margin-bottom: 10px;
 }
 
-/* AJUSTE PARA MÓVILES */
+/* =========================================
+   10. RESPONSIVE (MÓVILES)
+   ========================================= */
+@media (max-width: 850px) {
+    .nav-conteiner { flex-direction: column; gap: 15px; }
+    .menu-links { gap: 15px; flex-wrap: wrap; justify-content: center; }
+}
+
 @media (max-width: 768px) {
-    .social-sidebar {
-        left: 20px;
-        bottom: 20px;
-    }
-    .linea-decorativa { display: none; } /* En móvil quitamos la línea */
+    /* Programación en columna */
+    .fila-obras { flex-direction: column; height: auto; }
+    .card-link { width: 100%; height: 60vh; }
+    .card-titulo { font-size: 2rem; max-width: 100%; /* En móvil vuelve a ser libre */
+ }
+    
+    /* Detalle Obra */
+    .grid-layout { grid-template-columns: 1fr; }
+    .obra-titulo { font-size: 2.5rem; line-height: 1; }
+    
+    /* Redes */
+    .social-sidebar { left: 20px; bottom: 20px; }
+    .linea-decorativa { display: none; }
 }
