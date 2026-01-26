@@ -1,77 +1,91 @@
 ---
 // Hero.astro
-// CAMBIA ESTO POR EL ID DE TU VIDEO
-// He puesto uno de naturaleza seguro. Si este funciona, prueba luego con el tuyo.
+// ID del video (Costa Rica 4K para probar, luego pon el tuyo)
 const VIDEO_ID = "iNJdPyoqt8U"; 
+
+// Construimos la URL con todos los trucos de seguridad:
+// autoplay=1 & mute=1: Obligatorio para que arranque solo.
+// loop=1 & playlist=ID: Para que se repita infinitamente.
+// controls=0: Sin botones.
+// playsinline=1: Para que funcione en iPhone sin pantalla completa.
+const VIDEO_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&showinfo=0&playsinline=1&rel=0&disablekb=1&iv_load_policy=3&modestbranding=1`;
 ---
 
 <div class="hero-section">
     
-    <!-- FONDO DE VIDEO -->
+    <!-- FONDO DE VIDEO (IFRAME DIRECTO) -->
     <div id="video-container">
-        <!-- El script inyectará el iframe aquí -->
-        <div id="youtube-bg" data-id={VIDEO_ID}></div>
-        <!-- Capa oscura para que el texto resalte -->
+        <iframe 
+            id="youtube-bg"
+            src={VIDEO_URL}
+            title="Hero Video"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+        ></iframe>
+        
+        <!-- Capa oscura -->
         <div class="overlay-oscura"></div>
     </div>
 
     <!-- CONTENIDO (TEXTO) -->
     <div class="hero-content">
+        <!-- Logo (Asegúrate de que la imagen existe en /public/img/) -->
         <img src="/img/kontrast-6-caio.webp" alt="Logo Festival KONTRAST" class="hero-logo" />
+        
         <p class="hero-dates">Del 10 al 19 de Abril</p>
         
+        <div style="height: 30px;"></div>
         
+        <a href="#programacion" class="btn-entradas btn-hero">VER PROGRAMACIÓN COMPLETA</a>
     </div>
 
 </div>
 
 <style>
-    /* El contenedor principal de la sección */
+    /* El contenedor principal */
     .hero-section {
         position: relative;
-        height: 80vh;
+        height: 100vh; /* Ocupa toda la pantalla */
         width: 100%;
         overflow: hidden;
+        background-color: black; /* Fondo negro mientras carga */
     }
 
-    /* El contenedor del video (se va al fondo) */
+    /* El contenedor del video */
     #video-container {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         z-index: 0;
-        pointer-events: none; /* Nadie puede tocar el video */
-        background: black;
+        pointer-events: none; /* Nadie puede tocar el video (pausarlo, etc) */
     }
 
-    /* FORZAR AL IFRAME A CUBRIR TODA LA PANTALLA */
-    /* Usamos :global porque el iframe lo crea Youtube dinámicamente */
-    :global(#youtube-bg iframe) {
+    /* ESTILOS DEL IFRAME PARA HACER "COVER" (Sin bordes negros) */
+    iframe#youtube-bg {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        
+        /* Matemáticas para 16:9 que cubra siempre */
         width: 100vw; 
-        height: 56.25vw; /* 16:9 ratio */
-        
-        /* Esto asegura que cubra siempre, vertical u horizontal */
+        height: 56.25vw; /* 100vw * 9 / 16 */
         min-height: 100vh;
-        min-width: 177.77vh;
+        min-width: 177.77vh; /* 100vh * 16 / 9 */
         
-        opacity: 0.8; /* Un poco de transparencia si quieres */
+        opacity: 0.8;
     }
 
     /* Capa oscura */
     .overlay-oscura {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.4); /* 40% de negro */
+        background: rgba(0,0,0,0.4); 
         z-index: 1;
     }
 
-    /* Contenido Centrado */
+    /* Contenido */
     .hero-content {
         position: relative;
         z-index: 10;
@@ -84,7 +98,14 @@ const VIDEO_ID = "iNJdPyoqt8U";
         color: white;
     }
 
-    /* Estilos extra para el botón del hero si los necesitas aquí */
+    /* Logo */
+    .hero-logo {
+        width: 80%;
+        max-width: 600px; /* Ajusta esto según tu logo */
+        height: auto;
+        margin-bottom: 20px;
+    }
+
     .btn-hero {
         padding: 20px 40px;
         font-size: 1.2rem;
@@ -97,47 +118,3 @@ const VIDEO_ID = "iNJdPyoqt8U";
     }
     .btn-hero:hover { transform: scale(1.05); background: white; color: black; }
 </style>
-
-<script>
-    // 1. Buscamos el elemento y el ID
-    const playerDiv = document.getElementById('youtube-bg');
-    const videoId = playerDiv ? playerDiv.getAttribute('data-id') : null;
-
-    if (videoId) {
-        // 2. Cargamos la API de Youtube (CORREGIDO)
-        if (!window.YT) {
-            var tag = document.createElement('script');
-            // AQUÍ FALTABA LA URL:
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-
-        // 3. Función que Youtube llama cuando la API está lista
-        window.onYouTubeIframeAPIReady = function() {
-            new window.YT.Player('youtube-bg', {
-                videoId: videoId,
-                playerVars: {
-                    'autoplay': 1,
-                    'controls': 0,
-                    'disablekb': 1,
-                    'fs': 0,
-                    'mute': 1,      // CRÍTICO: Sin mute no hay autoplay
-                    'loop': 1,
-                    'playlist': videoId, // Necesario para el bucle
-                    'playsinline': 1,
-                    'rel': 0,
-                    'showinfo': 0,
-                    'modestbranding': 1,
-                    'origin': window.location.origin // Ayuda con permisos de seguridad
-                },
-                events: {
-                    'onReady': function(e) {
-                        e.target.mute(); // Aseguramos el silencio otra vez
-                        e.target.playVideo();
-                    }
-                }
-            });
-        };
-    }
-</script>
