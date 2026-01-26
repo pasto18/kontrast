@@ -2,7 +2,7 @@
 // Hero.astro
 // CAMBIA ESTO POR EL ID DE TU VIDEO
 // He puesto uno de naturaleza seguro. Si este funciona, prueba luego con el tuyo.
-const VIDEO_ID = "pSBs0Y_oLeE"; 
+const VIDEO_ID = "iNJdPyoqt8U"; 
 ---
 
 <div class="hero-section">
@@ -99,42 +99,42 @@ const VIDEO_ID = "pSBs0Y_oLeE";
 </style>
 
 <script>
-    // --- ESTO ES LO QUE FALTABA ---
-    
     // 1. Buscamos el elemento y el ID
     const playerDiv = document.getElementById('youtube-bg');
     const videoId = playerDiv ? playerDiv.getAttribute('data-id') : null;
 
     if (videoId) {
-        // 2. Cargamos la API de Youtube si no está cargada ya
-        if (!window['YT']) {
+        // 2. Cargamos la API de Youtube (CORREGIDO)
+        if (!window.YT) {
             var tag = document.createElement('script');
+            // AQUÍ FALTABA LA URL:
             tag.src = "https://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         }
 
-        // 3. Función que Youtube llama cuando está listo
+        // 3. Función que Youtube llama cuando la API está lista
         window.onYouTubeIframeAPIReady = function() {
-            new window['YT'].Player('youtube-bg', {
+            new window.YT.Player('youtube-bg', {
                 videoId: videoId,
                 playerVars: {
                     'autoplay': 1,
                     'controls': 0,
                     'disablekb': 1,
                     'fs': 0,
-                    'mute': 1,      // ¡IMPORTANTE! Sin mute no hay autoplay
+                    'mute': 1,      // CRÍTICO: Sin mute no hay autoplay
                     'loop': 1,
-                    'playlist': videoId, // Necesario para el loop
+                    'playlist': videoId, // Necesario para el bucle
                     'playsinline': 1,
                     'rel': 0,
                     'showinfo': 0,
-                    'modestbranding': 1
+                    'modestbranding': 1,
+                    'origin': window.location.origin // Ayuda con permisos de seguridad
                 },
                 events: {
                     'onReady': function(e) {
+                        e.target.mute(); // Aseguramos el silencio otra vez
                         e.target.playVideo();
-                        e.target.mute(); // Aseguramos el silencio
                     }
                 }
             });
