@@ -1,29 +1,143 @@
 ---
 // Hero.astro
 // CAMBIA ESTO POR EL ID DE TU VIDEO
-const VIDEO_ID = "Puw2GJrfi4M"; 
+// He puesto uno de naturaleza seguro. Si este funciona, prueba luego con el tuyo.
+const VIDEO_ID = "pSBs0Y_oLeE"; 
 ---
 
+<div class="hero-section">
+    
+    <!-- FONDO DE VIDEO -->
+    <div id="video-container">
+        <!-- El script inyectará el iframe aquí -->
+        <div id="youtube-bg" data-id={VIDEO_ID}></div>
+        <!-- Capa oscura para que el texto resalte -->
+        <div class="overlay-oscura"></div>
+    </div>
 
-<!-- SOLO EL CONTENIDO -->
-<div id="video-container" style="height: 100vh">
-    <div id="youtube-bg" data-id={VIDEO_ID}></div>
-    <div class="overlay-oscura"></div>
+    <!-- CONTENIDO (TEXTO) -->
+    <div class="hero-content">
+        <img src="/img/kontrast-6-caio.webp" alt="Logo Festival KONTRAST" class="hero-logo" />
+        <p class="hero-dates">Del 10 al 19 de Abril</p>
+        
+        
+    </div>
+
 </div>
-
-<div class="hero-content" style="align-items: center; text-align: center; display: flex; flex-direction: column; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-    <h1 class="hero-title">KONTRAST #6</h1>
-    <p class="hero-dates">Del 10 al 19 de Abril</p>
-    <br><br>
-    <a href="#programacion" class="btn-entradas btn-hero">VER PROGRAMACIÓN COMPLETA</a>
-</div>
-
 
 <style>
-html {
-    scroll-behavior: smooth;
-}
+    /* El contenedor principal de la sección */
+    .hero-section {
+        position: relative;
+        height: 80vh;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* El contenedor del video (se va al fondo) */
+    #video-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none; /* Nadie puede tocar el video */
+        background: black;
+    }
+
+    /* FORZAR AL IFRAME A CUBRIR TODA LA PANTALLA */
+    /* Usamos :global porque el iframe lo crea Youtube dinámicamente */
+    :global(#youtube-bg iframe) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw; 
+        height: 56.25vw; /* 16:9 ratio */
+        
+        /* Esto asegura que cubra siempre, vertical u horizontal */
+        min-height: 100vh;
+        min-width: 177.77vh;
+        
+        opacity: 0.8; /* Un poco de transparencia si quieres */
+    }
+
+    /* Capa oscura */
+    .overlay-oscura {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4); /* 40% de negro */
+        z-index: 1;
+    }
+
+    /* Contenido Centrado */
+    .hero-content {
+        position: relative;
+        z-index: 10;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    /* Estilos extra para el botón del hero si los necesitas aquí */
+    .btn-hero {
+        padding: 20px 40px;
+        font-size: 1.2rem;
+        background-color: var(--c-rojo);
+        color: white;
+        border-radius: 50px;
+        font-weight: 800;
+        text-transform: uppercase;
+        transition: transform 0.2s;
+    }
+    .btn-hero:hover { transform: scale(1.05); background: white; color: black; }
 </style>
 
 <script>
+    // --- ESTO ES LO QUE FALTABA ---
+    
+    // 1. Buscamos el elemento y el ID
+    const playerDiv = document.getElementById('youtube-bg');
+    const videoId = playerDiv ? playerDiv.getAttribute('data-id') : null;
+
+    if (videoId) {
+        // 2. Cargamos la API de Youtube si no está cargada ya
+        if (!window['YT']) {
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // 3. Función que Youtube llama cuando está listo
+        window.onYouTubeIframeAPIReady = function() {
+            new window['YT'].Player('youtube-bg', {
+                videoId: videoId,
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'mute': 1,      // ¡IMPORTANTE! Sin mute no hay autoplay
+                    'loop': 1,
+                    'playlist': videoId, // Necesario para el loop
+                    'playsinline': 1,
+                    'rel': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1
+                },
+                events: {
+                    'onReady': function(e) {
+                        e.target.playVideo();
+                        e.target.mute(); // Aseguramos el silencio
+                    }
+                }
+            });
+        };
+    }
 </script>

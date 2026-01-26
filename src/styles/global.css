@@ -20,7 +20,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior:smooth; }
 
 body {
     background-color: var(--c-negro);
@@ -38,6 +38,39 @@ a { text-decoration: none; color: inherit; }
     max-width: 100vw;
     margin: 0 auto;
     padding: 0px 6%;
+}
+
+p  {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    text-align: center;
+}
+
+h2 { 
+    font-size: 12rem;
+    font-weight: 100;
+    letter-spacing: -1.5px;
+    font-style: italic;
+    text-align: left;
+    position: relative;
+    margin-bottom: -30px;
+    line-height: 8rem;
+    margin-bottom: 1rem;
+}
+h3 { 
+    font-size: 3.5rem;
+    font-weight: 100;
+    letter-spacing: -.5px;
+    text-align: left;
+    line-height: 2rem;
+}
+
+h4 { 
+    font-size: 3.5rem;
+    font-weight: 100;
+    letter-spacing: -.5px;
+    text-align: left;
+    line-height: 2.5rem;
 }
 
 /* =========================================
@@ -119,20 +152,20 @@ a { text-decoration: none; color: inherit; }
 
 .header-prog {
     text-align: center;
-    padding: 50px 20px;
+    padding: 0px 0px;
 }
 
 /* Separador visual de cada día */
 .separador-fecha {
-    padding: 20px 40px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 0px;
+    z-index: 999;
 }
 
 .separador-fecha h2 {
     font-size: 3rem;
-    font-weight: 900;
+    font-weight: 100;
     white-space: nowrap;
     margin: 0;
     color: white;
@@ -141,7 +174,7 @@ a { text-decoration: none; color: inherit; }
 .separador-fecha .linea {
     width: 100%;
     height: 2px;
-    background-color: var(--c-negro);
+    background-color: white;
     opacity: 0.2;
 }
 
@@ -150,6 +183,7 @@ a { text-decoration: none; color: inherit; }
     display: flex;
     width: 100%;
     height: 50vh; /* Altura fija */
+    
 }
 
 /* =========================================
@@ -164,6 +198,7 @@ a { text-decoration: none; color: inherit; }
     position: relative;
     min-width: 0;
     transition: flex 0.9s ease, opacity 0.4s ease, filter 0.4s ease; /* Transiciones suaves */
+    filter: grayscale(100%);
 }
 
 /* Efecto Acordeón al pasar el ratón */
@@ -210,7 +245,7 @@ a { text-decoration: none; color: inherit; }
     color: white;
     opacity: 0%;
     /* Degradado para legibilidad */
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
 }
 
 .card-content:hover {
@@ -258,7 +293,7 @@ line-height: 1;
 /* CASO A: Cuando el ratón entra en la FILA, 
    TODAS las tarjetas se oscurecen y se desenfocan. */
 .fila-obras:hover .card-link {
-    filter: grayscale(100%) brightness(0.9) blur(10px);
+    filter: grayscale(100%) brightness(0.9) blur(5px);
     opacity: 0.5;
 }
 
@@ -329,6 +364,10 @@ line-height: 1;
     color: #888;
 }
 .btn-volver:hover { color: var(--c-negro); }
+
+hr.solid {
+  border-top: 3px solid #bbb;
+}
 
 /* =========================================
    8. PÁGINA DETALLE DE OBRA
@@ -424,6 +463,63 @@ line-height: 1;
     height: 60px;
     background-color: white;
     margin-bottom: 10px;
+}
+
+
+/* =========================================
+   . TICKETS
+   ========================================= */
+.tickets-container {
+  display: flex;
+  flex-flow: row;
+}
+
+.tickets-column {
+    width: 100%;
+    height: 15vh;
+}
+
+.preu {
+    font-weight: bold;
+    rotate: 10deg;
+    text-align: center;
+    font-size: 3.5rem;
+    /*
+    border: white 2px solid;
+    width: fit-content;
+    margin-left: auto;
+    margin-right:  auto;
+    border-radius: 100px;
+    padding: 15px;
+    min-width: 120px;
+    */
+}
+
+.btn-entrades {
+    /* Estilos base */
+    font-size: 5rem; 
+    border: 2px solid #ffffff; 
+    padding: 10px 30px; 
+    border-radius: 60px;
+    color: #ffffff;
+    background-color: transparent; /* Fondo transparente inicial */
+    
+    /* Para que se comporte como botón */
+    cursor: pointer;
+    width: fit-content; /* Se ajusta al texto */
+    margin: 0 auto; /* Centrado si es bloque */
+    
+    /* La magia de la suavidad */
+    transition: all 0.1 s ease;
+
+    margin-top:80px;
+}
+
+/* EL EFECTO DE INVERSIÓN AL PASAR EL MOUSE */
+.btn-entrades:hover {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #000000;            /* Texto negro */
+    transform: scale(1);    /* Un pequeño zoom opcional para dar "punch" */
 }
 
 /* =========================================
