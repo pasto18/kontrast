@@ -1,21 +1,25 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  // --- CAMBIO IMPORTANTE: LÓGICA INTELIGENTE ---
+  // --- CONFIGURACIÓN DE GITHUB (Modo Escritura) ---
   storage: import.meta.env.PROD
     ? {
-        // En Vercel (Producción) usamos GitHub
         kind: 'github',
         repo: {
           owner: 'pasto18',      // <--- TU USUARIO DE GITHUB
-          name: 'festival-web',  // <--- EL NOMBRE DE TU REPO (Revísalo en la URL de GitHub)
+          name: 'kontrast',      // <--- EL NOMBRE DE TU REPO
         },
       }
     : {
-        // En tu PC (Desarrollo) usamos Local
         kind: 'local',
       },
-  // ---------------------------------------------
+
+  // ESTE BLOQUE ES EL NUEVO Y CRÍTICO: FUERZA EL PERMISO DE REPO
+  github: {
+      scope: 'repo', // Pide permiso completo de repositorio
+      // Opcional: client_id: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+  },
+  // ---------------------------------------------------
 
   collections: {
     obras: collection({
@@ -24,12 +28,9 @@ export default config({
       path: 'src/content/obras/*',
       format: { contentField: 'sinopsis' },
       
-      // ¡IMPORTANTE! Todo campo debe estar DENTRO de schema
       schema: {
-        
+        // ... (Tu esquema de campos aquí)
         titulo: fields.slug({ name: { label: 'Título de la Obra' } }),
-
-        // --- NUEVOS CAMPOS (Dentro del esquema) ---
         categoria: fields.select({
             label: 'Tipo de Espectáculo',
             options: [
@@ -40,19 +41,11 @@ export default config({
             ],
             defaultValue: 'CIRC'
         }),
-        
-        categoria_manual: fields.text({
-            label: 'Especificar tipo (Solo si elegiste "Otro" arriba)',
-        }),
-        // ------------------------------------------
-
-        compania: fields.text({ label: 'Compañía' }),
-        
-        // Quitamos la validación estricta de URL como acordamos
-        web_compania: fields.url({ label: 'Web de la Compañía', validation: { isRequired: false } }),
-        video: fields.url({ label: 'Link Video Youtube (Embed)', validation: { isRequired: false } }),
-        entradas_url: fields.url({ label: 'Link Entradas', validation: { isRequired: false } }),
-        
+        categoria_manual: fields.text({ label: 'Especificar tipo (Solo si elegiste "Otro" arriba)', }),
+        compania: fields.text({ label: 'Compañía' }).optional(),
+        web_compania: fields.url({ label: 'Web de la Compañía', validation: { isRequired: false } }).optional(),
+        video: fields.url({ label: 'Link Video Youtube (Embed)', validation: { isRequired: false } }).optional(),
+        entradas_url: fields.url({ label: 'Link Entradas', validation: { isRequired: false } }).optional(),
         fotos: fields.array(
             fields.image({
                 label: 'Foto',
@@ -61,7 +54,6 @@ export default config({
             }),
             { label: 'Galería de Fotos (Máx 4)', itemLabel: props => 'Foto' }
         ),
-        
         pases: fields.array(
             fields.object({
                 fecha: fields.date({ label: 'Fecha' }),
@@ -69,7 +61,6 @@ export default config({
             }),
             { label: 'Fechas y Horarios', itemLabel: props => `${props.fields.fecha.value} - ${props.fields.hora.value}` }
         ),
-        
         sinopsis: fields.mdx({
             label: 'Sinopsis',
         }),
