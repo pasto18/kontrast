@@ -51,16 +51,17 @@ fechasOrdenadas.forEach(fecha => {
 <!-- CONTENEDOR PRINCIPAL -->
 <div class="programacion-container">
     
-    <div class="header-prog">
-        <h2>PROGRAMACIÓ</h2>
-    </div>
+   <div class="header-prog">
+    <!-- Solo añadimos la clase -->
+    <h2 class="anim-left">PROGRAMACIÓ</h2>
+</div>
 
     <!-- BUCLE DE DÍAS -->
     {fechasOrdenadas.map((fecha) => (
         
         <div class="bloque-dia">
             <div class="separador-fecha">
-                <h2>{formatearFecha(fecha)}</h2>
+                <h2 class="anim-left">{formatearFecha(fecha)}</h2>
                 <div class="linea"></div>
             </div>
 
@@ -108,4 +109,6 @@ fechasOrdenadas.forEach(fecha => {
     ))}
 
 </div>
+
+
 

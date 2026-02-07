@@ -61,6 +61,18 @@ const { title } = Astro.props;
     </aside>
 
 </body>
+<!-- ... resto del layout ... -->
+
+<script>
+    // Importamos la función que acabamos de crear
+    import { initScrollAnimations } from '../scripts/animations.js';
+
+    // La ejecutamos cuando la página carga
+    initScrollAnimations();
+    
+    // (Opcional) Si en el futuro usas ViewTransitions de Astro, añade esto:
+    // document.addEventListener('astro:page-load', initScrollAnimations);
+</script>
 </html>
 </body>
 </html>

@@ -7,7 +7,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   // CORRECCIÓN: Astro 5 pide 'static' (o simplemente borrar la línea, ya que es el default)
   // Aunque pongamos 'static', el adaptador de Vercel permitirá que Keystatic funcione.
-  output: 'static', 
+  output: 'server', 
   
   adapter: vercel(),
 

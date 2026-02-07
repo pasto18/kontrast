@@ -522,6 +522,28 @@ hr.solid {
     transform: scale(1);    /* Un pequeño zoom opcional para dar "punch" */
 }
 
+
+
+/* =========================================
+     VIDEOS SCROLL
+   ========================================= */
+
+   .contenedor-video-magico {
+        width: 100%;
+        height: 100vh; /* O el tamaño que quieras */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .video-scroll {
+        width: 100%;
+        max-width: 100vw; /* Tamaño máximo */
+        /* Opcional: si quieres que cubra pantalla */
+        /* object-fit: cover; height: 100%; */
+    }
+
 /* =========================================
    10. RESPONSIVE (MÓVILES)
    ========================================= */

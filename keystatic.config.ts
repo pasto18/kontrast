@@ -1,9 +1,22 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  // --- CAMBIO IMPORTANTE: LÓGICA INTELIGENTE ---
+  storage: import.meta.env.PROD
+    ? {
+        // En Vercel (Producción) usamos GitHub
+        kind: 'github',
+        repo: {
+          owner: 'pasto18',      // <--- TU USUARIO DE GITHUB
+          name: 'festival-web',  // <--- EL NOMBRE DE TU REPO (Revísalo en la URL de GitHub)
+        },
+      }
+    : {
+        // En tu PC (Desarrollo) usamos Local
+        kind: 'local',
+      },
+  // ---------------------------------------------
+
   collections: {
     obras: collection({
       label: 'OBRAS',

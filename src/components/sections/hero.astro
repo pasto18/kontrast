@@ -1,83 +1,83 @@
 ---
 // Hero.astro
-// ID del video (Costa Rica 4K para probar, luego pon el tuyo)
-const VIDEO_ID = "iNJdPyoqt8U"; 
-
-// Construimos la URL con todos los trucos de seguridad:
-// autoplay=1 & mute=1: Obligatorio para que arranque solo.
-// loop=1 & playlist=ID: Para que se repita infinitamente.
-// controls=0: Sin botones.
-// playsinline=1: Para que funcione en iPhone sin pantalla completa.
-const VIDEO_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&showinfo=0&playsinline=1&rel=0&disablekb=1&iv_load_policy=3&modestbranding=1`;
 ---
 
 <div class="hero-section">
     
-    <!-- FONDO DE VIDEO (IFRAME DIRECTO) -->
+    <!-- FONDO DE VIDEO (NATIVO) -->
     <div id="video-container">
-        <iframe 
-            id="youtube-bg"
-            src={VIDEO_URL}
-            title="Hero Video"
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
-        ></iframe>
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            id="bg-video"
+            poster="/img/poster-video.jpg" 
+        >
+            <!-- Asegúrate de que la ruta coincide con tu archivo -->
+            <source src="/videos/hero.webm" type="video/mp4">
+            Tu navegador no soporta video HTML5.
+        </video>
         
         <!-- Capa oscura -->
         <div class="overlay-oscura"></div>
     </div>
 
-    <!-- CONTENIDO (TEXTO) -->
-    <div class="hero-content">
-        <!-- Logo (Asegúrate de que la imagen existe en /public/img/) -->
-        <img src="/img/kontrast-6-caio.webp" alt="Logo Festival KONTRAST" class="hero-logo" />
+
+
+
+
+
+    <div class="hero-content" style="margin-top:35px">
+        <img src="/img/kontrast-6-caio.webp" 
+        alt="Logo Festival KONTRAST" 
+        class="hero-logo"
+        style="scale:1.5;" />
         
-        <p class="hero-dates">Del 10 al 19 de Abril</p>
+        <img src="/img/disegno.webp" 
+        class="hero-logo"
+        style="scale:.9;" />
         
-        <div style="height: 30px;"></div>
-        
-        <a href="#programacion" class="btn-entradas btn-hero">VER PROGRAMACIÓN COMPLETA</a>
     </div>
 
 </div>
 
 <style>
-    /* El contenedor principal */
     .hero-section {
         position: relative;
-        height: 100vh; /* Ocupa toda la pantalla */
+        height: 100vh;
         width: 100%;
         overflow: hidden;
-        background-color: black; /* Fondo negro mientras carga */
+        background-color: black;
     }
 
-    /* El contenedor del video */
     #video-container {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: 0;
-        pointer-events: none; /* Nadie puede tocar el video (pausarlo, etc) */
     }
 
-    /* ESTILOS DEL IFRAME PARA HACER "COVER" (Sin bordes negros) */
-    iframe#youtube-bg {
+    /* ESTILOS DEL VIDEO NATIVO */
+    #bg-video {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         
-        /* Matemáticas para 16:9 que cubra siempre */
-        width: 100vw; 
-        height: 56.25vw; /* 100vw * 9 / 16 */
-        min-height: 100vh;
-        min-width: 177.77vh; /* 100vh * 16 / 9 */
+        /* Esto hace que cubra toda la pantalla sin deformarse (como background-size: cover) */
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        
+        /* Asegura el cover en navegadores modernos */
+        object-fit: cover; 
+        width: 100vw;
+        height: 100vh;
         
         opacity: 0.8;
     }
 
-    /* Capa oscura */
     .overlay-oscura {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -85,7 +85,6 @@ const VIDEO_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&l
         z-index: 1;
     }
 
-    /* Contenido */
     .hero-content {
         position: relative;
         z-index: 10;
@@ -98,10 +97,9 @@ const VIDEO_URL = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&l
         color: white;
     }
 
-    /* Logo */
     .hero-logo {
         width: 80%;
-        max-width: 600px; /* Ajusta esto según tu logo */
+        max-width: 600px;
         height: auto;
         margin-bottom: 20px;
     }
