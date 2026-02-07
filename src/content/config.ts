@@ -12,12 +12,13 @@ const obrasCollection = defineCollection({
     categoria: z.string().default('CIRC'),
     categoria_manual: z.string().optional(),
 
-    // CAMBIO AQUÍ: Ahora es opcional
-    compania: z.string().optional(), 
+   // CAMBIO CRÍTICO: Usamos nullable().optional() para compatibilidad máxima
+    compania: z.string().nullable().optional(), 
     
-    web_compania: z.string().optional(),
-    video: z.string().optional(),
-    entradas_url: z.string().optional(),
+    // Los campos URL también pueden ser nulos y opcionales
+    web_compania: z.string().nullable().optional(),
+    video: z.string().nullable().optional(),
+    entradas_url: z.string().nullable().optional(),
     
     fotos: z.array(z.string()).default([]), 
     pases: z.array(
