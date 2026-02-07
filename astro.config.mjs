@@ -5,10 +5,10 @@ import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  // CORRECCIÓN: Astro 5 pide 'static' (o simplemente borrar la línea, ya que es el default)
-  // Aunque pongamos 'static', el adaptador de Vercel permitirá que Keystatic funcione.
-  output: 'server', 
+  // AÑADE ESTA LÍNEA CON TU URL EXACTA (SIN BARRA AL FINAL)
+  site: 'https://kontrast-henna.vercel.app', 
   
+  output: 'server',
   adapter: vercel(),
 
   integrations: [
