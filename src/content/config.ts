@@ -1,22 +1,24 @@
 import { defineCollection, z } from 'astro:content';
 
 const obrasCollection = defineCollection({
-  type: 'content', // Esto permite leer .md y .mdx
+  type: 'content', 
   schema: z.object({
+    // Título es lo único OBLIGATORIO de verdad
     titulo: z.string(),
     
-    // CAMPOS DE CATEGORÍA
+    // Todo lo demás lo hacemos opcional o con valores por defecto
+    // para que la web nunca explote al compilar.
+    
     categoria: z.string().default('CIRC'),
     categoria_manual: z.string().optional(),
 
-    compania: z.string(),
+    // CAMBIO AQUÍ: Ahora es opcional
+    compania: z.string().optional(), 
     
-    // CAMPOS OPCIONALES (Para que no explote si están vacíos)
     web_compania: z.string().optional(),
     video: z.string().optional(),
     entradas_url: z.string().optional(),
     
-    // FOTOS Y PASES
     fotos: z.array(z.string()).default([]), 
     pases: z.array(
       z.object({
