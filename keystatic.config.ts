@@ -19,10 +19,9 @@ export default config({
       scope: 'repo', // Pide permiso completo de repositorio
   },
 
-  // Usamos process.env porque en el servidor (Vercel) es el estándar de Node.js
-  clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-  clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-  secret: process.env.KEYSTATIC_SECRET,
+clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+secret: process.env.KEYSTATIC_SECRET,
   // ---------------------------------------------------
 
   collections: {
