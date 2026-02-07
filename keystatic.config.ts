@@ -17,8 +17,12 @@ export default config({
   // ESTE BLOQUE ES EL NUEVO Y CRÍTICO: FUERZA EL PERMISO DE REPO
   github: {
       scope: 'repo', // Pide permiso completo de repositorio
-      // Opcional: client_id: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
   },
+
+  // Usamos process.env porque en el servidor (Vercel) es el estándar de Node.js
+  clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+  clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+  secret: process.env.KEYSTATIC_SECRET,
   // ---------------------------------------------------
 
   collections: {
