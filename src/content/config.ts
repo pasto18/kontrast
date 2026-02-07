@@ -10,7 +10,7 @@ const obrasCollection = defineCollection({
     // para que la web nunca explote al compilar.
     
     categoria: z.string().default('CIRC'),
-    categoria_manual: z.string().optional(),
+    categoria_manual: z.string().nullable().optional(),
 
    // CAMBIO CRÍTICO: Usamos nullable().optional() para compatibilidad máxima
     compania: z.string().nullable().optional(), 
