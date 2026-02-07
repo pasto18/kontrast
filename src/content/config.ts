@@ -1,24 +1,20 @@
+// src/content/config.ts (VERSION OBLIGATORIA Y LIMPIA)
+
 import { defineCollection, z } from 'astro:content';
 
 const obrasCollection = defineCollection({
   type: 'content', 
   schema: z.object({
-    // Título es lo único OBLIGATORIO de verdad
+    
     titulo: z.string(),
     
-    // Todo lo demás lo hacemos opcional o con valores por defecto
-    // para que la web nunca explote al compilar.
-    
+    // Todos estos son AHORA OBLIGATORIOS (sin .optional())
     categoria: z.string().default('CIRC'),
-    categoria_manual: z.string().nullable().optional(),
-
-   // CAMBIO CRÍTICO: Usamos nullable().optional() para compatibilidad máxima
-    compania: z.string().nullable().optional(), 
-    
-    // Los campos URL también pueden ser nulos y opcionales
-    web_compania: z.string().nullable().optional(),
-    video: z.string().nullable().optional(),
-    entradas_url: z.string().nullable().optional(),
+    categoria_manual: z.string(), // Si se elige "Otro", esto es obligatorio
+    compania: z.string(), 
+    web_compania: z.string(),
+    video: z.string(),
+    entradas_url: z.string(),
     
     fotos: z.array(z.string()).default([]), 
     pases: z.array(

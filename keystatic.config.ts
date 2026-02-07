@@ -42,10 +42,10 @@ export default config({
             defaultValue: 'CIRC'
         }),
         categoria_manual: fields.text({ label: 'Especificar tipo (Solo si elegiste "Otro" arriba)', }),
-        compania: fields.text({ label: 'Compañía' }).optional(),
-        web_compania: fields.url({ label: 'Web de la Compañía', validation: { isRequired: false } }).optional(),
-        video: fields.url({ label: 'Link Video Youtube (Embed)', validation: { isRequired: false } }).optional(),
-        entradas_url: fields.url({ label: 'Link Entradas', validation: { isRequired: false } }).optional(),
+        compania: fields.text({ label: 'Compañía' }),
+        web_compania: fields.url({ label: 'Web de la Compañía', validation: { isRequired: false } }),
+        video: fields.url({ label: 'Link Video Youtube (Embed)', validation: { isRequired: false } }),
+        entradas_url: fields.url({ label: 'Link Entradas', validation: { isRequired: false } }),
         fotos: fields.array(
             fields.image({
                 label: 'Foto',
