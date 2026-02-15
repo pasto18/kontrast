@@ -10,7 +10,7 @@ const obrasCollection = defineCollection({
     
     // Todos estos son AHORA OBLIGATORIOS (sin .optional())
     categoria: z.string().default('CIRC'),
-    categoria_manual: z.string(), // Si se elige "Otro", esto es obligatorio
+   categoria_manual: z.string().default(""), // Si se elige "Otro", esto es obligatorio
     compania: z.string(), 
     web_compania: z.string(),
     video: z.string(),

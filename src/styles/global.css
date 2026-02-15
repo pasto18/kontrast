@@ -40,11 +40,6 @@ a { text-decoration: none; color: inherit; }
     padding: 0px 6%;
 }
 
-p  {
-    font-size: 1.5rem;
-    margin-top: 20px;
-    text-align: center;
-}
 
 h2 { 
     font-size: 12rem;
@@ -57,6 +52,13 @@ h2 {
     line-height: 8rem;
     margin-bottom: 1rem;
 }
+
+h2.small { 
+    font-size: 2.5rem;   /* El cambio que buscas */
+    line-height: 1rem; /* Ajustamos el interlineado para que sea proporcional */
+    margin:0;
+}
+
 h3 { 
     font-size: 3.5rem;
     font-weight: 100;
@@ -73,6 +75,60 @@ h4 {
     line-height: 2.5rem;
 }
 
+h5 { 
+    font-size: 3rem;
+    font-weight: 100;
+    letter-spacing: -1.5px;
+    font-style: italic;
+    text-align: left;
+    position: relative;
+    line-height: 8rem;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    margin: 0;
+    color: white;
+}
+
+p, .p2 {
+    font-family: "Tu Fuente", sans-serif;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+
+}
+
+p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.p2 {
+    font-style: italic;
+    margin-top: 20px;
+    text-align: center;
+    color: #000000;
+    background-color: white;
+    padding: 20px;
+    rotate: -1deg;
+    width: 50vw;
+    margin: auto;
+}
+
+
+
+/* ESTO ES CLAVE: Estilo para los links dentro del cuadro */
+.p2 a {
+    color: #000 !important; 
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.p2 a:hover {
+    color: #ff0000 !important; /* Color al pasar el ratón */
+}
+
 /* =========================================
    2. HEADER / NAVEGACIÓN
    ========================================= */
@@ -85,14 +141,71 @@ h4 {
     text-transform: uppercase;
 }
 
-.nav-conteiner {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* --- NAVEGACIÓN LATERAL (Menu Oculto) --- */
+
+
+.side-nav {
+    position: fixed; 
+    /* En lugar de top 50% + translateY, usamos flexbox en un contenedor o top fijo */
+    top: 25%; /* Ajusta este % para que esté donde más te guste */
+    right: 0;
+    
+    /* Importante: el estado inicial en CSS debe ser fuera */
+    transform: translateX(100%); 
+    
+    width: auto;
+    min-width: 150px;
+    z-index: 9999; 
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 15px 0 0 15px;
+    
+    /* Evita que el texto se salga */
+    overflow: hidden;
 }
+
+/* Reset de links para que no se vean azules/subrayados */
+.side-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.side-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right; /* Alinea el texto a la derecha */
+}
+
+.side-nav li {
+    margin: 10px 0;
+}
+
+.side-nav a:hover {
+    color: #ccc; /* O el color de tu festival */
+}
+
+/* Móvil: Ocultamos el menú desplegado y solo dejamos el botón */
+@media (max-width: 1024px) {
+    .side-nav {
+        width: 60px; /* En móvil solo dejamos 60px de ancho */
+        transform: translateX(0); /* Lo mantenemos siempre visible en el borde */
+        background-color: transparent;
+        border-left: none;
+        justify-content: flex-start;
+        padding-top: 50px;
+    }
+    
+    .side-nav ul { 
+        display: none; /* Ocultamos la lista entera en móvil */
+    }
+    
+    .menu-toggle {
+        display: none; /* El botón de 3 rayas ahora no sirve */
+    }
+}
+
 
 .logo-text {
     color: var(--c-blanco);
@@ -347,6 +460,7 @@ line-height: 1;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 20px;
+    margin-bottom: 20px;
     transition: all 0.2s;
     box-shadow: 0 5px 15px rgba(255, 59, 48, 0.3);
 }
@@ -567,3 +681,127 @@ hr.solid {
     .social-sidebar { left: 20px; bottom: 20px; }
     .linea-decorativa { display: none; }
 }
+
+
+/* =========================================
+   11. MAPA
+   ========================================= */
+
+.map-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* CLAVE: Corta lo que sobresale */
+    position: relative;
+}
+
+.map-wrapper iframe {
+    /* Hacemos el mapa más alto para compensar lo que vamos a subir */
+    width: 100%;
+    height: calc(100vh + 60px); 
+    
+    /* Movemos el mapa hacia arriba para esconder la barra (suele medir entre 50px y 65px) */
+    margin-top: -60px; 
+    
+    border: 0;
+}
+
+/* =========================================
+   11. COTXE-SHARING
+   ========================================= */
+
+    .contenedor-tarjetas {
+        display: grid;
+        /* Crea 4 columnas en pantallas grandes, 2 en tablets y 1 en móvil */
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        width: 90vw;
+        margin: auto;
+    }
+
+    .tarjeta {
+        background: #000000;
+        color: white;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s;
+        position: relative;
+    }
+
+    .tarjeta:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Colores por tipo */
+    .tarjeta-busco { border-top:5px solid #ffcc00;
+                        border-bottom:2px solid #ffcc00;
+                        border-left: 1px solid #ffcc00;
+                    border-right: 1px solid #ffcc00; }
+    .tarjeta-ofrezco { border: 5px solid #00ffcc;
+        border-bottom:2px solid #00ffcc;
+                        border-left: 1px solid #00ffcc;
+                    border-right: 1px solid #00ffcc;
+                        }
+    .cabecera-tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgb(255, 255, 255);
+    padding-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.tipo-viaje {
+    background: rgb(0, 0, 0);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.fecha-viaje {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffcc00; /* Un color que resalte */
+}
+
+    
+    .campo {
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+    }
+
+    .campo strong {
+        display: block;
+        color: #888;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+    }
+
+    .controles-viajes {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Estilo de botones */
+    .controles-viajes button, .controles-viajes select {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: none;
+        background: #000000;
+        color: rgb(255, 255, 255);
+        outline: 2px solid white;
+        cursor: pointer;
+        font-size: 1.2rem;
+        font-family: var(--font-main);
+    }
+
+    .controles-viajes button:hover { background: #ffffff;
+    color: black; }

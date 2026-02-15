@@ -5,15 +5,17 @@ import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  // AÑADE ESTA LÍNEA CON TU URL EXACTA (SIN BARRA AL FINAL)
-  site: 'https://kontrast-henna.vercel.app', 
-  
+  site: 'https://kontrast-henna.vercel.app',
   output: 'server',
   adapter: vercel(),
-
-  integrations: [
-    mdx(),
-    react(), 
-    keystatic()
-  ]
+  integrations: [mdx(), react(), keystatic()],
+  
+  // SOLUCIÓN AL ERROR DE VITE
+  vite: {
+    optimizeDeps: {
+      // Excluimos solo las librerías de Keystatic de la optimización de caché
+      // Esto obliga a Vite a leerlas siempre del sitio correcto
+      exclude: ['@keystatic/core', '@keystatic/astro']
+    }
+  }
 });

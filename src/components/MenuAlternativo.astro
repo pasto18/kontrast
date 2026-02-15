@@ -1,0 +1,38 @@
+---
+// src/components/MenuAlternativo.astro
+---
+
+<nav class="menu-flotante">
+    <a href="/#programacion">PROGRAMACIÓ</a>
+    <a href="/#historia">EDICIONS ANTERIORS</a>
+    <a href="/#tickets">TICKETS</a>
+    <a href="/#info">INFO</a>
+    <a href="/cotxe-sharing-page">COTXE-SHARING</a>
+    <a href="/mapa">MAPA</a>
+</nav>
+
+<style>
+    .menu-flotante {
+        position: absolute;
+        top: 5vh;
+        left: 2vw;
+        z-index: 100;
+        background-color: rgb(0, 0, 0);
+        padding: 15px 25px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column; /* Para que salgan uno debajo de otro */
+        gap: 8px; /* Espacio entre enlaces sin usar <br> */
+    }
+
+    .menu-flotante a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        font-family: sans-serif;
+        font-size: 0.9rem;
+    }
+
+    .menu-flotante a:hover {
+        text-decoration: underline;
+    }
+</style>

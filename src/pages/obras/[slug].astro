@@ -1,25 +1,29 @@
 ---
-import Layout from '../../layouts/layout.astro';
-import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, getEntry } from 'astro:content';
 
-export async function getStaticPaths() {
-  const obras = await getCollection('obras');
-  return obras.map((obra) => ({
-    params: { slug: obra.slug },
-    props: { obra },
-  }));
+// 1. Obtenemos el 'slug' directamente de la URL
+const { slug } = Astro.params;
+
+// 2. Si por algún motivo no hay slug, lanzamos error 404
+if (slug === undefined) {
+  return Astro.redirect('/404');
 }
 
-const { obra } = Astro.props;
+// 3. Buscamos la obra específica en la colección usando el slug
+const obra = await getEntry('obras', slug);
+
+// 4. Si la obra no existe, mandamos al usuario a la página 404
+if (obra === undefined) {
+  return Astro.redirect('/404');
+}
+
+// 5. Ahora que tenemos la obra, preparamos el contenido y los datos
 const { Content } = await obra.render();
 const data = obra.data;
 
-// --- 1. LÓGICA DE LA ETIQUETA (Faltaba esto) ---
-const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
-    ? data.categoria_manual 
-    : data.categoria;
+// --- A partir de aquí, el resto de tu lógica (video, fechas, etc.) ---
 
-// --- 2. FUNCIÓN PARA OBTENER SOLO EL ID DEL VIDEO ---
 function getYouTubeID(url) {
     if (!url) return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -29,7 +33,11 @@ function getYouTubeID(url) {
 
 const videoID = getYouTubeID(data.video);
 
-// --- 3. FUNCIÓN FECHAS (Catalán) ---
+const cat = data.categoria || 'CIRC'; 
+const tipoShow = (cat === 'Otro' && data.categoria_manual) 
+    ? data.categoria_manual 
+    : cat;
+
 function formatearFecha(fechaStr) {
     if (!fechaStr) return "";
     const fecha = new Date(fechaStr);
@@ -39,7 +47,6 @@ function formatearFecha(fechaStr) {
     return `${diaSemana} ${dia}/${mes}`.toUpperCase();
 }
 ---
-
 <Layout title={data.titulo}>
     
     <!-- VIDEO DE FONDO -->

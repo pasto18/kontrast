@@ -1,28 +1,40 @@
 import { config, fields, collection } from '@keystatic/core';
 
+// 1. Función segura: Detecta si estamos en el servidor o cliente antes de pedir variables
+const getEnvVar = (key: string) => {
+  // Primero intenta con el estándar de Vite/Astro
+  if (import.meta.env[key]) return import.meta.env[key];
+  
+  // Solo intenta process.env si detecta que NO está en el navegador
+  if (typeof window === 'undefined' && typeof process !== 'undefined') {
+    return process.env[key];
+  }
+  return undefined;
+};
+
 export default config({
-  // --- CONFIGURACIÓN DE GITHUB (Modo Escritura) ---
+  // --- ESTRATEGIA DE ALMACENAMIENTO ---
   storage: import.meta.env.PROD
     ? {
-        kind: 'github',
+        kind: 'github', 
         repo: {
-          owner: 'pasto18',      // <--- TU USUARIO DE GITHUB
-          name: 'kontrast',      // <--- EL NOMBRE DE TU REPO
+          owner: 'pasto18',
+          name: 'kontrast',
         },
       }
     : {
-        kind: 'local',
+        kind: 'local', // En local (npm run dev) guardará en tu disco duro
       },
 
-  // ESTE BLOQUE ES EL NUEVO Y CRÍTICO: FUERZA EL PERMISO DE REPO
+  // --- CONFIGURACIÓN DE GITHUB APP ---
   github: {
-      scope: 'repo', // Pide permiso completo de repositorio
+    scope: 'repo',
   },
 
-clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-secret: process.env.KEYSTATIC_SECRET,
-  // ---------------------------------------------------
+  // Usamos la función segura para evitar el crash en el navegador
+  clientId: getEnvVar('KEYSTATIC_GITHUB_CLIENT_ID'),
+  clientSecret: getEnvVar('KEYSTATIC_GITHUB_CLIENT_SECRET'),
+  secret: getEnvVar('KEYSTATIC_SECRET'),
 
   collections: {
     obras: collection({
@@ -32,7 +44,6 @@ secret: process.env.KEYSTATIC_SECRET,
       format: { contentField: 'sinopsis' },
       
       schema: {
-        // ... (Tu esquema de campos aquí)
         titulo: fields.slug({ name: { label: 'Título de la Obra' } }),
         categoria: fields.select({
             label: 'Tipo de Espectáculo',

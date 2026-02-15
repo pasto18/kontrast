@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/layout.astro';
+import IconoMapa from '../components/IconoMapa.astro';
+import MenuAlternativo from '../components/MenuAlternativo.astro';
+---
+
+<Layout title="Mapa">
+
+
+
+<div>
+        <MenuAlternativo /> <main>
+        </main>
+    
+<div style="position: absolute; width: 22%; top: 10vh; right: 5vw;  z-index: 1; background-color: rgba(255, 255, 255, 1); padding: 20px 30px; border-radius: 10px; color:black;">
+<h2 class="small" style="margin-top: 3vh;">CAL ROSAL</h2>
+<p style="text-align: left; margin: 0px;">
+<br>
+<a href="https://maps.app.goo.gl/bTLAL3AGdbC313A99" target="_blank"><IconoMapa />KONVENT</a><br>
+<a href="https://maps.app.goo.gl/7wj6WnaXLWo2FBd5A" target="_blank"><IconoMapa />Teatre Cal Rosal</a><br>
+<a href="https://maps.app.goo.gl/jwmQgTg2aNNBWCpdA" target="_blank"><IconoMapa />Carpa SIDE</a><br>
+<a href="https://maps.app.goo.gl/UxfghWrXTmLuz53T9" target="_blank"><IconoMapa />Carpa PARDI!</a><br>
+<br>
+<h2 class="small">GIRONELLA</h2><br>
+<p style="text-align: left; margin: 0px;">
+<a href="https://maps.app.goo.gl/hynvxuoy4P7wkoQTA" target="_blank"><IconoMapa />Espai Santa Eulàlia</a><br>
+<a href="https://maps.app.goo.gl/5tCEunV8xWV9G9tf9" target="_blank"><IconoMapa />Plaça de l'estació</a><br>
+<a href="https://maps.app.goo.gl/ArWDsNrHTYPJRf9g8" target="_blank"><IconoMapa />Riu</a><br>
+  
+</p>
+</div>
+
+
+<div class="map-wrapper">
+  <iframe 
+    src="https://www.google.com/maps/d/embed?mid=1rtnzDdEt542sQZ6KaW0PI6_6TlZA5G4&amp;ehbc=2E312F" 
+    allowfullscreen
+  ></iframe>
+</div>
+</div>
+</Layout>

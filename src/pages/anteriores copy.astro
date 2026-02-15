@@ -1,22 +1,14 @@
 ---
 // Generamos una lista falsa de compañías
-const listaCompanias5 = 
-    ["Compañía de Circo 'eia'", "Sacékripa", "My!Laika", 
-    "JÁNIKA company", "Francine Satu", "Esteros live project", 
-    "Lupa Maimone/Oltrenotte", "Cie. Kimera", "Sofia de la Zambra",
-    "Cirque Pardi!", "Collectif Les Idoles", "Blanco Teta",
-"Brik Tu-Tok","Ivana Ray Singh", "Kimchi","Wes Peden","Las Corpa & Humo y Polvo",
-"Cru Lab","Cie La Vispera","Intrepidus Squad","Konvent Klub", "Fr`9il","Dj Valentina",
-"COPIA","Marta LoFi","Cie. Circoncentrique","FernandaAlemán","Cabezadenego","Gin Bali",
-"Fiesta en el Vacio", "Alta Gama", "Société protectrice de petites idées"];
 const listaCompanias = ["Compañía de Circo 'eia'", "Sacékripa", "My!Laika", "JÁNIKA company", "Francine Satu", "Esteros live project", "Lupa Maimone/Oltrenotte", "Cie. Kimera", "Sofia de la Zambra"];
+
 const ediciones = [
     { 
-        year: "2025", titulo: "#5", color: "white", 
+        year: "2025", titulo: "#5", color: "#FF3B30", 
         cartel: "/img/k-5-cartel.jpg", 
         video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
         extras: ["/img/k5-1.jpg", "/img/k5-2.jpg"],
-        companys: listaCompanias5 
+        companys: listaCompanias 
     },
     { 
         year: "2024", titulo: "#4", color: "#FFCC00", 
@@ -40,8 +32,8 @@ const ediciones = [
         
         <!-- PANEL 1: INTRO -->
         <section class="panel intro">
-            <h2>EDICIONS ANTERIORS</h2>
-            <p>→→→→→→</p>
+            <h1>HISTÒRIA DEL FESTIVAL</h1>
+            <p>Scroll horizontal →</p>
         </section>
 
         <!-- BUCLE DE EDICIONES -->
@@ -52,8 +44,9 @@ const ediciones = [
                     
                     <!-- 1. INDICADOR DE AÑO -->
                     <div class="year-marker">
-                    <h2 class="year-number" style={`color: ${ed.color}`}>{ed.year}</h2>
-                </div>  
+                        <span class="year-number" style={`color: ${ed.color}`}>{ed.year}</span>
+                        <div class="year-line" style={`background: ${ed.color}`}></div>
+                    </div>
 
                     <!-- 2. CARTEL PRINCIPAL -->
                     <div class="media-item main-cartel">
@@ -73,10 +66,9 @@ const ediciones = [
                             <img src={img} alt="Foto archivo" />
                         </div>
                     ))}
-                    <div style="width: 40px;"></div>
+
                     <!-- 5. LISTA DE COMPAÑÍAS -->
                     <div class="companies-mini-block">
-                        <h3 style="text-align: center;">COMPANYES</h3>
                         <p>
                             {ed.companys.map((c, index) => (
                                 <span>{c}{index < ed.companys.length - 1 ? ' • ' : ''}</span>
@@ -125,12 +117,12 @@ const ediciones = [
     .gallery-row {
         display: flex;
         align-items: center;
-        gap: 20px; /* Espacio entre cartel, video y fotos */
+        gap: 60px; /* Espacio entre cartel, video y fotos */
         position: relative;
     }
 
     /* INDICADOR DE AÑO (Abajo izquierda del bloque) */
-    h2.year-marker {
+    .year-marker {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -141,20 +133,23 @@ const ediciones = [
         font-size: 6rem;
         font-weight: 900;
         line-height: 1;
-        margin-top: 56vh;
     }
 
-  
+    .year-line {
+        width: 100%;
+        height: 10px;
+        margin-top: 10px;
+    }
 
     /* ELEMENTOS MULTIMEDIA */
     .media-item {
-        height: 90vh;
+        height: 60vh;
         position: relative;
         background: #111;
         box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
-    .main-cartel { aspect-ratio: 4/5; }
+    .main-cartel { aspect-ratio: 2/3; }
     .video-item { aspect-ratio: 16/9; width: 60vw; }
     .extra-photo { aspect-ratio: 4/3; }
 
@@ -177,8 +172,10 @@ const ediciones = [
 
     /* BLOQUE COMPAÑÍAS */
     .companies-mini-block {
-        width: 500px;
-        opacity: 1;
+        width: 300px;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        opacity: 0.6;
         text-align: justify;
     }
 
