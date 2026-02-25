@@ -1,22 +1,35 @@
 ---
+// src/components/sections/programacion.astro
 import { getCollection } from 'astro:content';
 
 const obras = await getCollection('obras');
 
+// 1. Detectamos el idioma actual
+const lang = Astro.currentLocale || 'ca';
+
+// 2. Definimos la base de la URL para las obras
+const baseRoute = lang === 'en' ? '/en/obras/' : '/obras/';
+
+// 3. Traducciones para los textos de esta sección
+const t = {
+    titulo_seccion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ'
+};
+
 function formatearFecha(fechaStr) {
     if (!fechaStr) return "";
     const fecha = new Date(fechaStr);
-    const diaSemana = fecha.toLocaleDateString('ca-ES', { weekday: 'long' });
+    
+    // Usamos el idioma actual para el formato de fecha
+    const locale = lang === 'en' ? 'en-GB' : 'ca-ES';
+    const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'long' });
     const dia = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
     return `${diaSemana} ${dia}/${mes}`.toUpperCase();
 }
 
-// --- NUEVA LÓGICA DE AGRUPACIÓN ---
+// --- LÓGICA DE AGRUPACIÓN (Se mantiene igual) ---
 const obrasPorDia = {};
-
 obras.forEach(obra => {
-    // 1. Recorremos TODOS los pases de la obra, no solo el primero
     obra.data.pases.forEach(pase => {
         const fechaKey = pase.fecha;
         const horaKey = pase.hora;
@@ -25,22 +38,18 @@ obras.forEach(obra => {
             obrasPorDia[fechaKey] = [];
         }
 
-        // 2. Metemos un objeto que combina los datos de la obra + LA HORA ESPECÍFICA de ese pase
         obrasPorDia[fechaKey].push({
-            originalData: obra.data, // Datos generales (título, foto...)
-            slug: obra.slug,
-            horaEspecifica: horaKey  // La hora de ESTE pase concreto
+            originalData: obra.data, 
+            id: obra.id,      
+            horaEspecifica: horaKey
         });
     });
 });
 
-// 3. Ordenamos las fechas (días)
 const fechasOrdenadas = Object.keys(obrasPorDia).sort();
 
-// 4. Ordenamos las obras DENTRO de cada día por hora
 fechasOrdenadas.forEach(fecha => {
     obrasPorDia[fecha].sort((a, b) => {
-        // Convertimos "20:00" a 2000 para comparar números
         const horaA = parseInt(a.horaEspecifica.replace(':', ''));
         const horaB = parseInt(b.horaEspecifica.replace(':', ''));
         return horaA - horaB;
@@ -48,17 +57,13 @@ fechasOrdenadas.forEach(fecha => {
 });
 ---
 
-<!-- CONTENEDOR PRINCIPAL -->
 <div class="programacion-container">
     
    <div class="header-prog">
-    <!-- Solo añadimos la clase -->
-    <h2 class="anim-left">PROGRAMACIÓ</h2>
+    <h2 class="anim-left">{t.titulo_seccion}</h2>
 </div>
 
-    <!-- BUCLE DE DÍAS -->
     {fechasOrdenadas.map((fecha) => (
-        
         <div class="bloque-dia">
             <div class="separador-fecha">
                 <h2 class="anim-left">{formatearFecha(fecha)}</h2>
@@ -67,7 +72,6 @@ fechasOrdenadas.forEach(fecha => {
 
             <div class="fila-obras">
                 {obrasPorDia[fecha].map((item) => {
-                    // OJO: Ahora accedemos a item.originalData
                     const data = item.originalData;
                     
                     const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
@@ -75,30 +79,24 @@ fechasOrdenadas.forEach(fecha => {
                         : data.categoria;
 
                     return (
-                        <a href={`/obras/${item.slug}`} class="card-link">
+                        /* CAMBIO CLAVE: Usamos baseRoute para que el enlace sea /en/obras/ o /obras/ */
+                        <a href={`${baseRoute}${item.id}`} class="card-link">
                             <article class="card-obra">
-                                
                                 <div class="card-img-container">
                                     <img src={data.fotos[0]} alt={data.titulo} class="card-img"/>
                                 </div>
                                 
                                 <div class="card-content">
-                                    
-                                    <!-- CABECERA (Etiqueta + Hora) -->
-                                             {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
-                                        <!-- AQUI USAMOS LA HORA ESPECÍFICA ORDENADA -->
-                                      
+                                    {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
 
-                                    <!-- INFO CENTRAL -->
                                     <div style="margin-top: auto; margin-bottom: auto; text-align: center; width: 100%;">
                                         <h2 class="card-titulo">{data.titulo}</h2>
                                         <p class="card-compania">{data.compania}</p>
                                     </div>
 
-                                      <span class="card-fecha">
-                                           {item.horaEspecifica}h
-                                        </span>
-
+                                    <span class="card-fecha">
+                                        {item.horaEspecifica}
+                                    </span>
                                 </div>
                             </article>
                         </a>
@@ -107,8 +105,4 @@ fechasOrdenadas.forEach(fecha => {
             </div>
         </div>
     ))}
-
 </div>
-
-
-

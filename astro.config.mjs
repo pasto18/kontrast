@@ -10,12 +10,20 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [mdx(), react(), keystatic()],
   
-  // SOLUCIÓN AL ERROR DE VITE
   vite: {
+    ssr: {
+      noExternal: ['@keystatic/core', '@keystatic/astro', 'lodash']
+    },
     optimizeDeps: {
-      // Excluimos solo las librerías de Keystatic de la optimización de caché
-      // Esto obliga a Vite a leerlas siempre del sitio correcto
-      exclude: ['@keystatic/core', '@keystatic/astro']
+      include: ['@keystatic/core', '@keystatic/astro']
+    }
+  }, // <-- Faltaba esta coma
+
+  i18n: {
+    defaultLocale: 'ca',
+    locales: ['ca', 'en'],
+    routing: {
+      prefixDefaultLocale: false 
     }
   }
 });

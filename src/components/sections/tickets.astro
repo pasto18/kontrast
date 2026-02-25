@@ -1,81 +1,92 @@
 ---
-import Layout from '../layouts/layout.astro';
+// src/components/sections/tickets.astro
+const lang = Astro.currentLocale || 'ca'; 
+
+// Definimos los textos aquí para mantener el HTML limpio
+const t = {
+    espectacle: lang === 'en' ? 'SHOW' : 'ESPECTACLE',
+    concert: lang === 'en' ? 'CONCERT' : 'CONCERT',
+    adult: lang === 'en' ? 'ADULT' : 'ADULT',
+    infant: lang === 'en' ? 'CHILD' : 'INFANT',
+    solidaria: lang === 'en' ? 'SOLIDARITY FARE*' : 'TARIFA SOLIDÀRIA*',
+    nota_solidaria: lang === 'en' 
+        ? '*The solidarity fare is for those who want to contribute a grain of sand to help make the festival more accessible to everyone. :)' 
+        : '*La tarifa solidària és per a aquelles persones que vulguin aportar un granet de sorra per ajudar a que el festival sigui més accessible per a tothom. :)',
+    abonaments: lang === 'en' ? 'DAY & WEEKEND PASSES' : 'ABONAMENTS DE DIA i CAP de SETMANA',
+    online_only: lang === 'en' ? 'ONLINE PURCHASE ONLY' : 'NOMÉS COMPRA ONLINE',
+    comprar: lang === 'en' ? 'BUY TICKETS' : 'COMPRAR ENTRADES'
+};
 ---
 <div class="header-prog">
-    <!-- Solo añadimos la clase -->
     <h2 class="anim-left">TICKETS</h2>
 </div>
-    <div class="contenedor-principal">
-        <div class="tickets-container">
-            <div class="tickets-column">
-            </div>
-            <div class="tickets-column">
-                <h3 style="text-align: center;">ESPECTACLE</h3>
-            </div>
-            <div class="tickets-column">
-                <h3 style="text-align: center;">CONCERT</h3>
-            </div>
+<div class="contenedor-principal">
+    <div class="tickets-container">
+        <div class="tickets-column"></div>
+        <div class="tickets-column">
+            <h3 style="text-align: center;">{t.espectacle}</h3> 
         </div>
-
-
-        <div class="tickets-container">
-            <div class="tickets-column">
-                <h4>ADULT</h4>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">12€</h1>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">10€</h1>
-            </div>
+        <div class="tickets-column">
+            <h3 style="text-align: center;">{t.concert}</h3> 
         </div>
-
-        <hr class="solid">
-
-        <div class="tickets-container">
-            <div class="tickets-column">
-                <h4>INFANT</h4>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">8€</h1>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">6€</h1>
-            </div>
-        </div>
-
-        <hr class="solid">
-
-        <div class="tickets-container">
-            <div class="tickets-column">
-                <h4>TARIFA SOLIDARIA*</h4>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">15€
-                </h1>
-            </div>
-            <div class="tickets-column">
-                <h1 class="preu">20€</h1>
-            </div>
-        </div>
-
-        <hr class="solid">
-    </div>
-    
-    <div style="margin-top: 30px; max-width: 60vw; margin-left: auto; margin-right: auto; text-align: center; font-style: italic;">
-        <p class="p2">
-            *La tarifa solidaria és per a aquelles persones que vulguin aportar un granet de sorra per ajudar a que el festival sigui més accessible per a tothom. :)
-        </p>
     </div>
 
-    <div style="display:flex; flex-direction: column; margin-top: 10vh; align-items: center; gap: -40px;">
-        <h3 style="text-align: center;">ABONAMENTS DE DIA i CAP de SETMANA</h3>
-        <h3 style="text-align: center; background-color: rgb(255, 255, 255); 
-        color: black; width: fit-content; padding: 20px 40px; border-radius: 0px;
-        margin-top:-40px; font-weight: 700; rotate:-2deg">
-        NOMES COMPRA ONLINE
+    <div class="tickets-container">
+        <div class="tickets-column">
+            <h4>{t.adult}</h4> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">12€</h1> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">10€</h1> 
+        </div>
+    </div>
+
+    <hr class="solid">
+
+    <div class="tickets-container">
+        <div class="tickets-column">
+            <h4>{t.infant}</h4> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">8€</h1> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">6€</h1> 
+        </div>
+    </div>
+
+    <hr class="solid">
+
+    <div class="tickets-container">
+        <div class="tickets-column">
+            <h4>{t.solidaria}</h4> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">15€</h1> 
+        </div>
+        <div class="tickets-column">
+            <h1 class="preu">20€</h1> 
+        </div>
+    </div>
+
+    <hr class="solid">
+</div>
+
+<div style="margin-top: 30px; max-width: 100vw; margin:auto; text-align: center; font-style: italic;">
+    <p class="p2">
+        {t.nota_solidaria} 
+    </p>
+</div>
+
+<div style="display:flex; flex-direction: column; margin-top: 10vh; align-items: center; gap: -40px;">
+    <h3 style="text-align: center;">{t.abonaments}</h3> 
+    <h3 style="text-align: center; background-color: var(--c-blanco); color: black; width: fit-content; padding: 20px 40px; border-radius: 0px; margin-top:-40px; font-weight: 700; rotate:-2deg">
+        {t.online_only} 
     </h3>
-<h1 class="btn-entrades">COMPRAR ENTRADES</h1>    </div>
+    <h1 class="btn-entrades">{t.comprar}</h1> 
+</div>
  <!-- 
 <div class="contenedor-video-magico">
    

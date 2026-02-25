@@ -1,0 +1,18 @@
+{
+  "titulo": "Kamchàtka",
+  "categoria": "CIRC",
+  "categoria_manual": "circ",
+  "compania": "Kamchàtka",
+  "web_compania": "asd.com",
+  "video": "asd.com",
+  "entradas_url": "asd.com",
+  "fotos": [
+    "/img/obras/kamtchatka/fotos/0.jpeg"
+  ],
+  "pases": [
+    {
+      "fecha": "2026-04-10",
+      "hora": "18:00 - Gironella"
+    }
+  ]
+}

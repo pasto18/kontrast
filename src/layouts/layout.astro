@@ -1,27 +1,60 @@
 ---
 // src/layouts/layout.astro
 import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
 const { title } = Astro.props;
+
+// 1. Detectamos el idioma actual con un fallback seguro
+const lang = Astro.currentLocale || 'ca';
+
+// 2. Definimos los textos aquí arriba para que el HTML sea más limpio
+const labels = {
+  programacion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ',
+  historia: lang === 'en' ? 'HISTORY' : 'HISTÒRIA',
+  tickets: 'TICKETS',
+  info: 'INFO',
+  coches: 'COTXE-SHARING',
+  mapa: 'MAPA',
+  switchLang: lang === 'en' ? 'CATALÀ' : 'ENGLISH',
+  switchUrl: lang === 'en' ? '/' : '/en/'
+};
+
+// 3. Función para las rutas externas
+const usePath = (path: string) => {
+  return lang === 'en' ? `/en${path}` : path;
+};
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang={lang}>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} - Festival</title>
 </head>
 <body id="body-principal">
     
     <nav class="side-nav" id="side-menu">
         <ul>
-            <li><a href="#programacion">PROGRAMACIÓ</a></li>
-            <li><a href="#historia">EDICIONS ANTERIORS</a></li>
-            <li><a href="#tickets">TICKETS</a></li>
-            <li><a href="#info">INFO</a></li>
-            <li><a href="/cotxe-sharing-page">COTXE-SHARING</a></li>
-            <li><a href="/mapa">MAPA</a></li>
-
+            <li><a href="#programacion">{labels.programacion}</a></li>
+            <li><a href="#historia">{labels.historia}</a></li>
+            <li><a href="#tickets">{labels.tickets}</a></li>
+            <li><a href="#info">{labels.info}</a></li>
+            
+            <li><a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a></li>
+            <li><a href={usePath("/mapa")}>{labels.mapa}</a></li>
+            
+            <hr style="margin: 10px 0; opacity: 0.3;" />
+            
+            <li>
+                <a href={labels.switchUrl} style="font-weight: bold;">
+                    {labels.switchLang}
+                </a>
+            </li>
         </ul>
     </nav>
     
@@ -29,11 +62,14 @@ const { title } = Astro.props;
 
     <aside class="social-sidebar">
         <div class="linea-decorativa"></div>
-        <a href="https://instagram.com/TU_USUARIO" target="_blank" class="social-icon">
+        <a href="https://instagram.com/kontrast.festival" target="_blank" class="social-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
-        <a href="https://facebook.com/TU_USUARIO" target="_blank" class="social-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        <a href="mailto:festival.kontrast@gmail.com" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
         </a>
     </aside>
 
@@ -42,43 +78,36 @@ const { title } = Astro.props;
         initScrollAnimations();
 
         import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
+        import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-    gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Esperamos a que todo cargue para evitar saltos
-    window.addEventListener('load', () => {
-        const sideNav = document.getElementById('side-menu');
+        window.addEventListener('load', () => {
+            const sideNav = document.getElementById('side-menu');
 
-        if (sideNav) {
-            // 1. Animación de entrada al bajar
-            gsap.to(sideNav, {
-                x: 0, 
-                duration: 0.8,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: "body",
-                    start: "top -100px",
-                    // play al bajar, reverse al subir al inicio
-                    toggleActions: "play none none reverse",
-                }
-            });
-            
-            // 2. Hover: Mostrar/Ocultar
-            // Al salir, lo dejamos asomando un poquito (90%) o fuera del todo (100%)
-            sideNav.addEventListener('mouseenter', () => {
-                gsap.to(sideNav, { x: 0, duration: 0.4, ease: "power2.out" });
-            });
-            
-            sideNav.addEventListener('mouseleave', () => {
-                if (window.scrollY > 100) {
-                    gsap.to(sideNav, { x: "90%", duration: 0.4, ease: "power2.in" });
-                }
-            });
-        }
-    });
+            if (sideNav) {
+                gsap.to(sideNav, {
+                    x: 0, 
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top -100px",
+                        toggleActions: "play none none reverse",
+                    }
+                });
+                
+                sideNav.addEventListener('mouseenter', () => {
+                    gsap.to(sideNav, { x: 0, duration: 0.4, ease: "power2.out" });
+                });
+                
+                sideNav.addEventListener('mouseleave', () => {
+                    if (window.scrollY > 100) {
+                        gsap.to(sideNav, { x: "90%", duration: 0.4, ease: "power2.in" });
+                    }
+                });
+            }
+        });
     </script>
-
-    
 </body>
 </html>

@@ -1,82 +1,78 @@
 import { config, fields, collection } from '@keystatic/core';
 
-// 1. Función segura: Detecta si estamos en el servidor o cliente antes de pedir variables
-const getEnvVar = (key: string) => {
-  // Primero intenta con el estándar de Vite/Astro
-  if (import.meta.env[key]) return import.meta.env[key];
-  
-  // Solo intenta process.env si detecta que NO está en el navegador
-  if (typeof window === 'undefined' && typeof process !== 'undefined') {
-    return process.env[key];
-  }
-  return undefined;
-};
+// Detectamos el entorno
+const isProd = import.meta.env.PROD;
 
 export default config({
-  // --- ESTRATEGIA DE ALMACENAMIENTO ---
-  storage: import.meta.env.PROD
+  storage: isProd
     ? {
-        kind: 'github', 
-        repo: {
-          owner: 'pasto18',
-          name: 'kontrast',
-        },
+        kind: 'github',
+        repo: { owner: 'pasto18', name: 'kontrast' },
       }
     : {
-        kind: 'local', // En local (npm run dev) guardará en tu disco duro
+        kind: 'local',
       },
 
-  // --- CONFIGURACIÓN DE GITHUB APP ---
-  github: {
-    scope: 'repo',
-  },
-
-  // Usamos la función segura para evitar el crash en el navegador
-  clientId: getEnvVar('KEYSTATIC_GITHUB_CLIENT_ID'),
-  clientSecret: getEnvVar('KEYSTATIC_GITHUB_CLIENT_SECRET'),
-  secret: getEnvVar('KEYSTATIC_SECRET'),
+  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID,
+  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+  secret: import.meta.env.KEYSTATIC_SECRET || 'local-dummy-secret-123456',
 
   collections: {
     obras: collection({
       label: 'OBRAS',
       slugField: 'titulo',
       path: 'src/content/obras/*',
-      format: { contentField: 'sinopsis' },
+      format: { data: 'json' }, // Esto fuerza a que sea UN solo archivo JSON
       
       schema: {
-        titulo: fields.slug({ name: { label: 'Título de la Obra' } }),
+        titulo: fields.slug({ name: { label: 'Título' } }),
+        
         categoria: fields.select({
-            label: 'Tipo de Espectáculo',
+            label: 'Categoría',
             options: [
-                { label: 'Circ', value: 'CIRC' },
-                { label: 'Música', value: 'MÚSICA' },
-                { label: 'Teatre', value: 'TEATRE' },
-                { label: 'Otro (Escribir manual)', value: 'Otro' }
+                { label: 'Circ', value: 'CIRC' }, 
+                { label: 'Música', value: 'MÚSICA' }, 
+                { label: 'Teatre', value: 'TEATRE' }, 
+                { label: 'Otro', value: 'Otro' }
             ],
             defaultValue: 'CIRC'
         }),
-        categoria_manual: fields.text({ label: 'Especificar tipo (Solo si elegiste "Otro" arriba)', }),
+        
+        categoria_manual: fields.text({ label: 'Categoría manual' }),
         compania: fields.text({ label: 'Compañía' }),
-        web_compania: fields.url({ label: 'Web de la Compañía', validation: { isRequired: false } }),
-        video: fields.url({ label: 'Link Video Youtube (Embed)', validation: { isRequired: false } }),
-        entradas_url: fields.url({ label: 'Link Entradas', validation: { isRequired: false } }),
+        web_compania: fields.text({ label: 'Web Compañía' }),
+        video: fields.text({ label: 'Video URL' }),
+        entradas_url: fields.text({ label: 'Entradas URL' }),
+        
         fotos: fields.array(
             fields.image({
                 label: 'Foto',
                 directory: 'public/img/obras',
                 publicPath: '/img/obras/'
             }),
-            { label: 'Galería de Fotos (Máx 4)', itemLabel: props => 'Foto' }
+            { label: 'Galería de Fotos', itemLabel: props => 'Imagen' }
         ),
+        
         pases: fields.array(
             fields.object({
                 fecha: fields.date({ label: 'Fecha' }),
-                hora: fields.text({ label: 'Hora (ej: 20:00)' }),
+                hora: fields.text({ label: 'Hora' }),
             }),
             { label: 'Fechas y Horarios', itemLabel: props => `${props.fields.fecha.value} - ${props.fields.hora.value}` }
         ),
-        sinopsis: fields.mdx({
-            label: 'Sinopsis',
+
+        // --- SOLUCIÓN PARA UN SOLO ARCHIVO ---
+        // Usamos text con multiline: true. 
+        // Esto guarda el Markdown como una cadena de texto simple dentro del JSON.
+        sinopsis_cat: fields.text({ 
+            label: 'Sinopsis (CAT)', 
+            multiline: true,
+            description: 'Puedes usar Markdown aquí (# Titulo, **negrita**, etc)' 
+        }),
+        
+        sinopsis_eng: fields.text({ 
+            label: 'Sinopsis (ENG)', 
+            multiline: true 
         }),
       },
     }),

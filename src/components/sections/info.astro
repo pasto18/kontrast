@@ -1,34 +1,42 @@
-
 ---
+// src/components/sections/info.astro
+const lang = Astro.currentLocale || 'ca';
+
+const t = {
+    horaris: lang === 'en' ? 'Opening Hours' : 'Horaris d’obertura',
+    transport: lang === 'en' ? 'Transport' : 'Transport',
+    bus_info: lang === 'en' 
+        ? 'BUS Barcelona-Berga nearest stop: <br>Cal Rosal - Alternative stop: Berga' 
+        : 'BUS Barcelona-Berga parada més propera: <br>Cal Rosal - Parada alternativa: Berga',
+    cotxe_info: lang === 'en'
+        ? 'From Barcelona Direction Túnel Cadí Highway C-16 Exit 92'
+        : 'Des de Barcelona Direcció Túnel Cadí Autovia C-16 Sortida 92'
+};
 ---
 
-        
 <div>
-        <h2 class="anim-left">INFO</h2>
+    <h2 class="anim-left">INFO</h2>
 
+    <h1 style="text-align: center;">{t.horaris}</h1>
+    <p style="text-align: center; background-color: var(--c-blanco); color: #000000; font-style: italic; width:50%; margin:auto; padding:20px; border-radius:10px">
+        18/04   16.15h (Espai Sta. Eulàlia, Gironella)<br>
+        19/04    16.30h (KONVENT)<br>
+        14/04    13.00h (KONVENT)<br>
+        <br>
+        24/04     17.30h (KONVENT)<br>
+        25/04    18.00h (KONVENT)<br>
+        26/04    16.30h (KONVENT)<br>
+        27/04    13.00h (KONVENT)
+    </p>
 
-
-                    <h1 style="text-align: center;">Horaris d’obertura / Opening times</h1>
-                    <p style="text-align: center; background-color: #ffffff; color: #000000; font-style: italic; width:40%; margin:auto;padding:20px; border-radius:10px">
-                        Dv 18/04   16.15h (Espai Sta. Eulàlia, Gironella)<br>
-                        Ds 19/04    16.30h (KONVENT)<br>
-                        Dg 14/04    13.00h (KONVENT)<br>
-                        <br>
-                        Dj 24/04     17.30h (KONVENT)<br>
-                        Dv 25/04    18.00h (KONVENT)<br>
-                        Ds 26/04    16.30h (KONVENT)<br>
-                        Dg 27/04    13.00h (KONVENT)</p>
-
-<h1 style="text-align: center;">Transport</h1>
-                    <p style="text-align: center; background-color: #ffffff; color: #000000; font-style: italic; width:40%; margin:auto;padding:20px; border-radius:10px">
-                        BUS Barcelona-Berga parada mes propera: <br>Cal Rosal - Parada alternativa: Berga<br>
-                        www.alsa.es
-                        <br>
-                        Des de Barcelona Direcció Túnel Cadí Autovia C-16 Sortida 92<br>
-
-                        </p>
-
-
+    <h1 style="text-align: center;">{t.transport}</h1>
+    <p style="text-align: center; background-color: var(--c-blanco); color: #000000; font-style: italic; width:40%; margin:auto; padding:20px; border-radius:10px">
+        <span set:html={t.bus_info} />
+        <br>
+        www.alsa.es
+        <br><br>
+        {t.cotxe_info}
+    </p>
 </div>
 
 <div style="height: 5vh;"></div>

@@ -1,0 +1,24 @@
+{
+  "titulo": "Décrochez-moi ça",
+  "categoria": "CIRC",
+  "compania": "Bêtes de Foire",
+  "fotos": [],
+  "pases": [
+    {
+      "fecha": "2026-04-10",
+      "hora": "22:00 - Cal Rosal - Camp de Futbol"
+    },
+    {
+      "fecha": "2026-04-12",
+      "hora": "19:00 - Cal Rosal  - Camp de Futbol"
+    },
+    {
+      "fecha": "2026-04-17",
+      "hora": "19:30 - Cal Rosal (Camp de Futbol)"
+    },
+    {
+      "fecha": "2026-04-18",
+      "hora": "19:00 - Cal Rosal (Camp de Futbol)"
+    }
+  ]
+}

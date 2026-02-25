@@ -1,35 +1,48 @@
+---
+// src/components/sections/about.astro
+const lang = Astro.currentLocale || 'ca';
 
-    <div class="contenedor-principal">
-        <div style="display:flex; flex-direction: row; gap: 50px; text-align: justify;">
-            <div style="flex:1">
-                 <h2 class="anim-left">Kontrast #6!</h2>
-                 <div style="height: 15vh"></div>
-                  <p style="width: 60vw; text-align: center; margin:0 auto;">Multiforme i camaleònic, el Kontrast és un animal rar en creixement continu, 
-                    que ara compleix els seus cinc anys de vida. Després de les primeres etapes lligades al descobriment de les possibilitats de l'ambient 
-                    en què s'ha manifestat aquesta criatura, expandeix ara els tentacles per abastar tots els camps de l'art circense i musical.
-                    La bèstia insaciable comença a conèixer les seves forces i aquest any s'expandeix per l'espai que l'envolta: partint des del Konvent 
-                    tocarà amb les seves arts mòbils, la seva babilònia de llengües i còctel d'arts escèniques els pobles veïns de Gironella i Olvan, 
-                    els camps de Cal Rosal amb les carpes de My!Laika/Side kunst-cirque i Cirque Pardi! i fins i tot els rius amb espectacles flotants.
-                    <br>
-                    No us perdeu l'oportunitat de veure de prop aquest extraordinari animal que creix sota el signe del circ i surt del cau del 18 al 27 
-                    d'abril per sorprendre i emocionar. Donar-li suport és un acte d'amor: com tots els festivals, corre el risc d'extingir-se.
-                    <br>
+const t = {
+    titulo: "Kontrast #6!",
+    descripcion_1: lang === 'en' 
+        ? "Multiform and chameleonic, Kontrast is a rare animal in continuous growth, now celebrating its five years of life. After the first stages linked to the discovery of the environment's possibilities, it now expands its tentacles to cover all fields of circus and musical art."
+        : "Multiforme i camaleònic, el Kontrast és un animal rar en creixement continu, que ara compleix els seus cinc anys de vida. Després de les primeres etapes lligades al descobriment de les possibilitats de l'ambient en què s'ha manifestat aquesta criatura, expandeix ara els tentacles per abastar tots els camps de l'art circense i musical.",
+    descripcion_2: lang === 'en'
+        ? "The insatiable beast begins to know its strengths and this year expands through the surrounding space: starting from Konvent it will touch the neighboring towns of Gironella and Olvan with its mobile arts, its babylon of languages and cocktail of performing arts, the fields of Cal Rosal with the tents of My!Laika/Side kunst-cirque and Cirque Pardi! and even the rivers with floating shows."
+        : "La bèstia insaciable comença a conèixer les seves forces i aquest any s'expandeix per l'espai que l'envolta: partint des del Konvent tocarà amb les seves arts mòbils, la seva babilònia de llengües i còctel d'arts escèniques els pobles veïns de Gironella i Olvan, els camps de Cal Rosal amb les carpes de My!Laika/Side kunst-cirque i Cirque Pardi! i fins i tot els rius amb espectacles flotants.",
+    invitacion: lang === 'en'
+        ? "Don't miss the opportunity to see this extraordinary animal up close that grows under the sign of the circus and emerges from its lair from April 18 to 27 to surprise and thrill. Supporting it is an act of love: like all festivals, it runs the risk of extinction."
+        : "No us perdeu l'oportunitat de veure de prop aquest extraordinari animal que creix sota el signe del circ i surt del cau del 18 al 27 d'abril per sorprendre i emocionar. Donar-li suport és un acte d'amor: com tots els festivals, corre el risc d'extingir-se.",
+    plat_fort: lang === 'en'
+        ? "As the highlight of this edition, the Cirque Pardi! collective lands at Kontrast with its convoy and its tent to present for the first time in Catalonia Low Cost Paradise, a modern circus show with 10 artists on stage, live music and a combination of circus techniques."
+        : "Com a plat fort d’aquesta edició, el col·lectiu Cirque Pardi! aterra al Kontrast amb el seu convoi i la seva carpa per presentar per primera vegada a Catalunya Low Cost Paradise, un espectacle de circ modern amb 10 artistes en escena, música en directe i una combinació de tècniques circenses.",
+    etimologia: lang === 'en'
+        ? "The name of the festival is Kontrast. 'Contrasti' is the name that Italian circus people have used for generations to refer to artists who do not belong to the dynasty, that is, those who do not come from traditional circus families. That's us! Contrasts, without dogmas to respect: 100% pure circus."
+        : "El nom del festival és Kontrast. Contrasti és el nom que els circenses italians han estat utilitzant durant generacions per referir-se als artistes que no pertanyen a la dinastia, és a dir, aquells que no provenen de famílies de circ tradicional. Això som nosaltres! Contrastos, sense dogmes a respectar: 100% pur circ.",
+    nota_solidaria: lang === 'en'
+        ? "*Kontrast is a self-managed festival where all box office proceeds go to remunerate the work of the artists and cover infrastructure and maintenance costs. The Kontrast team works on a voluntary basis. If you have the means and the will to help sustain the project, we propose the solidarity fare."
+        : "*Kontrast és un festival autogestionat on tots els ingressos de les taquilles es destinen a remunerar la feina de lxs artistxs i a cobrir despeses d'infraestructura i manutenció. L'equip Kontrast treballa de forma voluntària per dur a terme el festival. Si tens els mitjans i la voluntat d'ajudar a sostenir el projecte, et proposem la tarifa solidària."
+};
+---
 
-                    Com a plat fort d’aquesta edició, el col·lectiu Cirque Pardi! aterra al Kontrast amb el seu convoi i la seva carpa 
-                    per presentar per primera vegada a Catalunya Low Cost Paradise, un espectacle de circ modern amb 10 artistes en escena, 
-                    música en directe i una combinació de tècniques circenses que inclouen trapezi fix, trapezi ballant, dansa, bicicleta acrobàtica, 
-                    funambulisme, portés acrobàtics, clown i malabars.
-                    <br>
-                    El nom del festival és Kontrast. Contrasti és el nom que els circenses italians han estat utilitzant durant generacions per referir-se 
-                    als artistes que no pertanyen a la dinastia, és a dir, aquells que no provenen de famílies de circ tradicional.
-                    Això som nosaltres! Contrastos, sense dogmes a respectar: 100% pur circ.</p>
-                    <div style="height: 10vh"></div>
-
-                    
-                            <p class="p2">*Kontrast és un festival autogestionat on tots els ingressos de les taquilles es destinen a remunerar la feina de lxs artistxs 
-                                i a cobrir despeses d'infraestructura i manutenció. L'equip Kontrast treballa de forma voluntària per dur a terme el festival. 
-                                Si tens els mitjans i la voluntat d'ajudar a sostenir el projecte, et proposem la tarifa solidària.</p>
-
-            </div>
-       
-
+<div class="contenedor-principal">
+    <div style="display:flex; flex-direction: row; gap: 50px; text-align: justify;">
+        <div style="flex:1">
+            <h2 class="anim-left">{t.titulo}</h2>
+            <div style="height: 15vh"></div>
+            <p style="width: 60vw; text-align: center; margin:0 auto;">
+                {t.descripcion_1}
+                <br><br>
+                {t.descripcion_2}
+                <br><br>
+                {t.invitacion}
+                <br><br>
+                {t.plat_fort}
+                <br><br>
+                {t.etimologia}
+            </p>
+            <div style="height: 10vh"></div>
+            <p class="p2">{t.nota_solidaria}</p>
+        </div>
+    </div>
+</div>

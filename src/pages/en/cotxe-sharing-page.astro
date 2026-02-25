@@ -1,0 +1,170 @@
+---
+import Layout from '../layouts/layout.astro';
+import MenuAlternativo from '../components/MenuAlternativo.astro';
+---
+
+<Layout title="Cotxe-Sharing">
+
+        <MenuAlternativo /> <main> </main>
+
+    <div class="contenedor-principal" style="margin-top: -10vh;">
+            <h2>COTXE-SHARING!</h2>
+    </div>
+
+    <div class="controles-viajes" style="margin-top: 10vh;">
+    <button id="btn-todos">Todos</button>
+    <button id="btn-busco">Busco</button>
+    <button id="btn-ofrezco">Ofrezco</button>
+    <select id="ordenarFecha">
+        <option value="asc">Fecha: Próximos primero</option>
+        <option value="desc">Fecha: Últimos primero</option>
+    </select>
+</div>
+
+<div class="contenedor-principal-viajes">
+    <div class="contenedor-tarjetas" id="tarjetas-container">
+        <p style="text-align: center; width: 100%;">Cargando viajes...</p>
+    </div>
+</div>
+
+<script>
+    let todosLosViajes = []; 
+    let encabezadosGlobales = [];
+
+    async function cargarDatos() {
+        const apiKey = 'AIzaSyDCgnL_oc1lTa_9Lsn3TWwQiKx9aYZ5qCM';
+        const spreadsheetId = '1Tm4RU-un_72kFzHPLUO7gbCzupMnSgIJFc6dwh6P23s';
+        const range = 'KO_VIAJES_ORDENADO!A:Z';
+
+        try {
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (!data.values || data.values.length <= 1) {
+                document.getElementById('tarjetas-container').innerHTML = "<p>No hay viajes disponibles.</p>";
+                return;
+            }
+
+            encabezadosGlobales = data.values[0];
+            todosLosViajes = data.values.slice(1);
+            
+            mostrarTarjetas(todosLosViajes);
+
+        } catch (error) {
+            console.error("Error cargando datos:", error);
+            document.getElementById('tarjetas-container').innerHTML = "<p>Error al cargar los datos.</p>";
+        }
+    }
+
+   function mostrarTarjetas(filas) {
+    const container = document.getElementById('tarjetas-container');
+    container.innerHTML = ''; 
+
+    filas.forEach(fila => {
+        if (!fila || fila.length < 5) return; // Seguridad
+
+        // --- ÍNDICES REALES SEGÚN TU CSV ---
+        const idxFecha = 1;
+        const idxHora  = 2;
+        const idxDesde = 3;
+        const idxPlazas = 4;
+        const idxNom   = 5;
+        const idxCont  = 6;
+        const idxComen = 7;
+        const idxTipo  = 8;
+
+        const tipoViaje = (fila[idxTipo] || '').trim();
+        const tarjeta = document.createElement('div');
+        tarjeta.className = `tarjeta ${tipoViaje === "Busco Viatge" ? 'tarjeta-busco' : 'tarjeta-ofrezco'}`;
+
+        // 1. Cabecera: FECHA - TIPO - SALIDA
+        let htmlInner = `
+            <div class="cabecera-tarjeta">
+                <span class="tipo-header">${tipoViaje === "Busco Viatge" ? 'BUSCO' : 'OFEREIXO'}</span>
+                 <span class="fecha-header"> ${fila[idxFecha] || ''}</span>
+
+            </div>
+        `;
+
+        // 2. Cuerpo: Mostramos el resto de campos importantes
+        // Definimos cuáles queremos mostrar abajo para que no se repitan
+        const camposCuerpo = [
+            { idx: idxDesde, label: "Desde" },
+            { idx: idxHora, label: "Hora" },
+            { idx: idxPlazas, label: tipoViaje === "Ofereixo Viatge" ? "Places disponibles" : "Places necessàries" },
+            { idx: idxNom, label: "Nom" },
+            { idx: idxCont, label: "Contacte" },
+            { idx: idxComen, label: "Comentaris" }
+        ];
+
+        camposCuerpo.forEach(campo => {
+            const valor = fila[campo.idx];
+            if (valor && valor.trim() !== "") {
+                htmlInner += `
+                    <div class="campo">
+                        <strong>${campo.label}</strong>
+                        <span>${valor}</span>
+                    </div>
+                `;
+            }
+        });
+
+        tarjeta.innerHTML = htmlInner;
+        container.appendChild(tarjeta);
+    });
+}
+
+    // --- LÓGICA DE FILTROS ---
+    function filtrarViajes(tipo) {
+        if (tipo === 'todos') {
+            mostrarTarjetas(todosLosViajes);
+        } else {
+            const filtrados = todosLosViajes.filter(f => f[8] === tipo);
+            mostrarTarjetas(filtrados);
+        }
+    }
+
+    // --- LÓGICA DE ORDENAR ---
+    function ordenarPorFecha(orden) {
+        const copiaViajes = [...todosLosViajes];
+        
+        copiaViajes.sort((a, b) => {
+            // Ajusta el '3' al índice real de tu columna de Fechas (Si A=0, B=1, C=2, D=3...)
+            const indiceFecha = 3; 
+            const fechaA = convertirFecha(a[indiceFecha]); 
+            const fechaB = convertirFecha(b[indiceFecha]);
+            
+            return orden === 'asc' ? fechaA - fechaB : fechaB - fechaA;
+        });
+        
+        mostrarTarjetas(copiaViajes);
+    }
+
+    function convertirFecha(stringFecha) {
+        if (!stringFecha) return new Date(0);
+        // Convierte DD/MM/AAAA a un formato que Javascript entienda
+        const partes = stringFecha.split('/');
+        if (partes.length === 3) {
+            return new Date(`${partes[2]}-${partes[1]}-${partes[0]}`);
+        }
+        return new Date(0); // Si no es una fecha válida, la manda al final
+    }
+
+    // --- EVENT LISTENERS (La forma correcta de conectar los botones) ---
+    document.addEventListener('DOMContentLoaded', () => {
+        cargarDatos();
+
+        // Conectamos los clics a los botones
+        document.getElementById('btn-todos').addEventListener('click', () => filtrarViajes('todos'));
+        document.getElementById('btn-busco').addEventListener('click', () => filtrarViajes('Busco Viatge'));
+        document.getElementById('btn-ofrezco').addEventListener('click', () => filtrarViajes('Ofereixo Viatge'));
+        
+        // Conectamos el selector de ordenar
+        document.getElementById('ordenarFecha').addEventListener('change', (e) => ordenarPorFecha(e.target.value));
+    });
+</script>
+
+
+</Layout>
+

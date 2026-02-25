@@ -1,33 +1,25 @@
-// src/content/config.ts (VERSION OBLIGATORIA Y LIMPIA)
-
 import { defineCollection, z } from 'astro:content';
 
-const obrasCollection = defineCollection({
-  type: 'content', 
+const obras = defineCollection({
+  type: 'data', 
   schema: z.object({
-    
     titulo: z.string(),
+    categoria: z.string(),
+    categoria_manual: z.string().optional().nullable(),
+    compania: z.string(),
+    web_compania: z.string().optional().nullable(),
+    video: z.string().optional().nullable(),
+    entradas_url: z.string().optional().nullable(),
+    fotos: z.array(z.string()).optional().default([]),
+    pases: z.array(z.object({
+      fecha: z.string(),
+      hora: z.string(),
+    })).optional().default([]),
     
-    // Todos estos son AHORA OBLIGATORIOS (sin .optional())
-    categoria: z.string().default('CIRC'),
-   categoria_manual: z.string().default(""), // Si se elige "Otro", esto es obligatorio
-    compania: z.string(), 
-    web_compania: z.string(),
-    video: z.string(),
-    entradas_url: z.string(),
-    
-    fotos: z.array(z.string()).default([]), 
-    pases: z.array(
-      z.object({
-        fecha: z.union([z.string(), z.date()]).transform((val) => {
-            return new Date(val).toISOString().split('T')[0];
-        }),
-        hora: z.string(),
-      })
-    ).default([]),
+    // Al usar fields.text, aquí recibimos un string simple
+    sinopsis_cat: z.string().optional().nullable(), 
+    sinopsis_eng: z.string().optional().nullable(),
   }),
 });
 
-export const collections = {
-  'obras': obrasCollection,
-};
+export const collections = { 'obras': obras };
