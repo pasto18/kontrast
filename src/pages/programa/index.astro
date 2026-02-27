@@ -1,0 +1,200 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+const obrasFiles = import.meta.glob('/src/content/obras/*.json', { eager: true });
+const listaObras = Object.values(obrasFiles).map((file: any) => file.default || file);
+
+const cssPath = path.resolve('./src/styles/global.css');
+const globalCSS = fs.readFileSync(cssPath, 'utf-8');
+
+// --- NUEVA FUNCIÓN DE FORMATEO ---
+function formatearFechaPrograma(fechaStr: string) {
+    if (!fechaStr) return "";
+    
+    // Separamos el string para evitar errores de zona horaria (UTC vs Local)
+    const [year, month, day] = fechaStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+
+    // Nombres de los días en Catalán
+    const diesSetmana = [
+        "Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"
+    ];
+
+    const diaNom = diesSetmana[date.getDay()];
+    const diaNum = day.toString().padStart(2, '0');
+    const mesNum = month.toString().padStart(2, '0');
+
+    return `${diaNom} ${diaNum}/${mesNum}`;
+}
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa Festival 2026</title>
+    <link rel="manifest" href="/programa/manifest.json">
+    
+    <!-- Inyectamos el CSS global -->
+    <style is:inline set:html={globalCSS}></style>
+    
+    <style>
+        /* Usamos estilos globales dentro de este componente para que afecten al HTML */
+        :global(html), :global(body) { 
+            background: #000 !important; 
+            margin: 0; 
+            padding: 0; 
+            color: #fff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .lista-container {
+            width: 100%;
+            max-width: 600px; /* Optimización para móvil/PWA */
+            margin: 0 auto;
+        }
+
+        .obra-card { 
+            position: relative; 
+            width: 100%;
+            margin-bottom: 0px; 
+            background: #000;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .hero-container { 
+            position: relative; 
+            width: 100%; 
+            height: 50vh; /* Ajustado un poco más alto para impacto */
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end; /* Alinea el texto abajo */
+        }
+
+        .hero-img { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            z-index: 0;
+        }
+
+        .hero-gradient { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%); 
+            z-index: 1; 
+        }
+
+        .hero-text { 
+            position: relative; 
+            padding: 20px;
+            z-index: 2; 
+            width: 100%;
+        }
+
+        .categoria-tag { 
+            display: inline-block; 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            color: #000000 !important; 
+            background: #ffffff !important; 
+            padding: 4px 12px; 
+            border-radius: 50px; 
+            text-transform: uppercase; 
+            margin-bottom: 10px;
+        }
+
+        .obra-titulo { 
+            font-size: 2.8rem; 
+            margin: 0; 
+            color: #fff; 
+            text-transform: uppercase; 
+            font-weight: 900; 
+            line-height: 0.85;
+            letter-spacing: -1px;
+        }
+
+        .obra-compania { 
+            font-size: 1.2rem; 
+            margin: 0 0 0 0; 
+            color: #ffffff;
+            background-color: transparent;
+            border-color: transparent; 
+            font-weight: 400;
+            padding: 0;
+        }
+
+        .info-container { 
+            padding: 20px; 
+            background: #000;
+        }
+
+        .pases-box { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+        }
+
+        .sinopsis { 
+            color: #ffffff; 
+            line-height: 1.4; 
+            font-size: 1rem; 
+            text-align: justify;
+        }
+    </style>
+    <!-- Registro del Service Worker -->
+    <script is:inline>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/programa/sw.js')
+                    .then(reg => console.log('Service Worker registrado!', reg))
+                    .catch(err => console.warn('Error al registrar el SW', err));
+            });
+        }
+    </script>
+</head>
+</head>
+<body>
+
+    <main class="lista-container">
+        {listaObras.map((obra) => (
+            <div class="obra-card">
+                <div class="hero-container">
+                    {obra.fotos && obra.fotos.length > 0 && (
+                        <img src={obra.fotos[0]} class="hero-img" alt={obra.titulo} />
+                    )}
+                    <div class="hero-gradient"></div>
+                    <div class="hero-text">
+                        <span class="categoria-tag">{obra.categoria || 'CIRC'}</span>
+                        <h2 class="obra-titulo">{obra.titulo}</h2>
+                        <p class="obra-compania">{obra.compania}</p>
+                    </div>
+                </div>
+                
+                <div class="info-container">
+    {obra.pases && obra.pases.map((p: any) => (
+        <div class="pases-box">
+            {/* Usamos nuestra función aquí */}
+            <span class="fecha-label">{formatearFechaPrograma(p.fecha)}</span> 
+            <span class="hora-label"> — {p.hora}</span>
+        </div>
+    ))}
+    
+    <div class="sinopsis">
+        {obra.sinopsis_cat || obra.sinopsis}
+    </div>
+</div>
+            </div>
+        ))}
+    </main>
+
+</body>
+</html>
