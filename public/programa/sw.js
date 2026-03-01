@@ -1,21 +1,20 @@
-const CACHE_NAME = 'festival-programa-v1';
-// Lista de archivos que queremos que funcionen sin internet
-const ASSETS_TO_CACHE = [
-  '/programa',           // La página principal del programa
-  '/styles/global.css',  // El CSS
+const CACHE_NAME = 'kontrast-v2'; // Cambia el nombre si haces cambios para forzar actualización
+
+// Archivos críticos iniciales
+const PRE_CACHE = [
+  '/programa',
+  '/programa/',
+  '/styles/global.css',
   '/programa/manifest.json'
 ];
 
-// 1. Instalación: Guardar archivos en la caché del móvil
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRE_CACHE))
   );
+  self.skipWaiting(); // Fuerza a que el SW se active de inmediato
 });
 
-// 2. Activación: Limpiar cachés viejas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -24,14 +23,30 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
+  self.clients.claim(); // Toma el control de la página inmediatamente
 });
 
-// 3. Intercepción: Responder desde la caché si no hay red
+// ESTRATEGIA: Intentar Red -> Si falla -> Buscar en Caché
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Si el archivo está en caché, lo devuelve. Si no, intenta buscarlo en internet.
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        // Si la respuesta es buena, guardamos una copia en el caché para el futuro
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
+        return response;
+      })
+      .catch(() => {
+        // Si no hay internet (fetch falla), buscamos en el caché
+        return caches.match(event.request).then((res) => {
+            if (res) return res;
+            // Si incluso el caché falla, intentamos devolver la página principal del programa
+            if (event.request.mode === 'navigate') {
+                return caches.match('/programa');
+            }
+        });
+      })
   );
 });
