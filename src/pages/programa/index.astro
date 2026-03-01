@@ -169,25 +169,15 @@ function formatearFechaPrograma(fechaStr: string) {
         }
     </style>
     <script is:inline>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/programa/sw.js', { scope: '/programa/' })
-        .then(reg => {
-          console.log('SW registrado con éxito');
-          // Truco pro: forzar actualización si hay cambios
-          reg.onupdatefound = () => {
-            const installingWorker = reg.installing;
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                console.log('Nueva versión disponible, por favor recarga.');
-              }
-            };
-          };
-        })
-        .catch(err => console.error('Error registro SW:', err));
-    });
-  }
-</script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                 // Ahora la ruta es /sw.js porque lo movimos a la raíz de public
+                     navigator.serviceWorker.register('/sw.js')
+                      .then(reg => console.log('✅ SW Activo'))
+                     .catch(err => console.error('❌ Error:', err));
+         });
+        }
+    </script>
 </head>
 </head>
 <body>

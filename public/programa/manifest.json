@@ -1,10 +1,11 @@
 {
-  "name": "Programa Festival",
-  "short_name": "Festival",
+  "name": "Programa Kontrast",
+  "short_name": "Kontrast",
   "start_url": "/programa/", 
   "display": "standalone",
   "background_color": "#1a1a1a",
   "theme_color": "#ff4500",
+  "scope": "/programa/",
   "icons": [
     {
       "src": "https://via.placeholder.com/192/ff4500/ffffff?text=FEST",
