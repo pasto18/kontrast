@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kontrast-v5';
+const CACHE_NAME = 'kontrast-v6';
 const OFFLINE_URL = '/programa/';
 
 const ASSETS_TO_CACHE = [
@@ -27,31 +27,21 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  const url = event.request.url;
-
-  // Interceptamos: la página /programa/ Y las imágenes de obras
-  const esPagina = url.includes('/programa/');
-  const esImagenObra = url.includes('/img/obras/');
-
-  if (!esPagina && !esImagenObra) return;
+  // Solo interceptamos peticiones dentro del scope /programa/
+  if (!event.request.url.includes('/programa/')) return;
 
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      // Si está en caché, lo devolvemos
       if (cachedResponse) {
         return cachedResponse;
       }
-      // Si no, lo descargamos y lo guardamos en caché para la próxima vez
       return fetch(event.request).then((networkResponse) => {
         return caches.open(CACHE_NAME).then((cache) => {
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
         });
       }).catch(() => {
-        // Si falla la red y es navegación, devolvemos la página offline
-        if (event.request.mode === 'navigate') {
-          return caches.match(OFFLINE_URL);
-        }
+        return caches.match(OFFLINE_URL);
       });
     })
   );
