@@ -5,7 +5,6 @@ const ASSETS_TO_CACHE = [
   '/programa/',
   '/programa/index.html', // Vercel a veces lo necesita así
   '/programa/manifest.json',
-  '/styles/global.css'
 ];
 
 self.addEventListener('install', (event) => {

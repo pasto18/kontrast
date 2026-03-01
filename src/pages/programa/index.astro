@@ -171,14 +171,12 @@ function formatearFechaPrograma(fechaStr: string) {
     <script is:inline>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                 // Ahora la ruta es /sw.js porque lo movimos a la raíz de public
-                     navigator.serviceWorker.register('/sw.js')
+                     navigator.serviceWorker.register('/programa/sw.js', { scope: '/programa/' })
                       .then(reg => console.log('✅ SW Activo'))
                      .catch(err => console.error('❌ Error:', err));
          });
         }
     </script>
-</head>
 </head>
 <body>
 
