@@ -3,7 +3,10 @@
   "categoria": "Otro",
   "categoria_manual": "Dansa - Performance",
   "compania": "Los Informalls",
-  "fotos": [],
+  "video": "https://www.youtube.com/watch?v=-GOBtk7KMbE",
+  "fotos": [
+    "/img/obras/perdon/fotos/0.jpg"
+  ],
   "pases": [
     {
       "fecha": "2026-04-18",

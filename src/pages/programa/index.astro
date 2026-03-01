@@ -34,7 +34,7 @@ function formatearFechaPrograma(fechaStr: string) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programa Festival 2026</title>
+    <title>KONTRAST Programa 2026</title>
     <link rel="manifest" href="/programa/manifest.json">
     
     <!-- Inyectamos el CSS global -->
@@ -70,7 +70,8 @@ function formatearFechaPrograma(fechaStr: string) {
             height: 50vh; /* Ajustado un poco más alto para impacto */
             overflow: hidden;
             display: flex;
-            align-items: flex-end; /* Alinea el texto abajo */
+            flex-direction: column;
+            align-items: flex-start; 
         }
 
         .hero-img { 
@@ -93,24 +94,40 @@ function formatearFechaPrograma(fechaStr: string) {
             z-index: 1; 
         }
 
+        .bottom-group {
+    /* 3. EL TRUCO MÁGICO: El margen automático empuja hacia abajo */
+    margin-top: auto; 
+    width: 100%;
+}
+
         .hero-text { 
-            position: relative; 
-            padding: 20px;
-            z-index: 2; 
-            width: 100%;
-        }
+    /* 1. Posicionamos sobre toda la imagen */
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    z-index: 2; 
+    padding: 20px;
+
+    /* 2. Activamos Flexbox en vertical */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Todo empieza arriba */
+}
 
         .categoria-tag { 
-            display: inline-block; 
-            font-size: 0.7rem; 
-            font-weight: 800; 
-            color: #000000 !important; 
-            background: #ffffff !important; 
-            padding: 4px 12px; 
-            border-radius: 50px; 
-            text-transform: uppercase; 
-            margin-bottom: 10px;
-        }
+    /* Se queda arriba por naturaleza */
+    display: inline-block; 
+    font-size: .9rem; 
+    font-weight: bold; 
+    color: #000 !important; 
+    background: #fff !important; 
+    padding: 3px 10px; 
+    border-radius: 50px; 
+    text-transform: uppercase; 
+    width: fit-content; /* Importante para que no ocupe todo el ancho */
+}
 
         .obra-titulo { 
             font-size: 2.8rem; 
@@ -123,7 +140,7 @@ function formatearFechaPrograma(fechaStr: string) {
         }
 
         .obra-compania { 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             margin: 0 0 0 0; 
             color: #ffffff;
             background-color: transparent;
@@ -133,12 +150,12 @@ function formatearFechaPrograma(fechaStr: string) {
         }
 
         .info-container { 
-            padding: 20px; 
+    padding: 0px 20px 30px 20px; 
             background: #000;
         }
 
         .pases-box { 
-            font-size: 1.1rem; 
+            font-size: 1.4rem; 
             font-weight: 700; 
             margin-bottom: 12px; 
         }
@@ -148,6 +165,7 @@ function formatearFechaPrograma(fechaStr: string) {
             line-height: 1.4; 
             font-size: 1rem; 
             text-align: justify;
+            white-space: pre-line; 
         }
     </style>
     <!-- Registro del Service Worker -->
@@ -165,7 +183,13 @@ function formatearFechaPrograma(fechaStr: string) {
 <body>
 
     <main class="lista-container">
-        {listaObras.map((obra) => (
+    {listaObras.map((obra) => {
+        // --- LÓGICA DE CATEGORÍA ---
+        const categoriaAMostrar = (obra.categoria === 'Otro' && obra.categoria_manual) 
+            ? obra.categoria_manual 
+            : (obra.categoria || 'CIRC');
+
+        return (
             <div class="obra-card">
                 <div class="hero-container">
                     {obra.fotos && obra.fotos.length > 0 && (
@@ -173,28 +197,32 @@ function formatearFechaPrograma(fechaStr: string) {
                     )}
                     <div class="hero-gradient"></div>
                     <div class="hero-text">
-                        <span class="categoria-tag">{obra.categoria || 'CIRC'}</span>
-                        <h2 class="obra-titulo">{obra.titulo}</h2>
-                        <p class="obra-compania">{obra.compania}</p>
-                    </div>
+                    {/* Este se queda arriba */}
+                     <span class="categoria-tag">{categoriaAMostrar}</span>
+    
+                     {/* Este div será empujado al fondo por el margin-top: auto */}
+                     <div class="bottom-group">
+                         <h2 class="obra-titulo">{obra.titulo}</h2>
+                         <p class="obra-compania">{obra.compania}</p>
+                     </div> 
                 </div>
+             </div>
                 
                 <div class="info-container">
-    {obra.pases && obra.pases.map((p: any) => (
-        <div class="pases-box">
-            {/* Usamos nuestra función aquí */}
-            <span class="fecha-label">{formatearFechaPrograma(p.fecha)}</span> 
-            <span class="hora-label"> — {p.hora}</span>
-        </div>
-    ))}
-    
-    <div class="sinopsis">
-        {obra.sinopsis_cat || obra.sinopsis}
-    </div>
-</div>
+                    {obra.pases && obra.pases.map((p: any) => (
+                        <div class="pases-box">
+                            <span class="fecha-label">{formatearFechaPrograma(p.fecha)}</span> 
+                            <span class="hora-label"> — {p.hora}</span>
+                        </div>
+                    ))}
+                    <div class="sinopsis">
+                        {obra.sinopsis_cat || obra.sinopsis}
+                    </div>
+                </div>
             </div>
-        ))}
-    </main>
+        );
+    })}
+</main>
 
 </body>
 </html>
