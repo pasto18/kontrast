@@ -1,0 +1,19 @@
+{
+  "titulo": "ERREURJEAN",
+  "categoria": "MÚSICA",
+  "categoria_manual": "Música",
+  "compania": "-",
+  "fotos": [
+    "/img/obras/erreurjean/fotos/0.webp",
+    "/img/obras/erreurjean/fotos/1.webp",
+    "/img/obras/erreurjean/fotos/2.webp"
+  ],
+  "pases": [
+    {
+      "fecha": "2026-04-10",
+      "hora": "23:30 - Konvent"
+    }
+  ],
+  "sinopsis_cat": "Entre les ruïnes digitals i les ones paràsites d’un món en bucle, Jean Peiry, àlies Erreurjean, s’imposa com un espectre sonor en revolta. Experimentant amb el so des de fa anys, només recentment l’artista friburguès ha decidit treure de la seva esfera privada aquest projecte situat als confins de l’electrònica, el post-punk i la noise. Amb els seus sintetitzadors, caixes de ritmes desajustades i samples mal enregistrats, provoca intencionadament l’error i el caos.\nA vegades xiuxiuejada, a vegades cridada, la seva veu se superposa a bucles industrials i beats crus. Com un alliberament, la seva música és un crit de ràbia davant dels errors del sistema.",
+  "sinopsis_eng": "sinopsis_eng"
+}

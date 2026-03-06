@@ -42,7 +42,7 @@ function formatearFecha(fechaStr) {
     const fecha = new Date(fechaStr);
     // Usamos el idioma actual para el nombre del día
     const locale = lang === 'en' ? 'en-GB' : 'ca-ES';
-    const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'long' });
+    const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'short' });
     const dia = fecha.getDate().toString().padStart(2, '0');
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
     return `${diaSemana} ${dia}/${mes}`.toUpperCase();
@@ -61,8 +61,8 @@ function formatearFecha(fechaStr) {
     <div class="contenedor-principal contenido-flotante" style="padding: 0 2% ;">
         <header>
             <h1 class="obra-titulo">{data.titulo}</h1>
-            <div style="display: flex; flex:row; height: fit-content; align-items:center; gap: 15px; margin-top: 7vh;">
-                <p class="obra-compania">
+                <div class="obra-header-meta">                
+                    <p class="obra-compania">
                     <a href={data.web_compania || '#'} target="_blank">{data.compania}</a>
                 </p>
                 {tipoShow && <span class="etiqueta-tipo gigante">{tipoShow}</span>}
@@ -86,7 +86,7 @@ function formatearFecha(fechaStr) {
 
         <div class="espacio-video"></div>
 
-        <div class="col-izq bg-blanco">
+        <div>
             <div class="obra-sinopsis">
                 {lang === 'en' ? (
                     data.sinopsis_eng && <div class="lang-section" set:html={renderMarkdown(data.sinopsis_eng)} />
@@ -95,7 +95,7 @@ function formatearFecha(fechaStr) {
                 )}
             </div>
 
-            <div class="galeria-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 30px;">
+            <div class="galeria-grid">
                 {data.fotos && data.fotos.map(foto => (
                     <img src={foto} alt={`Foto de ${data.titulo}`} class="galeria-img" style="width: 100%; border-radius: 8px;"/>
                 ))}
@@ -110,10 +110,9 @@ function formatearFecha(fechaStr) {
     #video-wrapper { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; }
     :global(iframe#youtube-player) { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; max-width: none !important; pointer-events: none; }
     #video-dimmer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 2; cursor: pointer; transition: background-color 1s ease; display: flex; align-items: center; justify-content: center; }
-    .contenedor-principal { position: relative; z-index: 10; max-width: 100vw; padding: 0 6%; pointer-events: none; }
+    .contenedor-principal { position: relative; z-index: 10; width: 100%; max-width: 100vw; padding: 0 0%; pointer-events: none; }    
     .espacio-video { height: 55vh; width: 100%; }
     header, .col-der, .col-izq, .btn-volver { pointer-events: auto; }
-    .bg-blanco { background-color: rgba(0, 0, 0, 0.85); padding: 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 20px; color: var(--c-blanco); }
     .obra-titulo { text-shadow: 0 5px 15px rgba(0,0,0,0.5); color:var(--c-blanco); mix-blend-mode: difference; }
     .lang-section :global(p) { margin-bottom: 1rem; line-height: 1.6; }
     .lang-section :global(h1), .lang-section :global(h2) { margin-top: 1.5rem; margin-bottom: 0.5rem; }

@@ -1,8 +1,14 @@
 {
-  "titulo": "Mirror",
+  "titulo": "Miror",
   "categoria": "CIRC",
   "compania": "Muchmuche Company",
-  "fotos": [],
+  "web_compania": "muchmuchecompany.com",
+  "video": "https://www.youtube.com/watch?v=LUIDqQFDzbE",
+  "fotos": [
+    "/img/obras/miror/fotos/0.webp",
+    "/img/obras/miror/fotos/1.webp",
+    "/img/obras/miror/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-12",

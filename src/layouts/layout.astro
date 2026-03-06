@@ -27,6 +27,10 @@ const labels = {
 const usePath = (path: string) => {
   return lang === 'en' ? `/en${path}` : path;
 };
+
+// Detectamos si estamos en la home
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '/en/';
+const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
 ---
 
 <!DOCTYPE html>
@@ -40,13 +44,14 @@ const usePath = (path: string) => {
     
     <nav class="side-nav" id="side-menu">
         <ul>
-            <li><a href="#programacion">{labels.programacion}</a></li>
-            <li><a href="#historia">{labels.historia}</a></li>
-            <li><a href="#tickets">{labels.tickets}</a></li>
-            <li><a href="#info">{labels.info}</a></li>
+            <li><a href={`${homePrefix}#programacion`}>{labels.programacion}</a></li>
+            <li><a href={`${homePrefix}#tickets`}>{labels.tickets}</a></li>
+            <li><a href={`${homePrefix}#info`}>{labels.info}</a></li>
             
             <li><a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a></li>
             <li><a href={usePath("/mapa")}>{labels.mapa}</a></li>
+
+            <li><a href={`${homePrefix}#historia`}>{labels.historia}</a></li>
             
             <hr style="margin: 10px 0; opacity: 0.3;" />
             
@@ -57,6 +62,33 @@ const usePath = (path: string) => {
             </li>
         </ul>
     </nav>
+
+    <!-- Botó hamburguesa mòbil -->
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Obrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Menú fullscreen mòbil -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href={`${homePrefix}#programacion`} class="mobile-menu-link">{labels.programacion}</a></li>
+                
+                <li><a href={`${homePrefix}#tickets`} class="mobile-menu-link">{labels.tickets}</a></li>
+                <li><a href={`${homePrefix}#info`} class="mobile-menu-link">{labels.info}</a></li>
+                <li><a href={usePath("/cotxe-sharing-page")} class="mobile-menu-link">{labels.coches}</a></li>
+                <li><a href={usePath("/mapa")} class="mobile-menu-link">{labels.mapa}</a></li>
+                <li><a href={`${homePrefix}#historia`} class="mobile-menu-link">{labels.historia}</a></li>
+                <li class="mobile-menu-lang">
+                    <a href={labels.switchUrl} class="mobile-menu-link mobile-menu-link--lang">
+                        {labels.switchLang}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     
     <slot />
 
@@ -72,6 +104,33 @@ const usePath = (path: string) => {
             </svg>
         </a>
     </aside>
+
+    <script>
+        // --- Menú hamburguesa mòbil ---
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const overlay = document.getElementById('mobile-menu-overlay');
+
+        function openMenu() {
+            overlay.classList.add('is-open');
+            hamburgerBtn.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            overlay.classList.remove('is-open');
+            hamburgerBtn.classList.remove('is-active');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            overlay.classList.contains('is-open') ? closeMenu() : openMenu();
+        });
+
+        // Tancar al fer clic en qualsevol enllaç del menú
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
 
     <script>
         import { initScrollAnimations } from '../scripts/animations.js';

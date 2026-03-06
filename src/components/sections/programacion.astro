@@ -19,7 +19,6 @@ function formatearFecha(fechaStr) {
     if (!fechaStr) return "";
     const fecha = new Date(fechaStr);
     
-    // Usamos el idioma actual para el formato de fecha
     const locale = lang === 'en' ? 'en-GB' : 'ca-ES';
     const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'long' });
     const dia = fecha.getDate().toString().padStart(2, '0');
@@ -27,7 +26,7 @@ function formatearFecha(fechaStr) {
     return `${diaSemana} ${dia}/${mes}`.toUpperCase();
 }
 
-// --- LÓGICA DE AGRUPACIÓN (Se mantiene igual) ---
+// --- LÓGICA DE AGRUPACIÓN ---
 const obrasPorDia = {};
 obras.forEach(obra => {
     obra.data.pases.forEach(pase => {
@@ -79,7 +78,6 @@ fechasOrdenadas.forEach(fecha => {
                         : data.categoria;
 
                     return (
-                        /* CAMBIO CLAVE: Usamos baseRoute para que el enlace sea /en/obras/ o /obras/ */
                         <a href={`${baseRoute}${item.id}`} class="card-link">
                             <article class="card-obra">
                                 <div class="card-img-container">
@@ -106,3 +104,145 @@ fechasOrdenadas.forEach(fecha => {
         </div>
     ))}
 </div>
+
+<style>
+  /* Solo en móvil: acordeón */
+  @media (max-width: 768px) {
+
+    /* El separador de fecha se convierte en botón */
+    .separador-fecha {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    /* Indicador +/- al lado derecho */
+    .separador-fecha::after {
+      content: '+';
+      font-size: 2rem;
+      font-weight: 100;
+      line-height: 1;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: transform 0.3s ease, content 0.1s;
+      color: var(--c-blanco);
+      width: 2rem;
+      text-align: center;
+    }
+
+    .separador-fecha.abierto::after {
+      content: '−';
+    }
+
+    /* La fila de obras se oculta por defecto en móvil */
+    .fila-obras {
+      display: none;
+      overflow: hidden;
+    }
+
+    /* Cuando el bloque está abierto, se muestra */
+    .bloque-dia.abierto .fila-obras {
+      display: flex;
+    }
+
+    /* --- EFECTE SCROLL MÒBIL ---
+       Per defecte: B/N (igual que desktop sense hover) */
+    .card-link {
+      filter: grayscale(100%);
+      transition: filter 0.4s ease;
+    }
+
+    /* Quan la fila té alguna card activa, les NO actives s'apaguen */
+    .fila-obras.has-active .card-link:not(.mobile-active) {
+      filter: grayscale(100%) brightness(0.7) blur(3px);
+      opacity: 0.5;
+    }
+
+    /* La card activa (≥30% visible): color complet + info visible */
+    .card-link.mobile-active {
+      filter: none !important;
+      opacity: 1 !important;
+    }
+
+    .card-link.mobile-active .card-content {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  function initAcordeon() {
+    // Solo activamos en móvil
+    if (window.innerWidth > 768) return;
+
+    const bloques = document.querySelectorAll('.bloque-dia');
+
+    bloques.forEach((bloque) => {
+      const separador = bloque.querySelector('.separador-fecha');
+      if (!separador) return;
+
+      separador.addEventListener('click', () => {
+        const estaAbierto = bloque.classList.contains('abierto');
+
+        // Cierra todos
+        bloques.forEach((b) => {
+          b.classList.remove('abierto');
+          b.querySelector('.separador-fecha')?.classList.remove('abierto');
+        });
+
+        // Si estaba cerrado, abre este
+        if (!estaAbierto) {
+          bloque.classList.add('abierto');
+          separador.classList.add('abierto');
+
+          // Scroll suave hasta el bloque recién abierto
+          setTimeout(() => {
+            bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        }
+      });
+    });
+  }
+
+  // Ejecutamos al cargar y también si cambia el tamaño de ventana
+  document.addEventListener('DOMContentLoaded', initAcordeon);
+  window.addEventListener('resize', initAcordeon);
+
+
+  // --- EFECTE SCROLL MÒBIL ---
+  // Quan una card ocupa ≥30% de la pantalla s'activa (color + info visible).
+  // Quan en queda menys del 30%, torna a B/N sense info.
+
+  function initMobileScrollCards() {
+    if (window.innerWidth > 768) return;
+
+    const cards = document.querySelectorAll('.card-link');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const fila = entry.target.closest('.fila-obras');
+
+          if (entry.isIntersecting) {
+            entry.target.classList.add('mobile-active');
+            if (fila) fila.classList.add('has-active');
+          } else {
+            entry.target.classList.remove('mobile-active');
+            if (fila && !fila.querySelector('.mobile-active')) {
+              fila.classList.remove('has-active');
+            }
+          }
+        });
+      },
+      { threshold: 0.8 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
+  document.addEventListener('DOMContentLoaded', initMobileScrollCards);
+  window.addEventListener('resize', initMobileScrollCards);
+</script>

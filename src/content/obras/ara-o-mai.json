@@ -2,7 +2,9 @@
   "titulo": "Ara o Mai",
   "categoria": "CIRC",
   "compania": "La Crida Company",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/ara-o-mai/fotos/0.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-19",

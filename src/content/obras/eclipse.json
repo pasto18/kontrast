@@ -2,7 +2,13 @@
   "titulo": "Eclipse",
   "categoria": "CIRC",
   "compania": "Léo Rousselet",
-  "fotos": [],
+  "web_compania": "https://cirquepetitesnatures.fr/eclipse-leo-rousselet/",
+  "video": "https://www.youtube.com/watch?v=6Ve2ncwQDZU",
+  "fotos": [
+    "/img/obras/eclipse/fotos/0.webp",
+    "/img/obras/eclipse/fotos/1.webp",
+    "/img/obras/eclipse/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-17",

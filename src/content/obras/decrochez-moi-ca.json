@@ -2,7 +2,11 @@
   "titulo": "Décrochez-moi ça",
   "categoria": "CIRC",
   "compania": "Bêtes de Foire",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/decrochez-moi-ca/fotos/0.webp",
+    "/img/obras/decrochez-moi-ca/fotos/1.webp",
+    "/img/obras/decrochez-moi-ca/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-10",

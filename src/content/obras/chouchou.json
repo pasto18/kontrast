@@ -2,7 +2,11 @@
   "titulo": "Chouchou",
   "categoria": "CIRC",
   "compania": "SPPI",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/chouchou/fotos/0.webp",
+    "/img/obras/chouchou/fotos/1.webp",
+    "/img/obras/chouchou/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-17",

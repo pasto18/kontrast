@@ -2,7 +2,12 @@
   "titulo": "Muovipussi + TBC",
   "categoria": "MÚSICA",
   "compania": "Muovipussi + TBC",
-  "fotos": [],
+  "web_compania": "https://www.instagram.com/muovipussimusic",
+  "fotos": [
+    "/img/obras/muovipussi-tbc/fotos/0.webp",
+    "/img/obras/muovipussi-tbc/fotos/1.webp",
+    "/img/obras/muovipussi-tbc/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-17",

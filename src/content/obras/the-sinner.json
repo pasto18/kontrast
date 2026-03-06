@@ -2,13 +2,19 @@
   "titulo": "The Sinner",
   "categoria": "CIRC",
   "compania": "Madame Paulette",
-  "fotos": [],
+  "web_compania": "www.paulettesanmartin.com",
+  "video": "https://youtu.be/FDzE0-1HBdo",
+  "fotos": [
+    "/img/obras/the-sinner/fotos/0.webp",
+    "/img/obras/the-sinner/fotos/1.webp",
+    "/img/obras/the-sinner/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-19",
       "hora": "14:00 - Konvent"
     }
   ],
-  "sinopsis_cat": "Adeus és un espectacle coreogràfic d’equilibris, contorsions i música en directe que ofereix una perspectiva original sobre la vellesa, explicada no com un moment de decadència, sinó com una etapa de la vida que les protagonistes, cinc dones, esperen amb impaciència. Amb un enfocament irònic, l’obra és una narració singular que juga amb les convencions socials i culturals. El tema de la vellesa, profundament humà i universal, s’explora a través dels cossos i dels objectes.",
+  "sinopsis_cat": "Una proposta de mini teatre de titelles d'adults una comèdia íntima, per a tres espectadors que espien a través d'un confessionari les fantasies i contradiccions de l'eròtica del pecat, ell o la \"voyeur\" que s'agenolla no per a confessar-se, sinó per a gaudir d'unes escenes de lúbrica concupiscència plenes de pecat, Un divertimento que busca provocar a mà de Madame Paulette.",
   "sinopsis_eng": "sinopsis_eng"
 }

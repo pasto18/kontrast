@@ -3,7 +3,10 @@
   "categoria": "Otro",
   "categoria_manual": "Teatre - Danza",
   "compania": "Sarah Anglada",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/rose-bif/fotos/0.webp",
+    "/img/obras/rose-bif/fotos/1.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-11",
