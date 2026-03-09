@@ -71,7 +71,7 @@ function formatearFecha(fechaStr) {
 
         <div class="col-der">
             <div class="caja-tickets">
-                <ul style="padding: 0; margin-bottom: 0px;">
+                <ul style="padding: 0; margin-top: 3rem;">
                     {data.pases.map(pase => (
                         <li class="pase-item">
                            {formatearFecha(pase.fecha)} - {pase.hora}
@@ -96,10 +96,24 @@ function formatearFecha(fechaStr) {
             </div>
 
             <div class="galeria-grid">
-                {data.fotos && data.fotos.map(foto => (
-                    <img src={foto} alt={`Foto de ${data.titulo}`} class="galeria-img" style="width: 100%; border-radius: 8px;"/>
-                ))}
-            </div>
+    {data.fotos && data.fotos.map((foto, i) => (
+        <img 
+            src={foto} 
+            alt={`Foto de ${data.titulo}`} 
+            class="galeria-img" 
+            style="width: 100%; border-radius: 8px;"
+            data-index={i}
+        />
+    ))}
+</div>
+
+<!-- Lightbox (solo se usa en desktop) -->
+<div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕</button>
+    <button class="lightbox-arrow prev" id="lightbox-prev">‹</button>
+    <img src="" alt="" class="lightbox-img" id="lightbox-img" />
+    <button class="lightbox-arrow next" id="lightbox-next">›</button>
+</div>
         </div>
     </div>
     <div style="height: 50px;"></div>
@@ -112,12 +126,77 @@ function formatearFecha(fechaStr) {
     #video-dimmer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 2; cursor: pointer; transition: background-color 1s ease; display: flex; align-items: center; justify-content: center; }
     .contenedor-principal { position: relative; z-index: 10; width: 100%; max-width: 100vw; padding: 0 0%; pointer-events: none; }    
     .espacio-video { height: 55vh; width: 100%; }
-    header, .col-der, .col-izq, .btn-volver { pointer-events: auto; }
+    header, .col-der, .col-izq, .btn-volver, .caja-tickets, .caja-tickets * { pointer-events: auto; }
     header { width: 100%; }
     .obra-titulo { text-shadow: 0 5px 15px rgba(0,0,0,0.5); color:var(--c-blanco); mix-blend-mode: difference; }
     .lang-section :global(p) { margin-bottom: 1rem; line-height: 1.3; text-align: justify; }
     .lang-section :global(h1), .lang-section :global(h2) { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+/* Habilitar clicks en la galería y el lightbox */
+.galeria-grid,
+.galeria-img,
+.lightbox-overlay,
+.lightbox-close,
+.lightbox-arrow {
+    pointer-events: auto;
+}
+
 </style>
+
+<script>
+    const isMobile = () => window.innerWidth <= 768;
+
+    const imgs = document.querySelectorAll('.galeria-img');
+    const overlay = document.getElementById('lightbox');
+    const lightImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('lightbox-close');
+    const prevBtn = document.getElementById('lightbox-prev');
+    const nextBtn = document.getElementById('lightbox-next');
+
+    let current = 0;
+    const srcs = Array.from(imgs).map(img => img.src);
+
+    function open(index) {
+        current = index;
+        lightImg.src = srcs[current];
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function prev() {
+        current = (current - 1 + srcs.length) % srcs.length;
+        lightImg.src = srcs[current];
+    }
+
+    function next() {
+        current = (current + 1) % srcs.length;
+        lightImg.src = srcs[current];
+    }
+
+    imgs.forEach((img, i) => {
+        img.addEventListener('click', () => {
+            if (!isMobile()) open(i);
+        });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (!overlay.classList.contains('active')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
+    });
+</script>
 
 <!-- SCRIPT YOUTUBE -->
 <script>
@@ -160,3 +239,4 @@ function formatearFecha(fechaStr) {
         }
     }
 </script>
+

@@ -133,40 +133,67 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
     </script>
 
     <script>
-        import { initScrollAnimations } from '../scripts/animations.js';
-        initScrollAnimations();
+    import { initScrollAnimations } from '../scripts/animations.js';
+    initScrollAnimations();
 
-        import { gsap } from "gsap";
-        import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-        gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-        window.addEventListener('load', () => {
-            const sideNav = document.getElementById('side-menu');
+    window.addEventListener('load', () => {
+        const sideNav = document.getElementById('side-menu');
+        if (!sideNav) return;
 
-            if (sideNav) {
-                gsap.to(sideNav, {
-                    x: 0, 
-                    duration: 0.8,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: "body",
-                        start: "top -100px",
-                        toggleActions: "play none none reverse",
-                    }
-                });
-                
-                sideNav.addEventListener('mouseenter', () => {
-                    gsap.to(sideNav, { x: 0, duration: 0.4, ease: "power2.out" });
-                });
-                
-                sideNav.addEventListener('mouseleave', () => {
-                    if (window.scrollY > 100) {
-                        gsap.to(sideNav, { x: "90%", duration: 0.4, ease: "power2.in" });
-                    }
-                });
-            }
+        let hideTimer = null;
+        let isHovered = false;
+        let isVisible = false;
+
+        function showNav() {
+            gsap.to(sideNav, { x: 0, duration: 0.4, ease: "power2.out" });
+            isVisible = true;
+        }
+
+        function hideNav() {
+            gsap.to(sideNav, { x: "100%", duration: 0.4, ease: "power2.in" });
+            isVisible = false;
+        }
+
+        function scheduleHide() {
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => {
+                if (!isHovered) hideNav();
+            }, 1000);
+        }
+
+        // Aparece al scrollear más de 100px
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top -100px",
+            onEnter: () => { showNav(); scheduleHide(); },
+            onLeaveBack: () => { clearTimeout(hideTimer); hideNav(); }
         });
-    </script>
+
+        // Al scrollear, reinicia el timer de 2s
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                if (!isVisible) showNav();
+                scheduleHide();
+            }
+        }, { passive: true });
+
+        // Hover: pausa el timer mientras el mouse está encima
+        sideNav.addEventListener('mouseenter', () => {
+            isHovered = true;
+            clearTimeout(hideTimer);
+            showNav();
+        });
+
+        sideNav.addEventListener('mouseleave', () => {
+            isHovered = false;
+            scheduleHide(); // empieza el countdown de 2s al salir
+        });
+    });
+</script>
 </body>
 </html>

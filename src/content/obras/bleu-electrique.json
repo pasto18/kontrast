@@ -1,8 +1,9 @@
 {
-  "titulo": "Bleu Électrique",
+  "titulo": "Bleu Électrique (WIP)",
   "categoria": "CIRC",
   "compania": "Cirque Pardi!",
   "web_compania": "www.cirquepardi.com",
+  "entradas_url": "https://www.ticketic.org/ca/entrades/festival-kontrast-5",
   "fotos": [
     "/img/obras/bleu-electrique/fotos/0.webp",
     "/img/obras/bleu-electrique/fotos/1.webp"
