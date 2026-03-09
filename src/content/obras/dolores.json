@@ -2,7 +2,10 @@
   "titulo": "Dolores",
   "categoria": "CIRC",
   "compania": "My!Laika",
-  "fotos": [],
+  "web_compania": "https://www.sidecirque.com/",
+  "fotos": [
+    "/img/obras/dolores/fotos/0.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-11",

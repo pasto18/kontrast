@@ -2,6 +2,8 @@
   "titulo": "Ara o Mai",
   "categoria": "CIRC",
   "compania": "La Crida Company",
+  "web_compania": "Cridacompany.org",
+  "video": "https://www.youtube.com/watch?v=MxLntJF8ry8",
   "fotos": [
     "/img/obras/ara-o-mai/fotos/0.webp"
   ],
@@ -11,6 +13,6 @@
       "hora": "18:00 - Konvent"
     }
   ],
-  "sinopsis_cat": "Adeus és un espectacle coreogràfic d’equilibris, contorsions i música en directe que ofereix una perspectiva original sobre la vellesa, explicada no com un moment de decadència, sinó com una etapa de la vida que les protagonistes, cinc dones, esperen amb impaciència. Amb un enfocament irònic, l’obra és una narració singular que juga amb les convencions socials i culturals. El tema de la vellesa, profundament humà i universal, s’explora a través dels cossos i dels objectes.",
+  "sinopsis_cat": "Ara o mai, és una composició híbrida feta amb totes les cordes que la Jur té al seu arc; pallassa, música, teatre, manipulació d'objectes, malabars, tot plegat muntat amb l'empremta única d'aquesta magnífica bogeria que és la seva.\nÉs una actuació d'una dona en plena emancipació artística, acompanyada d'un acròbata, la música creada per la Jur i l’Antoine Eole i un curtmetratge creat per la Jur i l’actriu Juliette Zannon",
   "sinopsis_eng": "sinopsis_eng"
 }

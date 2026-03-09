@@ -2,7 +2,13 @@
   "titulo": "Copyleft",
   "categoria": "CIRC",
   "compania": "Cie Nicanor de Elia",
-  "fotos": [],
+  "web_compania": "https://nicanordeelia.com/copyleft/",
+  "video": "https://youtu.be/Y0l-V1YwrCY",
+  "fotos": [
+    "/img/obras/copyleft/fotos/0.webp",
+    "/img/obras/copyleft/fotos/1.webp",
+    "/img/obras/copyleft/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-10",
