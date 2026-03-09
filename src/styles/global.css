@@ -435,7 +435,7 @@ hr.solid {
 .pase-item {
     font-size: clamp(1.4rem, 2vw, 2rem);
     margin-left: 2vw;
-    max-width: 75vw;
+    max-width: 60vw;
 
 }
 
@@ -1168,6 +1168,8 @@ hr.solid {
     line-height: 1;
     letter-spacing: -2px;
     margin-bottom: 0px;
+        margin-top: 10px;
+
 
     /* 1. Ajusta el tamaño dinámicamente con un tope máximo de ancho */
     font-size: clamp(2rem, 15vw, 5rem); 

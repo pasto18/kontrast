@@ -71,7 +71,7 @@ function formatearFecha(fechaStr) {
 
         <div class="col-der">
             <div class="caja-tickets">
-                <ul style="padding: 0; margin-top: 3rem;">
+                <ul style="padding: 0 !important; margin-top: 3rem; list-style: none;">
                     {data.pases.map(pase => (
                         <li class="pase-item">
                            {formatearFecha(pase.fecha)} - {pase.hora}

@@ -107,17 +107,33 @@ fechasOrdenadas.forEach(fecha => {
 </div>
 
 <style>
-  /* Solo en móvil: acordeón */
-  @media (max-width: 768px) {
+  /* DESKTOP: efectos hover grayscale */
+  @media (min-width: 769px) {
+    .card-link {
+    transition: flex 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                opacity 0.6s ease, 
+                filter 0.6s ease;
+}
+    .card-link:hover {
+      filter: none;
+    }
+    .card-content {
+      opacity: 0;
+    }
+    .card-content:hover {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+  }
 
-    /* El separador de fecha se convierte en botón */
+  /* MÓVIL: acordeón */
+  @media (max-width: 768px) {
     .separador-fecha {
       cursor: pointer;
       user-select: none;
       position: relative;
     }
 
-    /* Indicador +/- al lado derecho */
     .separador-fecha::after {
       content: '+';
       font-size: 2rem;
@@ -127,7 +143,6 @@ fechasOrdenadas.forEach(fecha => {
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      transition: transform 0.3s ease, content 0.1s;
       color: var(--c-blanco);
       width: 2rem;
       text-align: center;
@@ -137,113 +152,67 @@ fechasOrdenadas.forEach(fecha => {
       content: '−';
     }
 
-    /* La fila de obras se oculta por defecto en móvil */
     .fila-obras {
       display: none;
       overflow: hidden;
     }
 
-    /* Cuando el bloque está abierto, se muestra */
     .bloque-dia.abierto .fila-obras {
       display: flex;
     }
 
-    /* --- EFECTE SCROLL MÒBIL ---
-       Per defecte: B/N (igual que desktop sense hover) */
-    .card-link {
-      filter: grayscale(100%);
-      transition: filter 0.4s ease;
-    }
-
-    /* Quan la fila té alguna card activa, les NO actives s'apaguen */
-    .fila-obras.has-active .card-link:not(.mobile-active) {
-      filter: grayscale(100%) brightness(0.7) blur(3px);
-      opacity: 0.5;
-    }
-
-    /* La card activa (≥30% visible): color complet + info visible */
-    .card-link.mobile-active {
+    /* Sin efectos en móvil */
+    .card-link,
+    .card-link:hover,
+    .card-link:active,
+    .card-link:focus {
       filter: none !important;
+      transition: none !important;
+      transform: none !important;
       opacity: 1 !important;
+      flex: 1 !important;
     }
 
-    .card-link.mobile-active .card-content {
-      opacity: 1;
+    .card-img,
+    .card-link:hover .card-img {
+      transform: none !important;
+      transition: none !important;
     }
-  }
+
+    .card-content,
+    .card-link:hover .card-content {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+}
 </style>
 
 <script>
   function initAcordeon() {
-    // Solo activamos en móvil
     if (window.innerWidth > 768) return;
 
     const bloques = document.querySelectorAll('.bloque-dia');
-
     bloques.forEach((bloque) => {
       const separador = bloque.querySelector('.separador-fecha');
-      if (!separador) return;
+      if (!separador || separador._acordeonInit) return;
+      separador._acordeonInit = true; // evita duplicar listeners en resize
 
       separador.addEventListener('click', () => {
         const estaAbierto = bloque.classList.contains('abierto');
 
-        // Cierra todos
         bloques.forEach((b) => {
           b.classList.remove('abierto');
           b.querySelector('.separador-fecha')?.classList.remove('abierto');
         });
 
-        // Si estaba cerrado, abre este
         if (!estaAbierto) {
           bloque.classList.add('abierto');
           separador.classList.add('abierto');
-
-          // Scroll suave hasta el bloque recién abierto
-          setTimeout(() => {
-            bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 50);
+          
         }
       });
     });
   }
 
-  // Ejecutamos al cargar y también si cambia el tamaño de ventana
   document.addEventListener('DOMContentLoaded', initAcordeon);
-  window.addEventListener('resize', initAcordeon);
-
-
-  // --- EFECTE SCROLL MÒBIL ---
-  // Quan una card ocupa ≥30% de la pantalla s'activa (color + info visible).
-  // Quan en queda menys del 30%, torna a B/N sense info.
-
-  function initMobileScrollCards() {
-    if (window.innerWidth > 768) return;
-
-    const cards = document.querySelectorAll('.card-link');
-    if (!cards.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const fila = entry.target.closest('.fila-obras');
-
-          if (entry.isIntersecting) {
-            entry.target.classList.add('mobile-active');
-            if (fila) fila.classList.add('has-active');
-          } else {
-            entry.target.classList.remove('mobile-active');
-            if (fila && !fila.querySelector('.mobile-active')) {
-              fila.classList.remove('has-active');
-            }
-          }
-        });
-      },
-      { threshold: 0.8 }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-  }
-
-  document.addEventListener('DOMContentLoaded', initMobileScrollCards);
-  window.addEventListener('resize', initMobileScrollCards);
 </script>
