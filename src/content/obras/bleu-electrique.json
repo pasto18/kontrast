@@ -1,9 +1,9 @@
 {
-  "titulo": "Bleu Électrique (WIP)",
-  "categoria": "CIRC",
+  "titulo": "Bleu Électrique",
+  "categoria": "Otro",
+  "categoria_manual": "CIRC - WORK IN PROGRESS",
   "compania": "Cirque Pardi!",
   "web_compania": "www.cirquepardi.com",
-  "entradas_url": "https://www.ticketic.org/ca/entrades/festival-kontrast-5",
   "fotos": [
     "/img/obras/bleu-electrique/fotos/0.webp",
     "/img/obras/bleu-electrique/fotos/1.webp"
@@ -11,9 +11,9 @@
   "pases": [
     {
       "fecha": "2026-04-12",
-      "hora": "17:30 - Cal Rosal - Camp de Futbol"
+      "hora": "17:30 - Cal Rosal - Camp de Futbol - Espectacle amb aforament limitat, només accessible amb l’abonament de dia o de cap de setmana"
     }
   ],
-  "sinopsis_cat": "Aquí, a Bleu Électrique, hi plana un aire cinematogràfic. Els personatges hi són, a la frontera entre les escombraries i l’oblit. Sota una lletjor aparent que reflecteix un quotidià cru, Bleu Électrique transcendeix cap a una bellesa i una lleugeresa oníriques. Aquí, la humanitat és retratada en tota la seva esplendor, la seva crueltat i la seva absurditat.\nComportaments i relacions imprevisibles, esdeveniments afligents, repercussions absurdes i desenllaços còmplices de la indiferència general. Una nerviositat alhora plaent i inquietant s’apodera del públic, testimoni d’aquesta realitat.\nEn abordar els sentiments humans fonamentals —les pors, les angoixes, però també els desitjos i les aspiracions—, Bleu Électrique assumeix el risc d’oferir una mirada crua i sense concessions sobre la realitat, alhora que ens convida, de vegades, en un mateix impuls, a somiar.\nPerò només de vegades — aquí no s’hi ofereix cap recepta miraculosa. Amb força, sarcasme i humor, el públic és submergit en aquesta comèdia humana, alhora absurda i profunda.\nTot plegat resulta ben desconcertant.",
+  "sinopsis_cat": "Aquí, a Bleu Électrique, hi plana un aire cinematogràfic. Els personatges són allà, a la frontera entre les escombraries i l’oblit. Sota una lletjor aparent que reflecteix un quotidià cru, Bleu Électrique transcendeix cap a una bellesa i una lleugeresa oníriques. Aquí, la humanitat és retratada en tota la seva esplendor, la seva crueltat i la seva absurditat.\nComportaments i relacions imprevisibles, esdeveniments afligents, repercussions absurdes i desenllaços còmplices de la indiferència general. Una nerviositat alhora plaent i inquietant s’apodera del públic, testimoni d’aquesta realitat.\nEn abordar els sentiments humans fonamentals —les pors, les angoixes, però també els desitjos i les aspiracions—, Bleu Électrique assumeix el risc d’oferir una mirada crua i sense concessions sobre la realitat, alhora que ens convida, de vegades, en un mateix impuls, a somiar.\nPerò només de vegades — aquí no s’hi ofereix cap recepta miraculosa. Amb força, sarcasme i humor, el públic és submergit en aquesta comèdia humana, alhora absurda i profunda.\nTot plegat resulta ben desconcertant.",
   "sinopsis_eng": "sinopsis_eng"
 }

@@ -3,8 +3,11 @@
   "categoria": "CIRC",
   "compania": "My!Laika",
   "web_compania": "https://www.sidecirque.com/",
+  "video": "https://youtu.be/6Q_tlEfdqPI",
   "fotos": [
-    "/img/obras/dolores/fotos/0.webp"
+    "/img/obras/dolores/fotos/0.webp",
+    "/img/obras/dolores/fotos/1.webp",
+    "/img/obras/dolores/fotos/2.webp"
   ],
   "pases": [
     {

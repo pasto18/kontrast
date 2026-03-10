@@ -3,7 +3,13 @@
   "categoria": "Otro",
   "categoria_manual": "PERFORMANCE",
   "compania": "Mau Cugat",
-  "fotos": [],
+  "web_compania": "https://maucugat.com",
+  "video": "https://youtu.be/Pii65hva9kA?si=bwkrPJ8f45MXym4V",
+  "fotos": [
+    "/img/obras/queerass-e/fotos/0.webp",
+    "/img/obras/queerass-e/fotos/1.webp",
+    "/img/obras/queerass-e/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-16",

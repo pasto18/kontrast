@@ -2,7 +2,12 @@
   "titulo": "Ròdols i cigrons",
   "categoria": "CIRC",
   "compania": "Escarlata",
-  "fotos": [],
+  "video": "https://youtu.be/b-OYzqUgvrw",
+  "fotos": [
+    "/img/obras/rodols-i-cigrons/fotos/0.webp",
+    "/img/obras/rodols-i-cigrons/fotos/1.webp",
+    "/img/obras/rodols-i-cigrons/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-11",

@@ -5,7 +5,9 @@
   "compania": "Los Informalls",
   "video": "https://www.youtube.com/watch?v=-GOBtk7KMbE",
   "fotos": [
-    "/img/obras/perdon/fotos/0.jpg"
+    "/img/obras/perdon/fotos/0.jpg",
+    "/img/obras/perdon/fotos/1.webp",
+    "/img/obras/perdon/fotos/2.webp"
   ],
   "pases": [
     {
@@ -13,6 +15,6 @@
       "hora": "22:00 - Konvent"
     }
   ],
-  "sinopsis_cat": "Adeus és un espectacle coreogràfic d’equilibris, contorsions i música en directe que ofereix una perspectiva original sobre la vellesa, explicada no com un moment de decadència, sinó com una etapa de la vida que les protagonistes, cinc dones, esperen amb impaciència. Amb un enfocament irònic, l’obra és una narració singular que juga amb les convencions socials i culturals. El tema de la vellesa, profundament humà i universal, s’explora a través dels cossos i dels objectes.",
+  "sinopsis_cat": "Perdón és una declaració d’amor i odi a la dansa. Una peça que explora els límits: de la creació artística; del ballar; de la llibertat de l’intèrpret en escena o la seva relació amb el públic; de la incomoditat i també d’unes gomes de pollastre. Els límits com a manifest artístic o com un espai privilegiat per a la sorpresa i la provocació, on allò bonic pot esdevenir grotesc o una mostra de vulnerabilitat.\nSense victimismes ni moralismes, sense prejudicis sobre el bé, el mal, el que és bell o el que és avorrit, posem el cor directament a la graella per dir: Això és el que som: aquesta és la prova que es pot ballar amb ‘v’, amb humor i amb faltes d’ortografia. (I si aquesta és una altra sinopsi que no t’aclareix res, perdó.)",
   "sinopsis_eng": "sinopsis_eng"
 }

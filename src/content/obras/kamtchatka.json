@@ -1,7 +1,7 @@
 {
   "titulo": "Kamchàtka",
-  "categoria": "CIRC",
-  "categoria_manual": "circ",
+  "categoria": "Otro",
+  "categoria_manual": "Teatre de Carrer",
   "compania": "Kamchàtka",
   "web_compania": "https://kamchatka.cat",
   "video": "https://youtu.be/M41twBTsq8I",
@@ -13,9 +13,9 @@
   "pases": [
     {
       "fecha": "2026-04-10",
-      "hora": "18:00 - Gironella"
+      "hora": "18:00 - Gironella (Pl. de la Vila) - GRATUÏT"
     }
   ],
-  "sinopsis_cat": "Adeus és un espectacle coreogràfic d’equilibris, contorsions i música en directe que ofereix una perspectiva original sobre la vellesa, explicada no com un moment de decadència, sinó com una etapa de la vida que les protagonistes, cinc dones, esperen amb impaciència. Amb un enfocament irònic, l’obra és una narració singular que juga amb les convencions socials i culturals. El tema de la vellesa, profundament humà i universal, s’explora a través dels cossos i dels objectes.",
+  "sinopsis_cat": "Vuit personatges perduts per la ciutat, cadascun d’ells amb la seva maleta. Viatgers o immigrants?\nIngenus, curiosos, amb les emocions a flor de pell, no coneixen les normes, les nostres regles, la nostra manera de viure.\nEl seu joc és tan subtil que es confon amb la realitat. És així com s’obre un espai de diàleg, on l’espectador es torna actor de l’intercanvi i de l’experimentació.\nKamchàtka es converteix finalment en un mirall: el dels nostres comportaments vers l’altre, l’estranger, el diferent. Construirem el futur amb els Kamchàtka o els rebutjarem?",
   "sinopsis_eng": "sinopsis_eng"
 }

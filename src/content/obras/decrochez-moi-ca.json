@@ -3,6 +3,7 @@
   "categoria": "CIRC",
   "compania": "Bêtes de Foire",
   "web_compania": "https://www.betesdefoire.com",
+  "video": "https://www.youtube.com/watch?v=MBdkmZW1d18&t=6s",
   "fotos": [
     "/img/obras/decrochez-moi-ca/fotos/0.webp",
     "/img/obras/decrochez-moi-ca/fotos/1.webp",
@@ -11,11 +12,11 @@
   "pases": [
     {
       "fecha": "2026-04-10",
-      "hora": "22:00 - Cal Rosal - Camp de Futbol"
+      "hora": "22:00 - Cal Rosal - (Camp de Futbol)"
     },
     {
       "fecha": "2026-04-12",
-      "hora": "19:00 - Cal Rosal  - Camp de Futbol"
+      "hora": "19:00 - Cal Rosal  - (Camp de Futbol)"
     },
     {
       "fecha": "2026-04-17",

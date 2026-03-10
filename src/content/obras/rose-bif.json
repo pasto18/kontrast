@@ -1,11 +1,12 @@
 {
   "titulo": "ROSE BIF",
   "categoria": "Otro",
-  "categoria_manual": "Teatre - Danza",
+  "categoria_manual": "Teatre - Dansa",
   "compania": "Sarah Anglada",
   "fotos": [
     "/img/obras/rose-bif/fotos/0.webp",
-    "/img/obras/rose-bif/fotos/1.webp"
+    "/img/obras/rose-bif/fotos/1.webp",
+    "/img/obras/rose-bif/fotos/2.webp"
   ],
   "pases": [
     {

@@ -1,7 +1,8 @@
 {
   "titulo": "Chouchou",
-  "categoria": "CIRC",
-  "compania": "SPPI",
+  "categoria": "Otro",
+  "categoria_manual": "Teatre - Performance",
+  "compania": "Société protectrice de petites idées",
   "web_compania": "https://www.societeprotectricedepetitesidees.com/chou-chou-ténèbres",
   "video": "https://www.youtube.com/watch?v=rogRD1ilhf0",
   "fotos": [
@@ -16,5 +17,5 @@
     }
   ],
   "sinopsis_cat": "ON ÉS EL REAL?\n A fora — i segurament en molt mal estat.\nChou Chou Ténèbres us acull en un espai confortable i tranquil·litzador, com un garatge, un soterrani o un refugi antinuclear.\nAl mig d’una instal·lació electrònica en desús, amb velles càmeres de vídeo enfocades cap a ell, Chou Chou crea diversions per enganyar les Tenebres, l’amenaça de les quals plana permanentment. I es (de)bat joiosament contra l’obsolescència programada de la seva espècie.",
-  "sinopsis_eng": "sinopsis_eng"
+  "sinopsis_eng": "WHERE IS THE REAL?\nOutside—and surely in very bad shape.\n\nChou Chou Ténèbres welcomes you into a comfortable and reassuring space, like a garage, a basement, or a fallout shelter.\n\nIn the middle of a defunct electronic installation, with old video cameras focused on him, Chou Chou creates diversions to deceive the Shadows (Tenebres), whose threat looms permanently. And he struggles (and debates) joyfully against the programmed obsolescence of his species."
 }
