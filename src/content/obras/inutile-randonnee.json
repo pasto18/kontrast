@@ -1,12 +1,16 @@
 {
-  "titulo": "Inutile Randonnée",
-  "categoria": "MÚSICA",
+  "titulo": "Inutile Randonnée + Dinar",
+  "categoria": "Otro",
+  "categoria_manual": "MÚSICA i DINAR",
   "compania": "-",
-  "fotos": [],
+  "entradas_url": "https://www.instagram.com/_erreurjean_/",
+  "fotos": [
+    "/img/obras/inutile-randonnee/fotos/0.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-12",
-      "hora": "13:30 - Konvent - GRATUÏT"
+      "hora": "13:30 - Konvent - CONCERT GRATUÏT / DINAR Compra ONLINE"
     }
   ],
   "sinopsis_eng": "sinopsis_eng"

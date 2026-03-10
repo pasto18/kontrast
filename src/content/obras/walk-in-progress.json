@@ -2,13 +2,18 @@
   "titulo": "Walk in Progress",
   "categoria": "CIRC",
   "compania": "Claudio Stellato + Pablo Molina",
-  "fotos": [],
+  "entradas_url": "https://www.instagram.com/_erreurjean_/",
+  "fotos": [
+    "/img/obras/walk-in-progress/fotos/0.webp",
+    "/img/obras/walk-in-progress/fotos/1.webp",
+    "/img/obras/walk-in-progress/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-11",
       "hora": "19:00 - Konvent"
     }
   ],
-  "sinopsis_cat": "2 propostes artístiques en procés de creació que descobrirem en una passejada per l’interior de la fàbrica del Konvent.\n\n**“PEOPLE” CLAUDIO STELLATO**\nCom en totes les seves obres, Claudio busca portar els límits del circ contemporani cap a territoris decididament agosarats. PEOPLE s’apropia de l’acumulació compulsiva, mirall deformant de la nostra època, on els objectes s’amunteguen com a tantes traces d’una existència a la deriva. Els cossos es precipiten, la matèria esquitxa: a escena, el caos s’organitza en un blanc i negre radical, entre la frenesia i la poesia.\nJoc interpretatiu desfermat, energia bruta, ritme implacable — PEOPLE porta l’absurd al límit, on cada gest esdevé un crit, cada caiguda una resistència. Asseguts al cor de l’arena, quedareu colpits per aquesta experiència sensorial, on la bellesa neix del desordre i l’emoció esclata sense filtres.\n\n\n**CARTA BLANCA - PABLO MOLINA**\nNascut a Reus, format a l’escola de circ Rogelio Rivel de Barcelona (2010–2012), a l’Escola Internacional de les Arts de Pequín i graduat a la formació professional Le Lido de Tolosa (2014–2016). Co-creador de la companyia Random. Especialitzat en equilibri sobre mans, contorsió, dansa i teatre.\nLa seva tasca creativa consisteix en la hibridació d’aquestes arts per crear un llenguatge propi. Aquesta recerca es manifesta en una evolució constant, tant en les diferents creacions en què ha treballat com en la seva tasca com a formador.\n",
+  "sinopsis_cat": "2 propostes artístiques en procés de creació que descobrirem en una passejada per l’interior de la fàbrica del Konvent.\n\n**“PEOPLE” CLAUDIO STELLATO**\nAquest espectacle és una fusió d’arts visuals, circ i teatre; una recerca per crear \"tableaux\" on els humans i la matèria s’entrellacen.\n\n“People” posa en relleu la bellesa de la misèria humana i la bogeria d’aquells que viuen al carrer. Sobre una superfície blanca i buida, uns amics es reuneixen amb tot el que posseeixen per a una celebració col·lectiva, passant per totes les etapes d’una festa o d’un ritual.\n\nSón “persones” com nosaltres, però que viuen en una realitat paral·lela. En aquest món, les seves accions poden semblar absurdes per al públic, tot i que per als personatges són completament coherents i normals.\n\nPablo Molina - brainwash (treball en procès)\nNascut a Reus, format a l’escola de circ Rogelio Rivel de Barcelona (2010–2012) i graduat a la formació professional Le Lido de Tolosa (2014–2016). Creador de l'espectacle CANDY i Co-creador de la companyia Random. Especialitzat en equilibri sobre mans, contorsió, dansa i teatre. La seva tasca creativa consisteix en la hibridació d’aquestes arts per crear un llenguatge propi. Aquesta recerca es manifesta en una evolució constant, tant en les diferents creacions en què ha treballat com en la seva tasca com a formador.\n",
   "sinopsis_eng": "sinopsis_eng"
 }

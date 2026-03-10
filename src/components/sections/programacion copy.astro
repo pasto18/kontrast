@@ -1,0 +1,218 @@
+---
+// src/components/sections/programacion.astro
+import { getCollection } from 'astro:content';
+
+const obras = await getCollection('obras');
+
+// 1. Detectamos el idioma actual
+const lang = Astro.currentLocale || 'ca';
+
+// 2. Definimos la base de la URL para las obras
+const baseRoute = lang === 'en' ? '/en/obras/' : '/obras/';
+
+// 3. Traducciones para los textos de esta sección
+const t = {
+    titulo_seccion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ'
+};
+
+function formatearFecha(fechaStr) {
+    if (!fechaStr) return "";
+    const fecha = new Date(fechaStr);
+    
+    const locale = lang === 'en' ? 'en-GB' : 'ca-ES';
+    const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'long' });
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    return `${diaSemana} ${dia}/${mes}`.toUpperCase();
+}
+
+// --- LÓGICA DE AGRUPACIÓN ---
+const obrasPorDia = {};
+obras.forEach(obra => {
+    obra.data.pases.forEach(pase => {
+        const fechaKey = pase.fecha;
+        const horaKey = pase.hora;
+
+        if (!obrasPorDia[fechaKey]) {
+            obrasPorDia[fechaKey] = [];
+        }
+
+        obrasPorDia[fechaKey].push({
+            originalData: obra.data, 
+            id: obra.id,      
+            horaEspecifica: horaKey
+        });
+    });
+});
+
+const fechasOrdenadas = Object.keys(obrasPorDia).sort();
+
+fechasOrdenadas.forEach(fecha => {
+    obrasPorDia[fecha].sort((a, b) => {
+        const horaA = parseInt(a.horaEspecifica.replace(':', ''));
+        const horaB = parseInt(b.horaEspecifica.replace(':', ''));
+        return horaA - horaB;
+    });
+});
+---
+
+<div class="programacion-container">
+    
+   <div class="header-prog">
+    <!-- <h2 class="anim-left">{t.titulo_seccion}</h2>-->
+    <img src="/img/programació.webp" alt="programacio" class="titulos">
+</div>
+
+    {fechasOrdenadas.map((fecha) => (
+        <div class="bloque-dia">
+            <div class="separador-fecha">
+                <h2 class="anim-left">{formatearFecha(fecha)}</h2>
+                <div class="linea"></div>
+            </div>
+
+            <div class="fila-obras">
+                {obrasPorDia[fecha].map((item) => {
+                    const data = item.originalData;
+                    
+                    const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
+                        ? data.categoria_manual 
+                        : data.categoria;
+
+                    return (
+                        <a href={`${baseRoute}${item.id}`} class="card-link">
+                            <article class="card-obra">
+                                <div class="card-img-container">
+                                    <img src={data.fotos[0]} alt={data.titulo} class="card-img"/>
+                                </div>
+                                
+                                <div class="card-content">
+                                    {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
+
+                                    <div style="margin-top: auto; margin-bottom: auto; text-align: center; width: 100%;">
+                                        <h2 class="card-titulo">{data.titulo}</h2>
+                                        <p class="card-compania">{data.compania}</p>
+                                    </div>
+
+                                    <span class="card-fecha">
+                                        {item.horaEspecifica}
+                                    </span>
+                                </div>
+                            </article>
+                        </a>
+                    );
+                })}
+            </div>
+        </div>
+    ))}
+</div>
+
+<style>
+  /* DESKTOP: efectos hover grayscale */
+  @media (min-width: 769px) {
+    .card-link {
+    transition: flex 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                opacity 0.6s ease, 
+                filter 0.6s ease;
+}
+    .card-link:hover {
+      filter: none;
+    }
+    .card-content {
+      opacity: 0;
+    }
+    .card-content:hover {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+  }
+
+  /* MÓVIL: acordeón */
+  @media (max-width: 768px) {
+    .separador-fecha {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .separador-fecha::after {
+      content: '+';
+      font-size: 2rem;
+      font-weight: 100;
+      line-height: 1;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--c-blanco);
+      width: 2rem;
+      text-align: center;
+    }
+
+    .separador-fecha.abierto::after {
+      content: '−';
+    }
+
+    .fila-obras {
+      display: none;
+      overflow: hidden;
+    }
+
+    .bloque-dia.abierto .fila-obras {
+      display: flex;
+    }
+
+    /* Sin efectos en móvil */
+    .card-link,
+    .card-link:hover,
+    .card-link:active,
+    .card-link:focus {
+      filter: none !important;
+      transition: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      flex: 1 !important;
+    }
+
+    .card-img,
+    .card-link:hover .card-img {
+      transform: none !important;
+      transition: none !important;
+    }
+
+    .card-content,
+    .card-link:hover .card-content {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+}
+</style>
+
+<script>
+  function initAcordeon() {
+    if (window.innerWidth > 768) return;
+
+    const bloques = document.querySelectorAll('.bloque-dia');
+    bloques.forEach((bloque) => {
+      const separador = bloque.querySelector('.separador-fecha');
+      if (!separador || separador._acordeonInit) return;
+      separador._acordeonInit = true; // evita duplicar listeners en resize
+
+      separador.addEventListener('click', () => {
+        const estaAbierto = bloque.classList.contains('abierto');
+
+        bloques.forEach((b) => {
+          b.classList.remove('abierto');
+          b.querySelector('.separador-fecha')?.classList.remove('abierto');
+        });
+
+        if (!estaAbierto) {
+          bloque.classList.add('abierto');
+          separador.classList.add('abierto');
+          
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initAcordeon);
+</script>

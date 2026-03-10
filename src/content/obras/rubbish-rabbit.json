@@ -1,7 +1,8 @@
 {
   "titulo": "Rubbish Rabbit",
-  "categoria": "CIRC",
-  "compania": "Tony Cliffton",
+  "categoria": "Otro",
+  "categoria_manual": "TEATRE DE CARRER",
+  "compania": "Tony Cliffton Circus",
   "web_compania": "www.tonycliftoncircus.com ",
   "video": "https://www.youtube.com/watch?v=DdVwBZrUmJQ",
   "fotos": [
