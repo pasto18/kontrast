@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kontrast-v10';
+const CACHE_NAME = 'kontrast-v11';
 const OFFLINE_URL = '/programa/';
 
 const ASSETS_TO_CACHE = [
