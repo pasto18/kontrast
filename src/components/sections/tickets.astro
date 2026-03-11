@@ -43,6 +43,7 @@ const t = {
     border-top: 1px solid currentColor;
     margin: 0;
     opacity: 0.4;
+    color: var(--c-negro);
   }
 
   /* ── Cards mobile: ocultas por defecto ── */
@@ -65,7 +66,7 @@ const t = {
     /* Hereda h3 del global (3.5rem desktop, 1.5rem móvil) */
     text-align: center;
     background-color: var(--c-blanco);
-    color: black;
+    color: var(--c-rojo);
     width: fit-content;
     padding: 20px 40px;
     border-radius: 0px;
@@ -114,7 +115,7 @@ const t = {
       grid-template-columns: 1fr 1fr 1fr;
       align-items: center;
       padding: 16px 0%;
-      border-top: 1px solid rgba(250, 234, 217, 0.4);
+      border-top: 1px solid var(--c-negro);
     }
 
     .ticket-card .label {
@@ -123,6 +124,7 @@ const t = {
       font-weight: 100;
       text-align: left;
       line-height: 1.2;
+      
     }
 
     .ticket-card .price-block {
@@ -144,6 +146,7 @@ const t = {
       margin-top: -30px !important;
       max-width: 85vw;
       font-size: 1.2rem; /* explícito para no depender de h3 en este contexto */
+      color: var(--c-rojo);
     }
 
     /* Nota solidaria */
@@ -161,15 +164,16 @@ const t = {
     flex-direction: column;
     align-items: center;
     gap: 0px;
-    margin-top: 15vh;
+    margin-top: 5vh;
     padding: 0 16px;
     }
   }
 </style>
-
+<div style="background-color: var(--c-rojo);">
+    
 <div class="header-prog">
     <!-- <h2 class="anim-left">TICKETS</h2> -->
-    <img src="/img/tickets.webp" alt="entrades" class="titulos">
+    <img src="/img/tickets.webp" alt="entrades" class="titulos" style="margin-bottom: 10vh; margin-top: 5vh;">
 </div>
 
 <div class="contenedor-principal">
@@ -180,25 +184,25 @@ const t = {
       <thead>
         <tr>
           <th></th>
-          <th><h3 style="margin:0; text-align:center;">{t.espectacle}</h3></th>
-          <th><h3 style="margin:0; text-align:center;">{t.concert}</h3></th>
+          <th><h4 style="margin:0; text-align:center; font-weight: 300; font-style: italic;">{t.espectacle}</h4></th>
+          <th><h4 style="margin:0; text-align:center; font-weight: 300;font-style: italic">{t.concert}</h4></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><h4>{t.adult}</h4></td>
+          <td><h4 style="font-weight: 300; font-style: italic;">{t.adult}</h4></td>
           <td><h1 class="preu">12€</h1></td>
           <td><h1 class="preu">10€</h1></td>
         </tr>
         <tr><td colspan="3"><hr class="solid"/></td></tr>
         <tr>
-          <td><h4>{t.infant}</h4></td>
+          <td><h4 style="font-weight: 300; font-style: italic;">{t.infant}</h4></td>
           <td><h1 class="preu">8€</h1></td>
           <td><h1 class="preu">6€</h1></td>
         </tr>
         <tr><td colspan="3"><hr class="solid"/></td></tr>
         <tr>
-          <td><h4>{t.solidaria}</h4></td>
+          <td><h4 style="font-weight: 300; font-style: italic;">{t.solidaria}</h4></td>
           <td><h1 class="preu">15€</h1></td>
           <td><h1 class="preu">20€</h1></td>
         </tr>
@@ -231,17 +235,25 @@ const t = {
       <div class="price-block"><h1 class="preu">15€</h1></div>
       <div class="price-block"><h1 class="preu">20€</h1></div>
     </div>
-    <hr class="solid" style="margin: 0 6%; opacity: 0.4;" />
+    <hr class="solid" style="margin: 0 0%; opacity: 1;" />
   </div>
 
 </div>
 
-<div class="nota-solidaria" style="margin-top: 30px; text-align: center;">
-    <p class="p2">{t.nota_solidaria}</p>
-</div>
+
 
 <div class="abonaments-container">
     <h3 style="text-align: center;">{t.abonaments}</h3>
     <h3 class="badge-online">{t.online_only}</h3>
-    <h1 class="btn-entrades">{t.comprar}</h1>
+
+    <div class="nota-solidaria" style="margin-top: 5vh; text-align: center;">
+    <p class="p2" style="background-color: transparent; color: var(--c-blanco);">{t.nota_solidaria}</p>
+</div>
+
+
+    <h1 class="btn-entrades" style="margin-top:10vh;"><a href="https://www.ticketic.org/ca/entrades/festival-kontrast-6" target="_blank" rel="noopener noreferrer">{t.comprar}</a></h1>
+</div>
+
+<div style="height: 15vh;"></div>
+
 </div>

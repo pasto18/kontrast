@@ -43,27 +43,21 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
 </head>
 <body id="body-principal">
     
-    <nav class="side-nav" id="side-menu">
-        <ul>
-            <li><a href={`${homePrefix}#programacion`}>{labels.programacion}</a></li>
-            <li><a href={`${homePrefix}#tickets`}>{labels.tickets}</a></li>
-            <li><a href={`${homePrefix}#info`}>{labels.info}</a></li>
-            
-            <li><a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a></li>
-            <li><a href={usePath("/mapa")}>{labels.mapa}</a></li>
-            <li><a href={usePath("/programa")}>{labels.programa}</a></li>
+    <header class="desktop-header" id="desktop-header">
+       <!--<a href={isHome ? '#top' : homePrefix} class="desktop-header-logo">KONTRAST</a> --> 
+        <img src="/img/kontrast6.webp" alt="kontrast" style="height: 30px;">
 
-            <li><a href={`${homePrefix}#historia`}>{labels.historia}</a></li>
-            
-            <hr style="margin: 10px 0; opacity: 0.3;" />
-            
-            <li>
-                <a href={labels.switchUrl} style="font-weight: bold;">
-                    {labels.switchLang}
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <nav class="desktop-header-nav">
+            <a href={`${homePrefix}#programacion`}>{labels.programacion}</a>
+            <a href={`${homePrefix}#tickets`}>{labels.tickets}</a>
+            <a href={`${homePrefix}#info`}>{labels.info}</a>
+            <a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a>
+            <a href={usePath("/mapa")}>{labels.mapa}</a>
+            <a href={usePath("/programa")}>{labels.programa}</a>
+            <a href={`${homePrefix}#historia`}>{labels.historia}</a>
+        </nav>
+        <a href={labels.switchUrl} class="desktop-header-lang">{labels.switchLang}</a>
+    </header>
 
     <!-- Botó hamburguesa mòbil -->
     <button class="hamburger-btn" id="hamburger-btn" aria-label="Obrir menú">
@@ -138,65 +132,6 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
     <script>
     import { initScrollAnimations } from '../scripts/animations.js';
     initScrollAnimations();
-
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    window.addEventListener('load', () => {
-        const sideNav = document.getElementById('side-menu');
-        if (!sideNav) return;
-
-        let hideTimer = null;
-        let isHovered = false;
-        let isVisible = false;
-
-        function showNav() {
-            gsap.to(sideNav, { x: 0, duration: 0.4, ease: "power2.out" });
-            isVisible = true;
-        }
-
-        function hideNav() {
-            gsap.to(sideNav, { x: "100%", duration: 0.4, ease: "power2.in" });
-            isVisible = false;
-        }
-
-        function scheduleHide() {
-            clearTimeout(hideTimer);
-            hideTimer = setTimeout(() => {
-                if (!isHovered) hideNav();
-            }, 500);
-        }
-
-        // Aparece al scrollear más de 100px
-        ScrollTrigger.create({
-            trigger: "body",
-            start: "top -100px",
-            onEnter: () => { showNav(); scheduleHide(); },
-            onLeaveBack: () => { clearTimeout(hideTimer); hideNav(); }
-        });
-
-        // Al scrollear, reinicia el timer de 2s
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                if (!isVisible) showNav();
-                scheduleHide();
-            }
-        }, { passive: true });
-
-        // Hover: pausa el timer mientras el mouse está encima
-        sideNav.addEventListener('mouseenter', () => {
-            isHovered = true;
-            clearTimeout(hideTimer);
-            showNav();
-        });
-
-        sideNav.addEventListener('mouseleave', () => {
-            isHovered = false;
-            scheduleHide(); // empieza el countdown de 2s al salir
-        });
-    });
 </script>
 </body>
 </html>

@@ -4,10 +4,17 @@ import { config, fields, collection } from '@keystatic/core';
 const isProd = import.meta.env.PROD;
 
 export default config({
-  storage: isProd
+  storage: import.meta.env.PROD
     ? {
         kind: 'github',
-        repo: { owner: 'pasto18', name: 'kontrast' },
+        repo: {
+          owner: 'pasto18',
+          name: 'kontrast',
+        },
+        // --- LOGICA DE RAMA DINÁMICA ---
+        // Si Vercel nos dice que estamos en una rama específica, la usamos.
+        // Si no (local), Keystatic usará la configuración por defecto.
+        branch: process.env.PUBLIC_VERCEL_GIT_COMMIT_REF || 'main',
       }
     : {
         kind: 'local',
