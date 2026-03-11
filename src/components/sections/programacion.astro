@@ -7,6 +7,28 @@ const obras = await getCollection('obras');
 // 1. Detectamos el idioma actual
 const lang = Astro.currentLocale || 'ca';
 
+const categoriasTrad: Record<string, Record<string, string>> = {
+    'ca': {
+        'CIRC':    'CIRC',
+        'MÚSICA':  'MÚSICA',
+        'TEATRE':  'TEATRE',
+        'DANSA':   'DANSA',
+        'Otro':    'ALTRES',
+    },
+    'en': {
+        'CIRC':    'CIRCUS',
+        'MÚSICA':  'MUSIC',
+        'TEATRE':  'THEATRE',
+        'DANSA':   'DANCE',
+        'Otro':    'OTHER',
+        'TEATRE - DANSA':    'THEATRE - DANCE',
+    }
+};
+
+function traducirCategoria(cat: string) {
+    return categoriasTrad[lang]?.[cat] ?? cat;
+}
+
 // 2. Definimos la base de la URL para las obras
 const baseRoute = lang === 'en' ? '/en/obras/' : '/obras/';
 
@@ -75,8 +97,8 @@ fechasOrdenadas.forEach(fecha => {
                     const data = item.originalData;
                     
                     const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
-                        ? data.categoria_manual 
-                        : data.categoria;
+    ? data.categoria_manual 
+    : traducirCategoria(data.categoria);
 
                     return (
                         <a href={`${baseRoute}${item.id}`} class="card-link">
@@ -90,7 +112,7 @@ fechasOrdenadas.forEach(fecha => {
 
                                     <div style="margin-top: auto; margin-bottom: auto; text-align: center; width: 100%;">
                                         <h2 class="card-titulo">{data.titulo}</h2>
-                                        <p class="card-compania">{data.compania}</p>
+                                        {data.compania !== '-' && <p class="card-compania">{data.compania}</p>}
                                     </div>
 
                                     <span class="card-fecha">

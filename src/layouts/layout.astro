@@ -19,6 +19,7 @@ const labels = {
   info: 'INFO',
   coches: 'COTXE-SHARING',
   mapa: 'MAPA',
+  programa: lang === 'en' ? 'DOWNLOAD PROGRAM' :'DESCARREGAR PROGRAMA',
   switchLang: lang === 'en' ? 'CATALÀ' : 'ENGLISH',
   switchUrl: lang === 'en' ? '/' : '/en/'
 };
@@ -50,6 +51,7 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
             
             <li><a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a></li>
             <li><a href={usePath("/mapa")}>{labels.mapa}</a></li>
+            <li><a href={usePath("/programa")}>{labels.programa}</a></li>
 
             <li><a href={`${homePrefix}#historia`}>{labels.historia}</a></li>
             
@@ -80,6 +82,7 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
                 <li><a href={`${homePrefix}#info`} class="mobile-menu-link">{labels.info}</a></li>
                 <li><a href={usePath("/cotxe-sharing-page")} class="mobile-menu-link">{labels.coches}</a></li>
                 <li><a href={usePath("/mapa")} class="mobile-menu-link">{labels.mapa}</a></li>
+                <li><a href={usePath("/programa")} target="_blank" class="mobile-menu-link">{labels.programa}</a></li>
                 <li><a href={`${homePrefix}#historia`} class="mobile-menu-link">{labels.historia}</a></li>
                 <li class="mobile-menu-lang">
                     <a href={labels.switchUrl} class="mobile-menu-link mobile-menu-link--lang">

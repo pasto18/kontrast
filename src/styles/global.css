@@ -365,6 +365,8 @@ p {
     margin-right: auto;
     background-color: black;
     padding-bottom: 5px;
+    width: fit-content;
+    
 }
 
 .card-compania {

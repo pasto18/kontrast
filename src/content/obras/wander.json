@@ -4,7 +4,11 @@
   "categoria_manual": "CIRC - MÚSICA",
   "compania": "EBC-223",
   "entradas_url": "https://www.instagram.com/_erreurjean_/",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/wander/fotos/0.webp",
+    "/img/obras/wander/fotos/1.webp",
+    "/img/obras/wander/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-16",
@@ -12,5 +16,5 @@
     }
   ],
   "sinopsis_cat": "WANDER és un viatge sonor i físic, un cos que parla i una veu que es transforma.\nUna deambulació en un petit espai íntim, que convida el públic a perdre’s en aquest viatge excèntric que sembla sense destí, però que avança amb molta determinació.\nCap a on vaig? Cap a on anem?\nCom a individus, com a societat.\nUna cartografia mòbil de migracions possibles. Un mapa vivent, traçat col·lectivament, amb passos que llisquen cap a nous horitzons per habitar.\nVINE A WANDER AMB MI.",
-  "sinopsis_eng": "sinopsis_eng"
+  "sinopsis_eng": "WANDER is a sonic and physical journey, a body that speaks and a voice that transforms.\n A wandering in a small intimate space, inviting the audience to get lost in this eccentric journey that seems without destination, yet advances with great determination.\n Where am I going? Where are we going?\n As individuals, as a society.\n A mobile cartography of possible migrations. A living map, collectively drawn, with steps that slide toward new horizons to inhabit.\n COME WANDER WITH ME."
 }
