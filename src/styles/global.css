@@ -256,6 +256,7 @@ p {
 .programacion-container {
     width: 100%;
     padding-bottom: 100px;
+    margin-top:100px;
 }
 
 .header-prog {
@@ -1250,5 +1251,9 @@ hr.solid {
     display: block;      /* Necesario para centrar con margin auto */
     margin: 0 0;     /* Centra la imagen en el contenedor */
     margin-top: 40px; /* Espacio debajo del título */
-}
+    }
+
+    .programacion-container {
+    margin-top:-50px;
+    }
 }
