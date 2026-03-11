@@ -427,7 +427,7 @@ function formatearFechaPrograma(fechaStr: string) {
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
         const alreadyDismissed = localStorage.getItem('kontrast-banner-dismissed');
 
-        if (isStandalone || alreadyDismissed) return;
+       // if (isStandalone || alreadyDismissed) return; //
 
         if (isMobile) {
             const banner = document.createElement('div');
