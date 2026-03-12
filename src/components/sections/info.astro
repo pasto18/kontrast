@@ -3,8 +3,8 @@
 const lang = Astro.currentLocale || 'ca';
 
 const t = {
-    horaris: lang === 'en' ? 'Opening Hours' : 'Horaris d’obertura',
-    transport: lang === 'en' ? 'Transport' : 'Transport',
+    horaris: lang === 'en' ? 'OPENING HOURS' : 'HORARIS D’OBERTURA',
+    transport: lang === 'en' ? 'TRANSPORT' : 'TRANSPORT',
     bus_info: lang === 'en' 
         ? 'BUS Barcelona-Berga nearest stop: <br>Cal Rosal - Alternative stop: Berga' 
         : 'BUS Barcelona-Berga parada més propera: <br>Cal Rosal - Parada alternativa: Berga',
@@ -21,14 +21,14 @@ const t = {
 
     <h1 style="text-align: center;">{t.horaris}</h1>
     <p class="horaris">
-        10/04   18.00h (Pl. de la Vila, Gironella)<br>
-        11/04   12.00h (Casserres)(+ espectacle gratuït a Casserres a les 12.00h)<br>
-        12/04   13.30h (KONVENT)<br>
+       <strong> 10/04 - 17.30h </strong>(Pl. de la Vila, Gironella)<br>
+       <strong>  11/04 - 16.30h </strong>(Casserres)<br>(+ espectacle gratuït a Casserres a les 12.00h)<br>
+       <strong>  12/04 - 13.00h </strong>(KONVENT)<br>
         <br>
-        16/04   19.00h (KONVENT)<br>
-        17/04   17.30h (KONVENT)<br>
-        18/04   15.00h (KONVENT)<br>
-        19/04   13.00h (KONVENT)
+        <strong>  16/04 - 19.00h </strong>(KONVENT)<br>
+        <strong>  17/04 - 17.30h </strong>(KONVENT)<br>
+        <strong>  18/04 - 15.00h </strong>(KONVENT)<br>
+        <strong>  19/04 - 13.00h </strong>(KONVENT)
     </p>
 
     <h1 style="text-align: center;">{t.transport}</h1>
