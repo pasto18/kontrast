@@ -89,7 +89,6 @@ import MenuAlternativo from '../components/MenuAlternativo.astro';
       position: absolute;
       inset: 0;
     }
-   
 
     .locations-panel {
       position: absolute;
@@ -97,8 +96,8 @@ import MenuAlternativo from '../components/MenuAlternativo.astro';
       top: 20vh;
       left: 5vw;
       z-index: 1;
-      padding: 25px 25px;
-      border-radius: 30px;
+      padding: 25px 20px;
+      border-radius: 10px;
       box-shadow: none;
       overflow-y: visible;
     }
@@ -134,11 +133,6 @@ import MenuAlternativo from '../components/MenuAlternativo.astro';
 
   /* Mobile: tamaño algo menor */
   @media (max-width: 767px) {
-
-    .locations-panel {
-      border-radius: 0px;
-    }
-
     .location-group {
       margin-bottom: 14px;
     }
@@ -154,15 +148,5 @@ import MenuAlternativo from '../components/MenuAlternativo.astro';
     .location-link {
       font-size: 1.1rem;
     }
-
-     .map-container iframe {
-    position: absolute;
-    top: -50px;
-    left: 0;
-    width: 100%;
-    height: calc(100vh + 60px);
-    border: none;
-    display: block;
-  }
   }
 </style>

@@ -479,9 +479,10 @@ hr.solid {
 .obra-titulo {
     font-size: clamp(5.5rem, 7.5vw, 7.5rem);
     font-weight: 900;
-    line-height: 0.1;
+    line-height: 5.5rem;
     letter-spacing: -2px;
     margin-bottom: 0px;
+    margin-top: 15px;
 }
 
 .obra-compania {
@@ -700,6 +701,19 @@ hr.solid {
     border: 0;
 }
 
+.map-container {
+    flex: 2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: calc(100% + 60px); /* desktop: compensa el header */
+    margin-top: 0px;
+    border: none;
+    display: block;
+  }
 /* =========================================
    15. COTXE-SHARING
    ========================================= */
@@ -1211,7 +1225,7 @@ hr.solid {
 
     .obra-titulo {
     font-weight: 900;
-    line-height: 1;
+    line-height: 4rem;
     letter-spacing: -2px;
     margin-bottom: 0px;
         margin-top: 10px;
@@ -1299,4 +1313,6 @@ hr.solid {
     .programacion-container {
     margin-top:-50px;
     }
-}
+
+
+  }
