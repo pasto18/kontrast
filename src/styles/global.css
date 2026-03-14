@@ -156,6 +156,11 @@ p {
     clip-path: inset(-500px 0px -500px 0px);
 }
 
+.header-titulos-img {
+    display: flex;
+    justify-content: center;
+}
+
 /* =========================================
    4. HEADER / NAVEGACIÓN
    ========================================= */
@@ -377,27 +382,28 @@ p {
     color: white;
     opacity: 0;
     background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
-}
-
-.card-content:hover {
-    opacity: 1;
     transition: opacity 0.5s ease;
 }
 
+/* Div interior que agrupa título y compañía (sin márgenes auto que separen del resto) */
+.card-center-content {
+    text-align: center;
+    width: 100%;
+}
+
 .card-titulo {
-    font-size: 1.4rem; /* ← mínimo, fluido, máximo */
+    font-size: 1.4rem;
     font-weight: 900;
     line-height: 1;
     color: white;
-    margin-bottom: -20px;
-    max-width: 18vw; /* ← esto también puede ser el problema */
+    margin-bottom: 4px;
+    max-width: 18vw;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     background-color: black;
     padding-bottom: 5px;
     width: fit-content;
-    
 }
 
 .card-compania {
@@ -413,7 +419,7 @@ p {
     font-size: .75rem;
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 /* =========================================
@@ -446,7 +452,7 @@ p {
     background-color: var(--c-blanco);
     color: var(--c-negro);
     width: fit-content;
-    margin-top: 10px;
+    margin-top: 0;
 }
 
 .etiqueta-tipo.gigante {
@@ -726,6 +732,19 @@ hr.solid {
     padding: 20px 0;         /* Espacio arriba y abajo */
 }
 
+.boton-formulario {
+    font-size:clamp(1.2rem, 3vw, 3rem);
+     text-align: center; 
+     width: 90%; 
+     max-width: 600px;
+     margin: 0 auto; 
+     margin-top: 50px; 
+     border: 2px solid white; 
+     padding: 20px; 
+     border-radius: 40px; 
+     font-weight: 500;
+}
+
 .boton-sharing {
     display: inline-block;
     text-decoration: none;
@@ -951,7 +970,7 @@ hr.solid {
 
 /* --- Overlay menú fullscreen --- */
 .mobile-menu-overlay {
-    display: none; /* ocult per defecte (desktop) */
+    display: none;
     position: fixed;
     inset: 0;
     width: 100vw;
@@ -959,8 +978,9 @@ hr.solid {
     background-color: var(--c-negro);
     z-index: 99999;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 80px 0 40px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease;
@@ -971,6 +991,29 @@ hr.solid {
     pointer-events: all;
 }
 
+.mobile-menu-social {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    margin-top: 0px;
+}
+
+.mobile-menu-social .social-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--c-blanco);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.mobile-menu-social .social-icon:hover {
+    opacity: 1;
+}
+
+.mobile-menu-social .social-icon svg {
+    width: 100%;
+    height: 100%;
+}
 .mobile-menu-nav ul {
     list-style: none;
     padding: 0;
@@ -1096,13 +1139,29 @@ hr.solid {
     .desktop-header { display: flex; }
     /* Compensar el header fijo: el contenido no queda tapado */
     body { padding-top: 56px; }
-}
-@media (min-width: 769px) {
+
     .galeria-img {
         cursor: pointer;
         transition: opacity 0.2s;
     }
     .galeria-img:hover { opacity: 0.9; }
+
+    /* Programación: efectos hover desktop */
+    .card-link {
+        transition: flex 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    opacity 0.6s ease,
+                    filter 0.6s ease;
+    }
+    .card-link:hover {
+        filter: none;
+    }
+    .card-content {
+        opacity: 0;
+    }
+    .card-content:hover {
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1120,6 +1179,59 @@ hr.solid {
     /* Amagar el header desktop en mòbil */
     .desktop-header { display: none !important; }
 
+    /* --- Acordeón programación --- */
+    .separador-fecha {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+    }
+
+    .separador-fecha::after {
+        content: '+';
+        font-size: 2rem;
+        font-weight: 100;
+        line-height: 1;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--c-rojo);
+        width: 2rem;
+        text-align: center;
+    }
+
+    .separador-fecha.abierto::after {
+        content: '−';
+    }
+
+    .fila-obras {
+        display: none;
+        overflow: hidden;
+    }
+
+    .bloque-dia.abierto .fila-obras {
+        display: flex;
+    }
+
+    /* Sin efectos hover en móvil */
+    .card-link,
+    .card-link:hover,
+    .card-link:active,
+    .card-link:focus {
+        filter: none !important;
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+        flex: 1 !important;
+    }
+
+    .card-img,
+    .card-link:hover .card-img {
+        transform: none !important;
+        transition: none !important;
+        opacity: 0.4;
+        filter: grayscale(100%);
+    }
 
 
     /* --- Separador fecha --- */
@@ -1131,16 +1243,58 @@ hr.solid {
     /* --- Programación --- */
     .fila-obras { flex-direction: column; height: auto; }
 
-    .card-titulo {
-        font-size: clamp(0.8rem, 4vw, 1.5rem);
-        max-width: 60vw; /* o el ancho que tenga la card en móvil */
+    .card-content {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        text-align: left;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px 14px;
+        color: white;
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
     }
 
+    .card-titulo {
+        text-align: left;
+        font-size: 2rem;
+        max-width: 60vw;
+        margin: 0;
+    }
+
+    .card-center-content {
+        margin: 0;
+        text-align: left;
+        width: 100%;
+    }
+
+    .card-compania {
+        font-size: 1rem;
+        opacity: 1;
+        line-height: 1;
+        text-align: left;
+        max-width: 60vw;
+        margin: 0;
+    }
+
+    .etiqueta-tipo {
+        margin-bottom: 3vh;
+    }
+
+    .card-fecha {
+        margin: 0;
+        font-size: .85rem;
+        opacity: 0.8;
+    }
     /* --- Detalle obra --- */
     .grid-layout { grid-template-columns: 1fr; }
 
     /* --- Redes sociales --- */
-    .social-sidebar { left: 20px; bottom: 20px; }
+    .social-sidebar { left: 20px; bottom: 20px; display: none;}
     .linea-decorativa { display: none; }
 
     /* --- Horaris / About --- */
@@ -1313,6 +1467,8 @@ hr.solid {
     .programacion-container {
     margin-top:-50px;
     }
+
+    
 
 
   }

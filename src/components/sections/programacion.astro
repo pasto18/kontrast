@@ -80,9 +80,10 @@ fechasOrdenadas.forEach(fecha => {
 
 <div class="programacion-container">
     
-   <div class="header-prog">
+       <div class="header-titulos-img">  
+
     <!-- <h2 class="anim-left">{t.titulo_seccion}</h2>-->
-    <img src="/img/programació.webp" alt="programacio" class="titulos">
+    <img src="/img/programació.webp" alt="programacio" class="titulos" style="width: 100%; margin-bottom: 10vh;">
 </div>
 
     {fechasOrdenadas.map((fecha) => (
@@ -110,7 +111,7 @@ fechasOrdenadas.forEach(fecha => {
                                 <div class="card-content">
                                     {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
 
-                                    <div style="margin-top: auto; margin-bottom: auto; text-align: center; width: 100%;">
+                                <div class="card-center-content">
                                         <h2 class="card-titulo">{data.titulo}</h2>
                                         {data.compania !== '-' && <p class="card-compania">{data.compania}</p>}
                                     </div>
@@ -127,87 +128,6 @@ fechasOrdenadas.forEach(fecha => {
         </div>
     ))}
 </div>
-
-<style>
-  /* DESKTOP: efectos hover grayscale */
-  @media (min-width: 769px) {
-    .card-link {
-    transition: flex 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                opacity 0.6s ease, 
-                filter 0.6s ease;
-}
-    .card-link:hover {
-      filter: none;
-    }
-    .card-content {
-      opacity: 0;
-    }
-    .card-content:hover {
-      opacity: 1;
-      transition: opacity 0.5s ease;
-    }
-  }
-
-  /* MÓVIL: acordeón */
-  @media (max-width: 768px) {
-    .separador-fecha {
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-    }
-
-    .separador-fecha::after {
-      content: '+';
-      font-size: 2rem;
-      font-weight: 100;
-      line-height: 1;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--c-rojo);
-      width: 2rem;
-      text-align: center;
-    }
-
-    .separador-fecha.abierto::after {
-      content: '−';
-    }
-
-    .fila-obras {
-      display: none;
-      overflow: hidden;
-    }
-
-    .bloque-dia.abierto .fila-obras {
-      display: flex;
-    }
-
-    /* Sin efectos en móvil */
-    .card-link,
-    .card-link:hover,
-    .card-link:active,
-    .card-link:focus {
-      filter: none !important;
-      transition: none !important;
-      transform: none !important;
-      opacity: 1 !important;
-      flex: 1 !important;
-    }
-
-    .card-img,
-    .card-link:hover .card-img {
-      transform: none !important;
-      transition: none !important;
-    }
-
-    .card-content,
-    .card-link:hover .card-content {
-      opacity: 1 !important;
-      transition: none !important;
-    }
-}
-</style>
 
 <script>
   function initAcordeon() {
