@@ -3,7 +3,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const obrasFiles = import.meta.glob('/src/content/obras/*.json', { eager: true });
-const listaObras = Object.values(obrasFiles).map((file: any) => file.default || file);
+const listaObras = Object.values(obrasFiles)
+    .map((file: any) => file.default || file)
+    .sort((a, b) => {
+        const paseA = a.pases?.[0];
+        const paseB = b.pases?.[0];
+        const keyA = paseA ? `${paseA.fecha}_${paseA.hora}` : '9999';
+        const keyB = paseB ? `${paseB.fecha}_${paseB.hora}` : '9999';
+        return keyA.localeCompare(keyB);
+    });
 
 const cssPath = path.resolve('./src/styles/global.css');
 const globalCSS = fs.readFileSync(cssPath, 'utf-8');
