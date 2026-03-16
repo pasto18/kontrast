@@ -4,7 +4,11 @@
   "categoria_manual": "Jocs",
   "compania": "-",
   "web_compania": "https://thelosersarcade.co.uk/",
-  "fotos": [],
+  "fotos": [
+    "/img/obras/loosers-arcade/fotos/0.webp",
+    "/img/obras/loosers-arcade/fotos/1.webp",
+    "/img/obras/loosers-arcade/fotos/2.webp"
+  ],
   "pases": [
     {
       "fecha": "2026-04-18",
