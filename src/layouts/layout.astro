@@ -45,7 +45,9 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
     
     <header class="desktop-header" id="desktop-header">
        <!--<a href={isHome ? '#top' : homePrefix} class="desktop-header-logo">KONTRAST</a> --> 
-        <img src="/img/kontrast6.webp" alt="kontrast" style="height: 30px;">
+        <a href={isHome ? '#top' : homePrefix}>
+            <img src="/img/kontrast6.webp" alt="kontrast" style="height: 30px;">
+        </a>
 
         <nav class="desktop-header-nav">
             <a href={`${homePrefix}#programacion`}>{labels.programacion}</a>
