@@ -1,0 +1,20 @@
+{
+  "titulo": "Loosers Arcade",
+  "categoria": "Otro",
+  "categoria_manual": "Jocs",
+  "compania": "-",
+  "web_compania": "https://thelosersarcade.co.uk/",
+  "fotos": [
+    "/img/obras/loosers-arcade/fotos/0.webp",
+    "/img/obras/loosers-arcade/fotos/1.webp",
+    "/img/obras/loosers-arcade/fotos/2.webp"
+  ],
+  "pases": [
+    {
+      "fecha": "2026-04-18",
+      "hora": "23:00h - KONVENT"
+    }
+  ],
+  "sinopsis_cat": "Losers Arcade presenta Beauty Roulette\nPer una petita moneda, els participants afortunats poden fer girar la ruleta i deixar que la sort decideixi el seu look del dia.\nAllà on s’aturi la fletxa de la ruleta determinarà la teva gamma de colors mentre ets conduït al Losers Salon of Wellmess and Beauty per a un canvi d’imatge complet, parcial o un canvi sorpresa.\nAmb massatges i altres delícies.",
+  "sinopsis_eng": "Losers Arcade present Beauty Roulette\nFor a small coin, lucky participants can spin the wheel and let fortune decide their look for the day\nWherever the roulette arrow points will determine your colour scheme as you are propelled into  the Losers Salon of Wellmess and Beauty for a full makeover, a partial makeover or a surprise makeover\nWith massage and other delights"
+}
