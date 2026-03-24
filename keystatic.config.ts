@@ -1,3 +1,9 @@
+console.log('KEYSTATIC ENV CHECK:', {
+  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? process.env.KEYSTATIC_GITHUB_CLIENT_ID ?? 'UNDEFINED',
+  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? 'UNDEFINED',
+  secret: import.meta.env.KEYSTATIC_SECRET ?? process.env.KEYSTATIC_SECRET ?? 'UNDEFINED',
+})
+
 import { config, fields, collection } from '@keystatic/core';
 
 // Detectamos el entorno
