@@ -5,7 +5,7 @@ import mdx from '@astrojs/mdx';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://kontrast-henna.vercel.app',
+ site: 'https://www.festivalkontrast.com',
   output: 'server',
   adapter: vercel(),
   integrations: [mdx(), react(), keystatic()],
