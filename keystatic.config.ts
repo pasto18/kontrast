@@ -20,9 +20,9 @@ export default config({
         kind: 'local',
       },
 
-  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID,
-  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-  secret: import.meta.env.KEYSTATIC_SECRET || 'local-dummy-secret-123456',
+clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+secret: import.meta.env.KEYSTATIC_SECRET ?? process.env.KEYSTATIC_SECRET ?? 'local-dummy-secret-123456',
 
   collections: {
     obras: collection({

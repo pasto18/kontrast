@@ -29,10 +29,8 @@ function traducirCategoria(cat: string) {
     return categoriasTrad[lang]?.[cat] ?? cat;
 }
 
-// 2. Definimos la base de la URL para las obras
 const baseRoute = lang === 'en' ? '/en/obras/' : '/obras/';
 
-// 3. Traducciones para los textos de esta sección
 const t = {
     titulo_seccion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ'
 };
@@ -40,7 +38,6 @@ const t = {
 function formatearFecha(fechaStr) {
     if (!fechaStr) return "";
     const fecha = new Date(fechaStr);
-    
     const locale = lang === 'en' ? 'en-GB' : 'ca-ES';
     const diaSemana = fecha.toLocaleDateString(locale, { weekday: 'long' });
     const dia = fecha.getDate().toString().padStart(2, '0');
@@ -48,20 +45,17 @@ function formatearFecha(fechaStr) {
     return `${diaSemana} ${dia}/${mes}`.toUpperCase();
 }
 
-// --- LÓGICA DE AGRUPACIÓN ---
 const obrasPorDia = {};
 obras.forEach(obra => {
     obra.data.pases.forEach(pase => {
         const fechaKey = pase.fecha;
         const horaKey = pase.hora;
-
         if (!obrasPorDia[fechaKey]) {
             obrasPorDia[fechaKey] = [];
         }
-
         obrasPorDia[fechaKey].push({
-            originalData: obra.data, 
-            id: obra.id,      
+            originalData: obra.data,
+            id: obra.id,
             horaEspecifica: horaKey
         });
     });
@@ -79,12 +73,9 @@ fechasOrdenadas.forEach(fecha => {
 ---
 
 <div class="programacion-container">
-    
-       <div class="header-titulos-img">  
-
-    <!-- <h2 class="anim-left">{t.titulo_seccion}</h2>-->
-    <img src="/img/programació.webp" alt="programacio" class="titulos" style="width: 100%; margin-bottom: 10vh;">
-</div>
+    <div class="header-titulos-img">
+        <img src="/img/programació.webp" alt="programacio" class="titulos" style="width: 100%; margin-bottom: 10vh;">
+    </div>
 
     {fechasOrdenadas.map((fecha) => (
         <div class="bloque-dia">
@@ -92,33 +83,25 @@ fechasOrdenadas.forEach(fecha => {
                 <h2 class="anim-left">{formatearFecha(fecha)}</h2>
                 <div class="linea"></div>
             </div>
-
             <div class="fila-obras">
                 {obrasPorDia[fecha].map((item) => {
                     const data = item.originalData;
-                    
-                    const tipoShow = (data.categoria === 'Otro' && data.categoria_manual) 
-    ? data.categoria_manual 
-    : traducirCategoria(data.categoria);
-
+                    const tipoShow = (data.categoria === 'Otro' && data.categoria_manual)
+                        ? data.categoria_manual
+                        : traducirCategoria(data.categoria);
                     return (
                         <a href={`${baseRoute}${item.id}`} class="card-link">
                             <article class="card-obra">
                                 <div class="card-img-container">
                                     <img src={data.fotos[0]} alt={data.titulo} class="card-img"/>
                                 </div>
-                                
                                 <div class="card-content">
                                     {tipoShow && <span class="etiqueta-tipo">{tipoShow}</span>}
-
-                                <div class="card-center-content">
+                                    <div class="card-center-content">
                                         <h2 class="card-titulo">{data.titulo}</h2>
                                         {data.compania !== '-' && <p class="card-compania">{data.compania}</p>}
                                     </div>
-
-                                    <span class="card-fecha">
-                                        {item.horaEspecifica}
-                                    </span>
+                                    <span class="card-fecha">{item.horaEspecifica}</span>
                                 </div>
                             </article>
                         </a>
@@ -129,32 +112,152 @@ fechasOrdenadas.forEach(fecha => {
     ))}
 </div>
 
-<script>
-  function initAcordeon() {
-    if (window.innerWidth > 768) return;
+<!-- NOTA SOLIDARIA: desplegable en móvil, expandida en escritorio -->
+<div class="nota-solidaria" style="margin-top: 0vh; text-align: center; width: 100%; margin-bottom: 10vh">
 
-    const bloques = document.querySelectorAll('.bloque-dia');
-    bloques.forEach((bloque) => {
-      const separador = bloque.querySelector('.separador-fecha');
-      if (!separador || separador._acordeonInit) return;
-      separador._acordeonInit = true; // evita duplicar listeners en resize
+    <!-- Cabecera: siempre visible, actúa de toggle en móvil -->
+<div class="nota-solidaria__toggle" aria-expanded="false" aria-controls="nota-solidaria-body">
+    <h2 class="anim-left" style="font-size: 2.5rem;">Kontrast Expandit</h2>
+    <span class="nota-solidaria__chevron" aria-hidden="true">&#9660;</span>
+</div>
 
-      separador.addEventListener('click', () => {
-        const estaAbierto = bloque.classList.contains('abierto');
+    <!-- Cuerpo: colapsado en móvil, siempre visible en escritorio -->
+    <div class="nota-solidaria__body" id="nota-solidaria-body">
+        <p class="p2" style="background-color: transparent; color: var(--c-blanco); width: 80%; margin: 0 auto;">
+            <br>
+            Kontrast surt de casa:
+            <strong>Adeus</strong> arriba al poble del costat, al renovat Teatre del Cafè Teatre Orient, gràcies a la col·laboració de l'Ajuntament de Prats de Lluçanès!
+            I <strong>Chou Chou Ténèbres</strong> arriba per primer cop a Barcelona, a l'Antic Teatre.
+            <br>
+            <strong>Adeus - Oltrenotte</strong> al Cafè Teatre Orient de Prats de Lluçanès, divendres 17 d'abril 20h
+            <br>
+            <a href="https://www.entrapolis.com/entradas/cia-oltrenotte-adeus" target="_blank" style="color: var(--c-rojo) !important; text-decoration: none; font-weight: bold;">
+                ENTRADES
+            </a>
+            <br>
+            <strong>Chou chou ténèbres - Société protectrice de petites idées</strong> Estrena a Barcelona, Antic Teatre 21 d'abril 20h
+            <br>
+            <a href="https://www.anticteatre.com/events/event/chou-chou-tenebres-societe-protectrice-de-petites-idees/" target="_blank" style="color: var(--c-rojo) !important; text-decoration: none; font-weight: bold;">ENTRADES</a>
+        </p>
+    </div>
+</div>
 
-        bloques.forEach((b) => {
-          b.classList.remove('abierto');
-          b.querySelector('.separador-fecha')?.classList.remove('abierto');
-        });
+<style>
+    /* ── NOTA SOLIDARIA ── */
+    .nota-solidaria__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    /* sin background, border, ni estilos de botón */
+}
 
-        if (!estaAbierto) {
-          bloque.classList.add('abierto');
-          separador.classList.add('abierto');
-          
+@media (min-width: 769px) {
+    .nota-solidaria__toggle {
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .nota-solidaria__toggle {
+        cursor: pointer;
+    }
+}
+
+    .nota-solidaria__chevron {
+        display: none; /* oculto en escritorio */
+        font-size: 1.2rem;
+        color: var(--c-blanco);
+        transition: transform 0.35s ease;
+        flex-shrink: 0;
+    }
+
+    /* Cuerpo: en escritorio siempre visible */
+    .nota-solidaria__body {
+        overflow: hidden;
+    }
+
+    /* ── ESCRITORIO: mejora visual con separador sutil ── */
+    @media (min-width: 769px) {
+        .nota-solidaria {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 6vh;
         }
-      });
-    });
-  }
 
-  document.addEventListener('DOMContentLoaded', initAcordeon);
+        .nota-solidaria__toggle {
+            cursor: default;
+            pointer-events: none; /* no interactivo en escritorio */
+        }
+    }
+
+    /* ── MÓVIL ── */
+    @media (max-width: 768px) {
+        .nota-solidaria__toggle {
+            cursor: pointer;
+        }
+
+        .nota-solidaria__chevron {
+            display: inline-block;
+        }
+
+        /* Estado cerrado: cuerpo colapsado */
+        .nota-solidaria__body {
+            max-height: 0;
+            transition: max-height 0.4s ease;
+        }
+
+        /* Estado abierto */
+        .nota-solidaria__body.abierto {
+            max-height: 600px; /* valor suficientemente grande */
+        }
+
+        /* Chevron rotado cuando está abierto */
+        .nota-solidaria__toggle[aria-expanded="true"] .nota-solidaria__chevron {
+            transform: rotate(180deg);
+        }
+    }
+</style>
+
+<script>
+    /* ── Acordeón bloques-dia (móvil) ── */
+    function initAcordeon() {
+        if (window.innerWidth > 768) return;
+
+        const bloques = document.querySelectorAll('.bloque-dia');
+        bloques.forEach((bloque) => {
+            const separador = bloque.querySelector('.separador-fecha');
+            if (!separador || (separador as any)._acordeonInit) return;
+            (separador as any)._acordeonInit = true;
+
+            separador.addEventListener('click', () => {
+                const estaAbierto = bloque.classList.contains('abierto');
+                bloques.forEach((b) => {
+                    b.classList.remove('abierto');
+                    b.querySelector('.separador-fecha')?.classList.remove('abierto');
+                });
+                if (!estaAbierto) {
+                    bloque.classList.add('abierto');
+                    separador.classList.add('abierto');
+                }
+            });
+        });
+    }
+
+    /* ── Acordeón nota-solidaria (solo móvil) ── */
+   function initNotaSolidaria() {
+    const toggle = document.querySelector('.nota-solidaria__toggle');
+    const body = document.getElementById('nota-solidaria-body');
+    if (!toggle || !body) return;
+
+    toggle.addEventListener('click', () => {
+        if (window.innerWidth > 768) return;
+        const abierto = body.classList.toggle('abierto');
+        toggle.setAttribute('aria-expanded', String(abierto));
+    });
+}
+    document.addEventListener('DOMContentLoaded', () => {
+        initAcordeon();
+        initNotaSolidaria();
+    });
 </script>
