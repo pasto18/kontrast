@@ -19,7 +19,7 @@ const labels = {
   info: 'INFO',
   coches: 'COTXE-SHARING',
   mapa: 'MAPA',
-  programa: lang === 'en' ? 'DOWNLOAD PROGRAM' :'DESCARREGAR PROGRAMA',
+  programa: lang === 'en' ? 'COMPANIES' :'COMPANYES',
   switchLang: lang === 'en' ? 'CATALÀ' : 'ENGLISH',
   switchUrl: lang === 'en' ? '/' : '/en/'
 };
@@ -51,11 +51,11 @@ const homePrefix = isHome ? '' : (lang === 'en' ? '/en/' : '/');
 
         <nav class="desktop-header-nav">
             <a href={`${homePrefix}#programacion`}>{labels.programacion}</a>
+            <a href={usePath("/programa")}>{labels.programa}</a>
             <a href={`${homePrefix}#tickets`}>{labels.tickets}</a>
             <a href={`${homePrefix}#info`}>{labels.info}</a>
             <a href={usePath("/cotxe-sharing-page")}>{labels.coches}</a>
             <a href={usePath("/mapa")}>{labels.mapa}</a>
-            <a href={usePath("/programa")}>{labels.programa}</a>
             <a href={`${homePrefix}#historia`}>{labels.historia}</a>
         </nav>
         <a href={labels.switchUrl} class="desktop-header-lang">{labels.switchLang}</a>

@@ -62,9 +62,11 @@ function formatearFecha(fechaStr) {
         <header>
             <h1 class="obra-titulo">{data.titulo}</h1>
                 <div class="obra-header-meta">                
-                    <p class="obra-compania">
-                    <a href={data.web_compania || '#'} target="_blank">{data.compania}</a>
-                </p>
+                    {data.compania !== '-' && (
+    <p class="obra-compania">
+        <a href={data.web_compania || '#'} target="_blank">{data.compania}</a>
+    </p>
+)}
                 {tipoShow && <span class="etiqueta-tipo gigante">{tipoShow}</span>}
             </div>
         </header>
@@ -81,6 +83,7 @@ function formatearFecha(fechaStr) {
                 {data.entradas_url && (
                     <a href={data.entradas_url} target="_blank" class="btn-entrades-2">{t.comprar}</a>
                 )}
+                <a href={data.web_compania || '#'} target="_blank" class="btn-entrades-2">WEB</a>
             </div>
         </div> 
 
