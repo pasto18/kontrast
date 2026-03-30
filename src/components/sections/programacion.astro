@@ -32,7 +32,9 @@ function traducirCategoria(cat: string) {
 const baseRoute = lang === 'en' ? '/en/obras/' : '/obras/';
 
 const t = {
-    titulo_seccion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ'
+    titulo_seccion: lang === 'en' ? 'PROGRAM' : 'PROGRAMACIÓ',
+    descargar_programa: lang === 'en' ? 'DOWNLOAD PROGRAM' : 'DESCARREGAR PROGRAMA',
+    timetable: lang === 'en' ? 'TIMETABLE' : 'GRAELLA DE ESPECTACLES',
 };
 
 function formatearFecha(fechaStr) {
@@ -74,7 +76,18 @@ fechasOrdenadas.forEach(fecha => {
 
 <div class="programacion-container">
     <div class="header-titulos-img">
-        <img src="/img/programació.webp" alt="programacio" class="titulos" style="width: 100%; margin-bottom: 10vh;">
+        <img src="/img/programació.webp" alt="programacio" class="titulos" style="width: 100%; margin-bottom: 7vh;">
+    </div>
+
+    <div style="display: flex;flex-direction: row; justify-content: center; width: 100%; margin-bottom: 7vh; gap: 2rem; flex-wrap: wrap;">
+        <a href="drive.google.com/programa" target="_blank" rel="noopener noreferrer">
+            <h2 class="btn-descargar" style="font-size: 2rem; ">
+                {t.descargar_programa}
+            </h2>
+        <a href="/img/k_grilla-programacion-a3-v2.webp" download target="_blank" rel="noopener noreferrer">
+                <h2 class="btn-descargar" style="font-size: 2rem; ">
+                {t.timetable}
+            </h2>
     </div>
 
     {fechasOrdenadas.map((fecha) => (
@@ -116,29 +129,62 @@ fechasOrdenadas.forEach(fecha => {
 <div class="nota-solidaria" style="margin-top: 0vh; text-align: center; width: 100%; margin-bottom: 10vh">
 
     <!-- Cabecera: siempre visible, actúa de toggle en móvil -->
-<div class="nota-solidaria__toggle" aria-expanded="false" aria-controls="nota-solidaria-body">
-    <h2 class="anim-left" style="font-size: 2.5rem;">Kontrast Expandit</h2>
+<div class="nota-solidaria__toggle" aria-expanded="false" aria-controls="nota-solidaria-body" style="justify-content: flex-start; gap: 15px;">
+    <h2 class="anim-left" style="font-size: 2.5rem;">KONTRAST EXPANDIT</h2>
     <span class="nota-solidaria__chevron" aria-hidden="true">&#9660;</span>
 </div>
 
     <!-- Cuerpo: colapsado en móvil, siempre visible en escritorio -->
     <div class="nota-solidaria__body" id="nota-solidaria-body">
-        <p class="p2" style="background-color: transparent; color: var(--c-blanco); width: 80%; margin: 0 auto;">
-            <br>
+    <div style="width: 80%; margin: 0 auto; display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- Intro -->
+        <p style="color: var(--c-blanco); font-size: 1.5rem; line-height: 1.6; margin: 0;">
             Kontrast surt de casa:
             <strong>Adeus</strong> arriba al poble del costat, al renovat Teatre del Cafè Teatre Orient, gràcies a la col·laboració de l'Ajuntament de Prats de Lluçanès!
             I <strong>Chou Chou Ténèbres</strong> arriba per primer cop a Barcelona, a l'Antic Teatre.
-            <br>
-            <strong>Adeus - Oltrenotte</strong> al Cafè Teatre Orient de Prats de Lluçanès, divendres 17 d'abril 20h
-            <br>
-            <a href="https://www.entrapolis.com/entradas/cia-oltrenotte-adeus" target="_blank" style="color: var(--c-rojo) !important; text-decoration: none; font-weight: bold;">
-                ENTRADES
-            </a>
-            <br>
-            <strong>Chou chou ténèbres - Société protectrice de petites idées</strong> Estrena a Barcelona, Antic Teatre 21 d'abril 20h
-            <br>
-            <a href="https://www.anticteatre.com/events/event/chou-chou-tenebres-societe-protectrice-de-petites-idees/" target="_blank" style="color: var(--c-rojo) !important; text-decoration: none; font-weight: bold;">ENTRADES</a>
         </p>
+
+        <!-- Tarjetas -->
+        <div class="expandit-cards">
+
+            <!-- Obra 1 -->
+            <div class="expandit-card">
+                <p style="color: var(--c-rojo); font-size: 1.25rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px 0;">
+                    Cafè Teatre Orient · Prats de Lluçanès
+                </p>
+                <p style="color: var(--c-blanco); font-size: 1.25rem; font-weight: bold; margin: 0 0 4px 0;">
+                    Adeus — Cia. Oltrenotte
+                </p>
+                <p style="color: rgba(255,255,255,0.6); font-size: 1.25rem; margin: 0 0 12px 0;">
+                    Divendres 17 d'abril · 20h
+                </p>
+                <a href="https://www.entrapolis.com/entradas/cia-oltrenotte-adeus" target="_blank"
+                   style="color: var(--c-rojo); font-weight: bold; font-size: 1rem; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">
+                    Entrades →
+                </a>
+            </div>
+
+            <!-- Obra 2 -->
+            <div class="expandit-card">
+                <p style="color: var(--c-rojo); font-size: 1.25rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 6px 0;">
+                    Antic Teatre · Barcelona · Estrena
+                </p>
+                <p style="color: var(--c-blanco); font-size: 1.25rem; font-weight: bold; margin: 0 0 4px 0;">
+                    Chou Chou Ténèbres — Société Protectrice de Petites Idées
+                </p>
+                <p style="color: rgba(255,255,255,0.6); font-size: 1.25rem; margin: 0 0 12px 0;">
+                    Dilluns 21 d'abril · 20h
+                </p>
+                <a href="https://www.anticteatre.com/events/event/chou-chou-tenebres-societe-protectrice-de-petites-idees/" target="_blank"
+                   style="color: var(--c-rojo); font-weight: bold; font-size: 1rem; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">
+                    Entrades →
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
     </div>
 </div>
 
@@ -191,6 +237,20 @@ fechasOrdenadas.forEach(fecha => {
         }
     }
 
+    .expandit-cards {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .expandit-card {
+        flex: 1;
+        padding: 16px 20px;
+        border-radius: 8px;
+    }
+
+    
+
     /* ── MÓVIL ── */
     @media (max-width: 768px) {
         .nota-solidaria__toggle {
@@ -209,12 +269,16 @@ fechasOrdenadas.forEach(fecha => {
 
         /* Estado abierto */
         .nota-solidaria__body.abierto {
-            max-height: 600px; /* valor suficientemente grande */
+            max-height: 1200px; /* valor suficientemente grande */
         }
 
         /* Chevron rotado cuando está abierto */
         .nota-solidaria__toggle[aria-expanded="true"] .nota-solidaria__chevron {
             transform: rotate(180deg);
+        }
+
+         .expandit-cards {
+            flex-direction: column;
         }
     }
 </style>

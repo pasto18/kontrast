@@ -15,6 +15,8 @@ function getPrimerPaseTimestamp(obra) {
 }
 
 const obrasOrdenadas = obras.sort((a, b) => getPrimerPaseTimestamp(a) - getPrimerPaseTimestamp(b));
+const lang = Astro.currentLocale ?? 'ca';
+const imgPrefix = lang === 'en' ? '/img/en' : '/img/ca';
 
 function formatarData(fechaStr) {
     if (!fechaStr) return '';
@@ -49,22 +51,21 @@ function formatarData(fechaStr) {
                 <img src="/img/kontrast buono.webp" alt="Portada Festival KONTRAST 2026" class="cover-img" />
             </div>
             <div class="pdf-page pdf-cover">
-                <img src="/img/k-1.webp" alt="Portada Festival KONTRAST 2026" class="cover-img" />
+                <img src={`${imgPrefix}/k-1.webp`} alt="Portada Festival KONTRAST 2026" class="cover-img" />
             </div>
             <div class="pdf-page pdf-cover">
-                <img src="/img/k-2.webp" alt="Portada Festival KONTRAST 2026" class="cover-img" />
+                <img src={`${imgPrefix}/k-2.webp`} alt="Portada Festival KONTRAST 2026" class="cover-img" />
             </div>
             <div class="pdf-page pdf-cover">
-                <img src="/img/k-3.webp" alt="Portada Festival KONTRAST 2026" class="cover-img" />
+                <img src={`${imgPrefix}/k-3.webp`} alt="Portada Festival KONTRAST 2026" class="cover-img" />
             </div>
-            <div class="pdf-page pdf-cover">
-                <img src="/img/k-4.webp" alt="Portada Festival KONTRAST 2026" class="cover-img" />
-            </div>
+            
 
             {obrasOrdenadas.map((obra) => {
                 const data = obra.data;
                 const categoriaFinal = data.categoria === 'Otro' ? data.categoria_manual : data.categoria;
                 const companiaFinal = data.compania && data.compania.trim() !== '-' ? data.compania : null;
+            
                 
                 return (
                     <div class="pdf-page">
@@ -91,13 +92,16 @@ function formatarData(fechaStr) {
                                     ))}
                                 </div>
                                 <div class="col">
-                                    <p class="text">{data.sinopsis_cat}</p>
+                                    <p class="text">{lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 );
             })}
+            <div class="pdf-page pdf-cover">
+            <img src={`${imgPrefix}/k-4.webp`} alt="Contraportada" class="cover-img" />
+        </div>
         </div>
     </div>
 </Layout>

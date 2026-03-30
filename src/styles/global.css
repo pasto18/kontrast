@@ -671,6 +671,28 @@ hr.solid {
     color: var(--c-negro);
 }
 
+.btn-descargar {
+    border: 2px solid var(--c-blanco);
+    padding: 0 40px;
+    border-radius: 100px;
+    color: var(--c-blanco);
+    background-color: var(--c-negro);
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 auto;
+    transition: all 0.15s ease;
+    margin-top: 0px;
+    font-size: 5rem;
+    text-align: center;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.btn-descargar:hover {
+    background-color: var(--c-blanco);
+    color: var(--c-negro);
+}
+
 /* =========================================
    13. VÍDEO SCROLL
    ========================================= */
@@ -1467,6 +1489,17 @@ hr.solid {
     .programacion-container {
     margin-top:-50px;
     }
+
+
+    .btn-descargar {
+    padding: 0 20px;
+    cursor: pointer;
+    width: fit-content;
+    margin-top: 0px;
+    font-size: 1.5rem !important;
+    font-weight: 800;
+
+}
 
     
 
