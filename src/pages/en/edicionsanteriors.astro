@@ -1,0 +1,134 @@
+---
+// src/pages/media.astro
+import Layout from '../../layouts/layout.astro';
+
+const secciones = [
+    {
+        titulo: "Kontrast #5 - 2025",
+        video: "https://youtu.be/Puw2GJrfi4M?si=_qC8yvl6O4nHHSsL",
+        imatges: ["../img/edicionsanteriors/k5-1.webp", "../img/edicionsanteriors/k5-2.webp", "../img/edicionsanteriors/k5-3.webp", ]
+    },
+    {
+        titulo: "Kontrast #4 - 2024",
+        video: "https://youtu.be/B_nUIUVwKh4?si=Kex-qjJVJCPkax4P",
+        imatges: ["../img/edicionsanteriors/k4-1.webp", "../img/edicionsanteriors/k4-2.webp", "../img/edicionsanteriors/k4-3.webp", ]
+    },
+    {
+        titulo: "Kontrast #3 - 2023",
+        video: "https://youtu.be/hzF_HSrVUfA?si=Oqi0EkacWI9rzUZp",
+        imatges: ["../img/edicionsanteriors/k3-1.webp", "../img/edicionsanteriors/k3-2.webp"]
+    },
+    {
+        titulo: "Kontrast #2 - 2022",
+        imatges: ["../img/edicionsanteriors/k2-1.webp", "../img/edicionsanteriors/k2-2.webp"]
+    },
+    {
+        titulo: "Kontrast #1 - 2021",
+        imatges: ["../img/edicionsanteriors/k1-1.webp", "../img/edicionsanteriors/k1-2.webp"]
+    },
+];
+---
+
+<Layout title="Media">
+    <div class="media-container">
+        {secciones.map((seccio) => (
+    <div class="seccio">
+        <h2 class="seccio-titol">{seccio.titulo}</h2>
+
+        {seccio.video && (
+            <div class="video-wrapper">
+                <iframe
+                    src={`https://www.youtube.com/embed/${seccio.video.split('/').pop()?.split('?')[0]}`}
+                    title={seccio.titulo}
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        )}
+
+        <div class="imatges-row">
+            {seccio.imatges.map((img, i) => (
+                <div class="imatge-item">
+                    <img src={img} alt={`${seccio.titulo} foto ${i + 1}`} />
+                </div>
+            ))}
+        </div>
+    </div>
+))}
+    </div>
+</Layout>
+
+<style>
+    .media-container {
+        width: 100%;
+        padding: 60px 40px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+    }
+
+    .seccio {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .seccio-titol {
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-align: left;
+        margin: 0;
+        color: var(--c-blanco);
+    }
+
+    /* 16:9 responsive */
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        height: 0;
+    }
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .imatges-row {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .imatge-item {
+        flex: 1;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .imatge-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .media-container {
+            padding: 40px 20px;
+        }
+
+        .seccio-titol {
+            font-size: 1.75rem;
+        }
+
+        .imatges-row {
+            flex-direction: column;
+        }
+    }
+</style>
