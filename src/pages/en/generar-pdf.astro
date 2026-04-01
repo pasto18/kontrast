@@ -22,12 +22,28 @@ function formatarData(fechaStr) {
     if (!fechaStr) return '';
     // Afegim T12:00:00 per evitar problemes de zona horària que desplacen el dia
     const fecha = new Date(fechaStr + 'T12:00:00');
-    const dies = ['Sun', 'Dilluns', 'Dimarts', 'Dimecres', 'Thu', 'Fri', 'Sat'];
+    const dies = ['Dg', 'Dilluns', 'Dimarts', 'Dimecres', 'Dj', 'Dv', 'Ds'];
     const mesos = ['gen', 'feb', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'oct', 'nov', 'des'];
     const diaSemana = dies[fecha.getDay()];
     const dia = fecha.getDate();
     const mes = mesos[fecha.getMonth()];
     return `${diaSemana} ${dia}`;
+}
+
+function nlToBr(texto) {
+    if (!texto) return '';
+    return texto.replace(/\n/g, '<br>');
+}
+
+function getFontSize(texto) {
+    if (!texto) return '15px';
+    const len = texto.length;
+    if (len > 1200) return '11px';
+    if (len > 1000) return '14px';
+    if (len > 800) return '15px';
+    if (len > 600) return '18px';
+    if (len > 400) return '20px';
+    return '20px';
 }
 ---
 
@@ -36,8 +52,8 @@ function formatarData(fechaStr) {
         <div class="no-print" style="text-align: center; padding: 40px; color: white;">
           <img src="/img/cardonerpdf.webp" alt="Logo Kontrast" style="height:50vh; margin-bottom: -50px;" />  
           <h1 style="text-align: center;">Cardoner PDF Maker</h1>
-            <p>Patience Laureta...it takes one mica to generate the PDF.
-              
+            <p>Paciencia Laureta...triga una mica en fer el PDF.<br>
+              No cal que esperis a que fagi la Vista Previa, pots clickear Guardar
             </p>
             <button id="download-btn" class="btn-entradas" style="cursor: pointer; padding: 15px 30px; background: #ffcc00; color: #000; font-weight: bold; border: none; border-radius: 50px;">
                 DESCARREGAR PROGRAMA PDF
@@ -92,16 +108,16 @@ function formatarData(fechaStr) {
                                     ))}
                                 </div>
                                 <div class="col">
-                                    <p class="text">{lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat}</p>
+                                    <p class="text" 
+                                        style={`font-size: ${getFontSize(lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat)}`}
+                                        set:html={nlToBr(lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat)} />
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
                 );
             })}
-              <!-- CONTRAPORTADA - última página -->
-        <div class="pdf-page pdf-cover">
+            <div class="pdf-page pdf-cover">
             <img src={`${imgPrefix}/k-4.webp`} alt="Contraportada" class="cover-img" />
         </div>
         </div>

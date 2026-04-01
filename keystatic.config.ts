@@ -1,7 +1,7 @@
 console.log('KEYSTATIC ENV CHECK:', {
-  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? process.env.KEYSTATIC_GITHUB_CLIENT_ID ?? 'UNDEFINED',
-  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? 'UNDEFINED',
-  secret: import.meta.env.KEYSTATIC_SECRET ?? process.env.KEYSTATIC_SECRET ?? 'UNDEFINED',
+  clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_GITHUB_CLIENT_ID : undefined),
+  clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET : undefined),
+  secret: import.meta.env.KEYSTATIC_SECRET ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_SECRET : undefined) ?? 'local-dummy-secret-123456',
 })
 
 import { config, fields, collection } from '@keystatic/core';
@@ -20,15 +20,15 @@ export default config({
         // --- LOGICA DE RAMA DINÁMICA ---
         // Si Vercel nos dice que estamos en una rama específica, la usamos.
         // Si no (local), Keystatic usará la configuración por defecto.
-        branch: process.env.PUBLIC_VERCEL_GIT_COMMIT_REF || 'main',
+        branch: (typeof process !== 'undefined' ? process.env.PUBLIC_VERCEL_GIT_COMMIT_REF : undefined) || import.meta.env.PUBLIC_VERCEL_GIT_COMMIT_REF || 'main',
       }
     : {
         kind: 'local',
       },
 
-clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-secret: import.meta.env.KEYSTATIC_SECRET ?? process.env.KEYSTATIC_SECRET ?? 'local-dummy-secret-123456',
+clientId: import.meta.env.KEYSTATIC_GITHUB_CLIENT_ID ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_GITHUB_CLIENT_ID : undefined),
+clientSecret: import.meta.env.KEYSTATIC_GITHUB_CLIENT_SECRET ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_GITHUB_CLIENT_SECRET : undefined),
+secret: import.meta.env.KEYSTATIC_SECRET ?? (typeof process !== 'undefined' ? process.env.KEYSTATIC_SECRET : undefined) ?? 'local-dummy-secret-123456',
 
   collections: {
     obras: collection({

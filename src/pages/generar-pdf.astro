@@ -29,6 +29,22 @@ function formatarData(fechaStr) {
     const mes = mesos[fecha.getMonth()];
     return `${diaSemana} ${dia}`;
 }
+
+function nlToBr(texto) {
+    if (!texto) return '';
+    return texto.replace(/\n/g, '<br>');
+}
+
+function getFontSize(texto) {
+    if (!texto) return '15px';
+    const len = texto.length;
+    if (len > 1200) return '11px';
+    if (len > 1000) return '14px';
+    if (len > 800) return '15px';
+    if (len > 600) return '18px';
+    if (len > 400) return '20px';
+    return '20px';
+}
 ---
 
 <Layout title="Generar Programa PDF">
@@ -92,7 +108,9 @@ function formatarData(fechaStr) {
                                     ))}
                                 </div>
                                 <div class="col">
-                                    <p class="text">{lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat}</p>
+                                    <p class="text" 
+                                        style={`font-size: ${getFontSize(lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat)}`}
+                                        set:html={nlToBr(lang === 'en' ? data.sinopsis_eng : data.sinopsis_cat)} />
                                 </div>
                             </div>
                         </div>
