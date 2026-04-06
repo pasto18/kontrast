@@ -1,0 +1,233 @@
+---
+import Layout from '../layouts/layout.astro';
+---
+
+<Layout title="Generador de Historias - Cotxe-Sharing">
+
+    <div class="contenedor-principal">
+        <h1>STORY GENERATOR</h1>
+        <p>Toca una miniatura per descarregar la imatge 9:16 de qualitat (1080x1920).</p>
+        
+        <div class="controles-historias">
+            <button class="btn-filtro" id="btn-todos">Tots</button>
+            <button class="btn-filtro" id="btn-busco" style="border-bottom: 3px solid #e74c3c;">Busco</button>
+            <button class="btn-filtro" id="btn-ofrezco" style="border-bottom: 3px solid #2ecc71;">Ofereixo</button>
+        </div>
+    </div>
+
+    <div class="grid-historias" id="historias-container">
+        <div class="loader">Generant imatges...</div>
+    </div>
+
+    <style>
+    body { background-color: #121212; color: white; margin: 0; }
+    
+    .contenedor-principal { text-align: center; padding: 20px; }
+
+    /* Contenedor Grid */
+    .grid-historias {
+        display: grid;
+        /* Forzamos columnas de exactamente 200px, ni un píxel más */
+        grid-template-columns: repeat(auto-fill, 200px); 
+        gap: 20px;
+        padding: 20px;
+        justify-content: center; /* Centra la rejilla en la pantalla */
+    }
+
+    /* La tarjeta contenedora */
+    .item-historia {
+        width: 200px !important;      /* Ancho fijo obligatorio */
+        height: 355px !important;     /* Alto fijo (proporción 9:16) */
+        cursor: pointer;
+        border-radius: 10px;
+        overflow: hidden;             /* Corta cualquier cosa que intente salirse */
+        background: #222;
+        border: 2px solid #444;
+        position: relative;
+    }
+
+    /* LA IMAGEN: Aquí es donde suele fallar */
+    .item-historia img {
+        width: 100% !important;       /* Se ajusta al ancho de la tarjeta (200px) */
+        height: 100% !important;      /* Se ajusta al alto de la tarjeta (355px) */
+        object-fit: contain !important; /* Ajusta la imagen sin deformar */
+        display: block !important;
+    }
+
+    .item-historia:hover { border-color: #3498db; transform: scale(1.02); transition: 0.2s; }
+    
+    .btn-filtro { padding: 10px 20px; cursor: pointer; margin: 5px; border-radius: 5px; border: none; }
+    
+</style>
+    <script>
+        let viajesOriginales = [];
+
+        async function init() {
+            const apiKey = 'AIzaSyDCgnL_oc1lTa_9Lsn3TWwQiKx9aYZ5qCM';
+            const spreadsheetId = '1Tm4RU-un_72kFzHPLUO7gbCzupMnSgIJFc6dwh6P23s';
+            const range = 'KO_VIAJES_ORDENADO!A:Z';
+
+            try {
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}&valueRenderOption=FORMATTED_VALUE`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!data.values) return;
+
+                const raw = data.values.slice(1);
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0);
+
+                // Filtrar por fecha y limpiar
+                viajesOriginales = raw.filter(f => {
+                    if(!f[1]) return false;
+                    const d = parsearFecha(f[1]);
+                    return !isNaN(d.getTime()) && d >= hoy;
+                });
+
+                if(viajesOriginales.length === 0) {
+                    document.getElementById('historias-container').innerHTML = '<div class="loader">No hi ha viatges pròxims.</div>';
+                    return;
+                }
+
+                render(viajesOriginales);
+
+            } catch (e) { console.error("Error cargando datos:", e); }
+        }
+
+        function render(lista) {
+    const container = document.getElementById('historias-container');
+    container.innerHTML = '';
+
+    if(lista.length === 0) {
+        container.innerHTML = '<p>No hay viajes próximos.</p>';
+        return;
+    }
+
+    lista.forEach((viaje) => {
+        // Generamos el canvas
+        const imgData = crearCanvas(viaje);
+        
+        // Creamos el elemento
+        const box = document.createElement('div');
+        box.className = 'item-historia';
+        
+        // Insertamos la imagen asegurando que tenga los estilos inline de seguridad
+        const img = document.createElement('img');
+        img.src = imgData;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        
+        box.appendChild(img);
+        
+        box.onclick = () => {
+            const a = document.createElement('a');
+            a.href = imgData;
+            a.download = `CS-Story-${viaje[1].replace(/\//g,'-')}.jpg`;
+            a.click();
+        };
+        
+        container.appendChild(box);
+    });
+}
+
+        function crearCanvas(v) {
+    const cv = document.createElement('canvas');
+    cv.width = 1080;
+    cv.height = 1920;
+    const ctx = cv.getContext('2d');
+
+    const esBusco = v[8].includes('Busco');
+    const color = esBusco ? '#e74c3c' : '#2ecc71';
+
+    // 1. Fondo
+    ctx.fillStyle = '#121212';
+    ctx.fillRect(0, 0, 1080, 1920);
+
+    // 2. Cabecera
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1080, 480);
+
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 90px sans-serif';
+    ctx.fillText(esBusco ? 'BUSCO VIATGE' : 'OFEREIXO VIATGE', 80, 220);
+
+    ctx.font = '65px sans-serif';
+    ctx.fillText(`${v[1]}  |  ${v[2]}`, 80, 350);
+
+    // --- FUNCIÓN INTERNA PARA SALTO DE LÍNEA ---
+    function escribirTextoAjustado(texto, x, y, maxWidth, lineHeight) {
+        const palabras = texto.split(' ');
+        let linea = '';
+        let currentY = y;
+
+        for (let n = 0; n < palabras.length; n++) {
+            let testLinea = linea + palabras[n] + ' ';
+            let metrics = ctx.measureText(testLinea);
+            let testWidth = metrics.width;
+            if (testWidth > maxWidth && n > 0) {
+                ctx.fillText(linea, x, currentY);
+                linea = palabras[n] + ' ';
+                currentY += lineHeight;
+            } else {
+                linea = testLinea;
+            }
+        }
+        ctx.fillText(linea, x, currentY);
+        return currentY; // Devolvemos la última posición Y para saber dónde seguir
+    }
+
+    // 3. Cuerpo (Ruta con saltos de línea)
+    const anchoMax = 920; // 1080 - margenes
+    
+    ctx.font = 'bold 50px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText('DESDE', 80, 650);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 90px sans-serif';
+    // Dibujamos "Desde" y capturamos dónde termina para que el siguiente bloque no se solape
+    let ultimaY = escribirTextoAjustado((v[3] || '').toUpperCase(), 80, 760, anchoMax, 100);
+
+    ctx.font = 'bold 50px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    // Dejamos un margen de 120px después del bloque anterior
+    ctx.fillText('FINS A', 80, ultimaY + 120);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 90px sans-serif';
+    ultimaY = escribirTextoAjustado((v[9] || '').toUpperCase(), 80, ultimaY + 230, anchoMax, 100);
+
+    // 4. Info inferior (la movemos dinámicamente según la ruta)
+    ctx.fillStyle = color;
+    ctx.fillRect(80, ultimaY + 150, 200, 15);
+
+    ctx.fillStyle = 'white';
+    ctx.font = '55px sans-serif';
+    ctx.fillText(esBusco ? 'Places que busco:' : 'Places disponibles:', 80, ultimaY + 280);
+    ctx.font = 'bold 85px sans-serif';
+    ctx.fillText(v[4], 80, ultimaY + 380);
+
+    ctx.font = '55px sans-serif';
+    ctx.fillText('Contacte:', 80, ultimaY + 520);
+    ctx.font = 'bold 85px sans-serif';
+    ctx.fillText(v[5], 80, ultimaY + 620);
+
+    return cv.toDataURL('image/jpeg', 0.85);
+}
+
+        function parsearFecha(t) {
+            const p = t.split('/');
+            // Asumimos 2026 si falta el año (p.length === 2)
+            if(p.length === 2) return new Date(2026, p[1]-1, p[0]);
+            return new Date(p[2], p[1]-1, p[0]);
+        }
+
+        // Eventos de Filtro
+        document.getElementById('btn-todos').onclick = () => render(viajesOriginales);
+        document.getElementById('btn-busco').onclick = () => render(viajesOriginales.filter(x => x[8].includes('Busco')));
+        document.getElementById('btn-ofrezco').onclick = () => render(viajesOriginales.filter(x => x[8].includes('Ofereixo')));
+
+        init();
+    </script>
+</Layout>
