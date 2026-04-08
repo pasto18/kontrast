@@ -7,6 +7,7 @@ const obras = defineCollection({
     categoria: z.string(),
     categoria_manual: z.string().optional().nullable(),
     compania: z.string(),
+    gratuito: z.boolean().optional(), //
     web_compania: z.string().optional().nullable(),
     video: z.string().optional().nullable(),
     entradas_url: z.string().optional().nullable(),

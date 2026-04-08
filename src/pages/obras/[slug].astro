@@ -31,6 +31,7 @@ function getYouTubeID(url) {
 // Traducciones locales para esta página
 const t = {
     comprar: lang === 'en' ? 'BUY TICKETS' : 'COMPRAR ENTRADES',
+    gratuito: lang === 'en' ? 'FREE' : 'GRATUÏT',
     categoria: (data.categoria === 'Otro' && data.categoria_manual) ? data.categoria_manual : data.categoria
 };
 
@@ -80,6 +81,9 @@ function formatearFecha(fechaStr) {
                 </ul>
                 {data.entradas_url && (
                     <a href={data.entradas_url} target="_blank" class="btn-entrades-2">{t.comprar}</a>
+                )}
+               {data.gratuito && (
+                    <span class="btn-entrades-2 btn-gratuito">{t.gratuito}</span>
                 )}
                <a href={data.web_compania || '#'} target="_blank" class="btn-entrades-2">WEB</a>
             </div>
@@ -153,6 +157,7 @@ function formatearFecha(fechaStr) {
     }
 }
 
+    .btn-gratuito { cursor: default; pointer-events: none; opacity: 0.85; }
 </style>
 
 <script>

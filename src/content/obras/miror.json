@@ -3,6 +3,7 @@
   "categoria": "CIRC",
   "compania": "Muchmuche Company",
   "web_compania": "muchmuchecompany.com",
+  "gratuito": true,
   "video": "https://www.youtube.com/watch?v=LUIDqQFDzbE",
   "fotos": [
     "/img/obras/miror/fotos/0.webp",
@@ -12,11 +13,11 @@
   "pases": [
     {
       "fecha": "2026-04-11",
-      "hora": "12:00 - El Guixaró - GRATUÏT"
+      "hora": "12:00 - El Guixaró"
     },
     {
       "fecha": "2026-04-12",
-      "hora": "16:00 - Cal Rosal (Pista de bàsquet) - GRATUÏT"
+      "hora": "16:00 - Cal Rosal (Pista de bàsquet)"
     }
   ],
   "sinopsis_cat": "Un personatge apareix, enterrat sota 35 quilos d’acer. Una armadura massa pesada, massa sorollosa, massa viva per ser només un vestit. Cada pas planteja una pregunta, cada gest renegocia un tractat de pau entre el cos i el metall. Entre circ i dansa, intenta domesticar aquesta massa capritxosa que de vegades l’ajuda i de vegades el desafia.\nDesprés, una a una, les peces es desprenen. El pes disminueix, l’espai s’obre i cada element troba un segon alè. Objecte, eina, contrapès, matèria per manipular o fer malabars: el metall es reinventa al mateix ritme que el cos que se n’allibera.\nMiror explora aquell moment en què alleugerir-se no és renunciar, sinó transformar-se. Un viatge dansat i circense on descobrim que treure pes pot, de vegades, obrir tot un món… i que els objectes que crèiem feixucs també saben sorprendre.",

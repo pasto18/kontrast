@@ -3,6 +3,7 @@
   "categoria": "Otro",
   "categoria_manual": "Teatre de Carrer",
   "compania": "Kamchàtka",
+  "gratuito": true,
   "web_compania": "https://kamchatka.cat",
   "video": "https://youtu.be/M41twBTsq8I",
   "fotos": [
@@ -13,7 +14,7 @@
   "pases": [
     {
       "fecha": "2026-04-10",
-      "hora": "18:00 - Gironella (Pl. de la Vila) - GRATUÏT"
+      "hora": "18:00 - Gironella (Pl. de la Vila)"
     }
   ],
   "sinopsis_cat": "Vuit personatges perduts per la ciutat, cadascun d’ells amb la seva maleta. Viatgers o immigrants?\nIngenus, curiosos, amb les emocions a flor de pell, no coneixen les normes, les nostres regles, la nostra manera de viure.\nEl seu joc és tan subtil que es confon amb la realitat. És així com s’obre un espai de diàleg, on l’espectador es torna actor de l’intercanvi i de l’experimentació.\nKamchàtka es converteix finalment en un mirall: el dels nostres comportaments vers l’altre, l’estranger, el diferent. Construirem el futur amb els Kamchàtka o els rebutjarem?",
